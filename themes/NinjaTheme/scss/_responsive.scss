@@ -1,0 +1,20 @@
+@use 'variables' as *;
+
+// Responsive Styles
+@media (max-width: $breakpoint-mobile) {
+    // Removed flex-direction: column from header to keep logo left and hamburger right
+    // .site-header .container {
+    //     flex-direction: column;
+    //     gap: $spacing-sm;
+    // }
+
+    .main-navigation ul {
+        flex-direction: column;
+        gap: $spacing-sm;
+        text-align: center;
+    }
+
+    .post-title {
+        font-size: 1.5rem;
+    }
+}

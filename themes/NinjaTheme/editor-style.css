@@ -1,0 +1,50 @@
+/*
+ * Editor-only tweaks to make custom blocks look good in wp-admin.
+ * Keep styles minimal so they don't fight the main theme styles.
+ */
+
+.editor-styles-wrapper {
+    background: #ffffff;
+    color: #333333;
+}
+
+.editor-styles-wrapper .container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.editor-styles-wrapper [class*="align"] {
+    max-width: 100%;
+}
+
+.editor-styles-wrapper .awards {
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.editor-styles-wrapper .carousel,
+.editor-styles-wrapper .carousel-post {
+    overflow: hidden;
+}
+
+.editor-styles-wrapper .wp-block-columns.ninja-sticky-columns {
+    position: relative;
+    align-items: flex-start;
+    --ninja-sticky-offset: 2rem;
+}
+
+.editor-styles-wrapper .wp-block-columns.ninja-sticky-columns > .wp-block-column.ninja-sticky-column {
+    position: sticky;
+    top: var(--ninja-sticky-offset);
+    align-self: flex-start;
+}
+
+@media (max-width: 768px) {
+    .editor-styles-wrapper .wp-block-columns.ninja-sticky-columns > .wp-block-column.ninja-sticky-column {
+        position: static;
+        top: auto;
+    }
+}

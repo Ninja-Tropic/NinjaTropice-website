@@ -1,0 +1,35 @@
+.social-icons {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    
+    .social-icon-item {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .social-icon-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        
+        &:hover {
+            transform: translateY(-3px);
+            opacity: 0.8;
+            text-decoration: none;
+        }
+    }
+    
+    .social-icon-image {
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
+        display: block;
+    }
+}

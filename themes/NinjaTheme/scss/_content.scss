@@ -1,0 +1,459 @@
+@use 'variables' as *;
+
+// Main Content
+.site-main {
+    //padding: $spacing-md 0;
+    min-height: 60vh;
+}
+
+// Post Styles
+.post {
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-md;
+    border-bottom: 1px solid $color-border;
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.post-title {
+    font-size: 2rem;
+    margin-bottom: $spacing-xs;
+
+    a {
+        text-decoration: none;
+        color: $color-text;
+        transition: color $transition-base;
+
+        &:hover {
+            color: $color-primary;
+        }
+    }
+}
+
+.post-meta {
+    color: $color-text-light;
+    font-size: 0.9rem;
+    margin-bottom: $spacing-sm;
+}
+
+.post-content {
+    //margin-top: $spacing-sm;
+
+    p {
+        margin-bottom: $spacing-sm;
+    }
+}
+
+// Full Width Template Styles
+.site-main--fullwidth {
+    width: 100%;
+    max-width: 100%;
+}
+
+.post--fullwidth {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    border-bottom: none;
+}
+
+.post-content--fullwidth {
+    width: 100%;
+    max-width: 100%;
+}
+
+.post-content {
+    .wp-block-columns.ninja-sticky-columns {
+        position: relative;
+        align-items: flex-start;
+        --ninja-sticky-offset: clamp(1.5rem, 6vw, 6rem);
+
+        > .wp-block-column.ninja-sticky-column {
+            position: sticky;
+            top: var(--ninja-sticky-offset);
+            align-self: flex-start;
+        }
+    }
+}
+
+.custom-sidebar-navigation {
+    --sidebar-nav-accent: #{$ninja-main-color};
+    --sidebar-nav-border: rgba(17, 17, 17, 0.08);
+    --sidebar-nav-surface: linear-gradient(180deg, rgba(255, 251, 247, 0.96) 0%, rgba(255, 255, 255, 0.98) 100%);
+    --sidebar-nav-shadow: 0 18px 38px rgba(17, 17, 17, 0.06);
+    --sidebar-nav-text: #{$color-text};
+    --sidebar-nav-text-muted: #4f5661;
+    --sidebar-nav-offset: clamp(1.5rem, 6vw, 6rem);
+
+    position: sticky;
+    top: var(--sidebar-nav-offset);
+    align-self: flex-start;
+    width: 100%;
+    max-height: calc(100vh - (var(--sidebar-nav-offset) * 2));
+    padding: 1rem;
+    overflow: auto;
+    border: 1px solid var(--sidebar-nav-border);
+    border-radius: 1.25rem;
+    background: var(--sidebar-nav-surface);
+    box-shadow: var(--sidebar-nav-shadow);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 104, 27, 0.35) rgba(255, 104, 27, 0.08);
+
+    > * {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        min-width: 0;
+    }
+
+    &::-webkit-scrollbar {
+        width: 0.4rem;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: rgba(255, 104, 27, 0.08);
+        border-radius: 999px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba(255, 104, 27, 0.35);
+        border-radius: 999px;
+    }
+
+    ul,
+    ol,
+    nav,
+    .wp-block-navigation,
+    .menu,
+    .wp-block-navigation__container,
+    .wp-block-page-list {
+        display: block;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        width: 100%;
+        background: transparent !important;
+        border: 0 !important;
+        outline: 0 !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+    }
+
+    li,
+    .wp-block-navigation-item,
+    .page_item {
+        margin: 0;
+        width: 100%;
+    }
+
+    li + li,
+    .wp-block-navigation-item + .wp-block-navigation-item,
+    .page_item + .page_item {
+        margin-top: 0.25rem;
+    }
+
+    a {
+        display: block;
+        width: 100%;
+        min-height: 3.25rem;
+        padding: 0.95rem 1rem 0.95rem 1.1rem;
+        border: 0;
+        border-left: 4px solid transparent;
+        border-radius: 0.9rem;
+        color: var(--sidebar-nav-text-muted);
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        line-height: 1.4;
+        text-decoration: none;
+        transition:
+            color $transition-base ease,
+            background-color $transition-base ease,
+            box-shadow $transition-base ease,
+            border-color $transition-base ease;
+
+        &:hover,
+        &:focus-visible {
+            color: var(--sidebar-nav-text);
+            background: rgba(255, 104, 27, 0.08);
+            outline: none;
+            border-left-color: rgba(255, 104, 27, 0.22);
+        }
+    }
+
+    li.current-menu-item > a,
+    li.current-menu-ancestor > a,
+    li.current-menu-parent > a,
+    li.current_page_item > a,
+    li.current_page_parent > a,
+    li.current_page_ancestor > a,
+    li.active > a,
+    li.is-active > a,
+    a.active,
+    a.is-active,
+    a[aria-current="page"] {
+        color: var(--sidebar-nav-text);
+        font-weight: 700;
+        background: rgba(255, 104, 27, 0.12);
+        border-left-color: var(--sidebar-nav-accent);
+        box-shadow: inset 0 0 0 1px rgba(255, 104, 27, 0.14);
+    }
+
+    .wp-block-navigation-item__content,
+    .wp-block-page-list li > a,
+    .menu > li > a {
+        width: 100%;
+    }
+
+    a:focus-visible {
+        box-shadow:
+            inset 0 0 0 1px rgba(255, 104, 27, 0.18),
+            0 0 0 4px rgba(255, 104, 27, 0.12);
+    }
+}
+
+.post-thumbnail--fullwidth {
+    width: 100%;
+    max-width: 100%;
+    
+    img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+}
+
+// Pricing comparison table
+.post-content {
+    .wp-block-table.ninja-pricing-table,
+    table.ninja-pricing-table {
+        padding: 0;
+        border-radius: 1.5rem;
+        background:
+            radial-gradient(circle at top right, rgba(255, 104, 27, 0.12), transparent 32%),
+            linear-gradient(180deg, #fffaf8 0%, #ffffff 100%);
+        border: 1px solid rgba(255, 104, 27, 0.12);
+        box-shadow: 0 18px 45px rgba(34, 34, 34, 0.08);
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255, 104, 27, 0.45) rgba(255, 104, 27, 0.08);
+
+        &::-webkit-scrollbar {
+            height: 0.5rem;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: rgba(255, 104, 27, 0.08);
+            border-radius: 999px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: rgba(255, 104, 27, 0.45);
+            border-radius: 999px;
+        }
+    }
+
+    .wp-block-table.ninja-pricing-table table,
+    table.ninja-pricing-table {
+        width: 100%;
+        min-width: 54rem;
+        margin: 0;
+        border-collapse: separate;
+        border-spacing: 0;
+        table-layout: fixed;
+        background: transparent;
+    }
+
+    .wp-block-table.ninja-pricing-table thead th,
+    table.ninja-pricing-table thead th {
+        padding: 1.5rem 1.25rem;
+        border: 0;
+        color: $color-text;
+        text-align: left;
+        vertical-align: top;
+        background: rgba(255, 255, 255, 0.72);
+        backdrop-filter: blur(10px);
+
+        &:first-child {
+            width: 24%;
+            background: transparent;
+        }
+
+        &:nth-child(2) {
+            background: linear-gradient(180deg, rgba(255, 104, 27, 0.16) 0%, rgba(255, 104, 27, 0.06) 100%);
+            text-align: center;
+        }
+
+        &:nth-child(3) {
+            background: linear-gradient(180deg, rgba(255, 104, 27, 0.22) 0%, rgba(213, 82, 155, 0.1) 100%);
+            text-align: center;
+        }
+    }
+
+    .wp-block-table.ninja-pricing-table thead th strong,
+    table.ninja-pricing-table thead th strong {
+        display: block;
+        margin: 0;
+        line-height: 1.2;
+
+        &:first-child {
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+            letter-spacing: -0.02em;
+        }
+    }
+
+    .wp-block-table.ninja-pricing-table thead th .plan-name,
+    table.ninja-pricing-table thead th .plan-name,
+    .wp-block-table.ninja-pricing-table thead th .plan-price,
+    table.ninja-pricing-table thead th .plan-price,
+    .wp-block-table.ninja-pricing-table thead th .plan-limit,
+    table.ninja-pricing-table thead th .plan-limit {
+        display: block;
+    }
+
+    .wp-block-table.ninja-pricing-table thead th .plan-name,
+    table.ninja-pricing-table thead th .plan-name {
+        margin-bottom: 0.45rem;
+        color: $color-text;
+        font-size: 1rem;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+    }
+
+    .wp-block-table.ninja-pricing-table thead th .plan-price,
+    table.ninja-pricing-table thead th .plan-price {
+        margin-bottom: 0.4rem;
+        color: $ninja-main-color;
+        font-size: clamp(1.8rem, 3vw, 2.5rem);
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -0.04em;
+    }
+
+    .wp-block-table.ninja-pricing-table thead th .plan-limit,
+    table.ninja-pricing-table thead th .plan-limit {
+        color: #6c7480;
+        font-size: 0.88rem;
+        font-weight: 500;
+        line-height: 1.35;
+        letter-spacing: 0.01em;
+        text-transform: uppercase;
+    }
+
+    .wp-block-table.ninja-pricing-table tbody td,
+    table.ninja-pricing-table tbody td {
+        padding: 1.1rem 1.25rem;
+        border: 0;
+        border-top: 1px solid rgba(44, 44, 44, 0.08);
+        color: #58606c;
+        font-size: 0.98rem;
+        line-height: 1.65;
+        vertical-align: top;
+        background: rgba(255, 255, 255, 0.88);
+        transition: background-color $transition-base ease;
+
+        &:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 1;
+            color: $color-text;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            background: linear-gradient(180deg, #fff7f2 0%, #ffffff 100%);
+        }
+
+        &:empty::before {
+            content: '—';
+            color: rgba(88, 96, 108, 0.5);
+        }
+        
+        &:nth-child(2),
+        &:nth-child(3) {
+            text-align: center;
+        }
+    }
+
+    .wp-block-table.ninja-pricing-table tbody tr,
+    table.ninja-pricing-table tbody tr {
+        &:hover td {
+            background: rgba(255, 104, 27, 0.04);
+        }
+
+        &:hover td:first-child {
+            background: linear-gradient(180deg, rgba(255, 104, 27, 0.12) 0%, rgba(255, 255, 255, 0.96) 100%);
+        }
+
+       
+    }
+
+    .wp-block-table.ninja-pricing-table tbody td:nth-child(3),
+    table.ninja-pricing-table tbody td:nth-child(3) {
+        background: linear-gradient(180deg, rgba(255, 104, 27, 0.05) 0%, rgba(213, 82, 155, 0.03) 100%);
+    }
+}
+
+@media (max-width: $breakpoint-mobile) {
+    .post-content {
+        .wp-block-columns.ninja-sticky-columns {
+            > .wp-block-column.ninja-sticky-column {
+                position: static;
+                top: auto;
+            }
+        }
+    }
+
+    .post-content {
+        .wp-block-table.ninja-pricing-table,
+        table.ninja-pricing-table {
+            margin: 2rem 0;
+            border-radius: 1.25rem;
+        }
+
+        .wp-block-table.ninja-pricing-table table,
+        table.ninja-pricing-table {
+            min-width: 44rem;
+        }
+
+        .wp-block-table.ninja-pricing-table thead th,
+        .wp-block-table.ninja-pricing-table tbody td,
+        table.ninja-pricing-table thead th,
+        table.ninja-pricing-table tbody td {
+            padding: 0.95rem 0.9rem;
+            font-size: 0.92rem;
+        }
+
+        .wp-block-table.ninja-pricing-table thead th strong:first-child,
+        table.ninja-pricing-table thead th strong:first-child {
+            font-size: 0.98rem;
+        }
+
+        .wp-block-table.ninja-pricing-table thead th .plan-name,
+        table.ninja-pricing-table thead th .plan-name {
+            font-size: 0.95rem;
+        }
+
+        .wp-block-table.ninja-pricing-table thead th .plan-price,
+        table.ninja-pricing-table thead th .plan-price {
+            font-size: 1.65rem;
+        }
+
+        .wp-block-table.ninja-pricing-table thead th .plan-limit,
+        table.ninja-pricing-table thead th .plan-limit {
+            font-size: 0.78rem;
+        }
+    }
+
+    .custom-sidebar-navigation {
+        position: static;
+        top: auto;
+        max-height: none;
+        padding: 1rem;
+    }
+}

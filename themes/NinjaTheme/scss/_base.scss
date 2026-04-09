@@ -1,0 +1,181 @@
+@use 'variables' as *;
+
+// Base Styles
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: $font-family-base;
+    line-height: $line-height-base;
+    color: $color-text;
+    background-color: $color-bg;
+}
+strong{color: $color-bg-dark;}
+
+// Container
+.container {
+    max-width: $container-max-width;
+    margin: 0 auto;
+    padding: 0 $container-padding;
+}
+.bg-main_full{
+    background-color: $ninja-main-color;
+    padding: 4rem;
+    position: relative;
+    p {
+        color: $color-bg;
+    }
+
+    &:before{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background-color: $ninja-main-color;
+    }
+    &:after{
+        content: '';
+        position: absolute;
+        bottom: 0;
+        right: -100%;
+        width: 100%;
+        height: 100%;
+        background-color: $ninja-main-color;
+    }
+}
+.half-main{
+    position: relative;
+    z-index: 1;
+    &:before{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -50%;
+        width: 200%;
+        height: 50%;
+        background-color: $ninja-main-color;
+        z-index: -1;
+    }
+}
+.card {
+    background-color: $color-bg!important;
+    padding: 2rem;
+    border-radius: 1rem;
+    height: 400px;
+    -webkit-box-shadow: 0px 3px 19px 5px rgba(0,0,0,0.20)!important;
+box-shadow: 0px 3px 19px 5px rgba(0,0,0,0.20)!important;
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+// Animated gradient text effect
+i, em {
+    font-style: normal !important;
+    background: linear-gradient(
+        90deg,
+        #ff641b 0%,
+        #d5529b 12.5%,
+        #a36dee 25%,
+        #d5529b 37.5%,
+        #ff641b 50%,
+        #d5529b 62.5%,
+        #a36dee 75%,
+        #d5529b 87.5%,
+        #ff641b 100%
+    ) !important;
+    background-size: 300% auto !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    animation: gradient-shift 1s ease-in-out infinite !important;
+    display: inline !important;
+}
+
+@keyframes gradient-shift {
+    0% {
+        background-position: 0% center;
+    }
+    50% {
+        background-position: 100% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+.entry-header{
+    visibility: hidden;
+    height: 0;
+    width: 0;
+}
+.ninja-box {
+    --ninja-border-angle: 0deg;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 18px;
+    border-width: 1px;
+    background-color: #fafafa;
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+    isolation: isolate;
+    transition: box-shadow 0.3s ease;
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        padding: 2px;
+        border-radius: inherit;
+        z-index: 0;
+        background: conic-gradient(from var(--ninja-border-angle), #ff641b 0deg, #d5529b 90deg, #a36dee 180deg, #d5529b 270deg, #ff641b 360deg) !important;
+        animation: ninja-border-gradient-rotate 4s linear infinite !important;
+        pointer-events: none;
+        -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        transition: opacity 0.3s ease;
+    }
+    > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    &--hover-border {
+        &::before {
+            opacity: 0;
+        }
+
+        &:hover::before,
+        &:focus-within::before {
+            opacity: 1;
+        }
+    }
+}
+
+@property --ninja-border-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+}
+
+@keyframes ninja-border-gradient-rotate {
+    0% {
+        --ninja-border-angle: 0deg;
+    }
+    100% {
+        --ninja-border-angle: 360deg;
+    }
+}
+.container-sm{
+    max-width: 768px;
+    margin: 0 auto;
+}

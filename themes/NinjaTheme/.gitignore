@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Compiled CSS (optional - you may want to commit this)
+# style.css
+
+# Temporary build files
+temp.css
+
+# Source maps
+*.css.map
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

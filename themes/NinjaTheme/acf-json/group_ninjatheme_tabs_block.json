@@ -1,0 +1,147 @@
+{
+    "key": "group_ninjatheme_tabs_block",
+    "title": "Block: Tabs Block",
+    "fields": [
+        {
+            "key": "field_ninjatheme_tabs_block_content_mode",
+            "label": "Content Mode",
+            "name": "content_mode",
+            "aria-label": "",
+            "type": "button_group",
+            "instructions": "Choose whether tab content is managed in the repeater or with nested Tab Panel blocks.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "wysiwyg": "WYSIWYG",
+                "inner_blocks": "InnerBlocks"
+            },
+            "default_value": "wysiwyg",
+            "return_format": "value",
+            "layout": "horizontal"
+        },
+        {
+            "key": "field_ninjatheme_tabs_block_tabs",
+            "label": "Tabs",
+            "name": "tabs",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Add the tab titles. In WYSIWYG mode, each row also stores the panel content. In InnerBlocks mode, add one Tab Panel block per row below and keep the order matched.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 1,
+            "max": 0,
+            "collapsed": "field_ninjatheme_tabs_block_tab_title",
+            "button_label": "Add Tab",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_ninjatheme_tabs_block_tab_title",
+                    "label": "Tab Title",
+                    "name": "tab_title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "Tab title",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_ninjatheme_tabs_block_tabs"
+                },
+                {
+                    "key": "field_ninjatheme_tabs_block_tab_content",
+                    "label": "Tab Content",
+                    "name": "tab_content",
+                    "aria-label": "",
+                    "type": "wysiwyg",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_ninjatheme_tabs_block_content_mode",
+                                "operator": "==",
+                                "value": "wysiwyg"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "tabs": "all",
+                    "toolbar": "full",
+                    "media_upload": 1,
+                    "delay": 0,
+                    "parent_repeater": "field_ninjatheme_tabs_block_tabs"
+                }
+            ]
+        },
+        {
+            "key": "field_ninjatheme_tabs_block_inner_blocks_message",
+            "label": "InnerBlocks Instructions",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_ninjatheme_tabs_block_content_mode",
+                        "operator": "==",
+                        "value": "inner_blocks"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Add one <strong>Tab Panel<\/strong> child block per tab in the content area below. Keep the panel order aligned with the repeater rows.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/tabs-block"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1775174400
+}

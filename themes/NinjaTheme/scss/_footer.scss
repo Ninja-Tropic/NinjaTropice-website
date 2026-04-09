@@ -1,0 +1,44 @@
+@use 'variables' as *;
+
+// Footer
+.site-footer {
+    background: linear-gradient(156deg,#ff641b 0%,#a36dee 100%)!important;
+    color: $color-bg;
+    padding: $spacing-md 0;
+    margin-top: $spacing-lg;
+    text-align: left;
+
+    a {
+        color: $color-bg;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    // Footer logo styling
+    .footer-logo {
+        max-width: 150px;
+        height: auto;
+        margin-bottom: 1rem;
+    }
+    h3 {
+        color: $color-bg;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+        text-align: left;
+        
+        
+    }
+    .columns {
+        .column:first-child {
+            text-align: center;
+        }
+        .column:not(:first-child) {
+            text-align: left;
+        }
+    }
+
+}

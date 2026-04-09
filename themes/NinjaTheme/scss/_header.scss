@@ -1,0 +1,159 @@
+@use 'variables' as *;
+
+// Header Styles
+.site-header {
+    background-color: transparent;
+    border-bottom: 1px solid transparent;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 20px 0;
+    transition: all $transition-base;
+    height: auto;
+
+    &.scrolled {
+        background-color: #fff;
+        border-bottom: 1px solid transparent;
+        border-bottom: 1px solid #e5e5e5;
+        position: fixed;
+
+        .site-branding .site-title a {
+            color: $color-text;
+        }
+
+        .lang-switcher {
+            color: $color-text;
+            
+            svg {
+                stroke: $color-text;
+            }
+        }
+    }
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 100%;
+        padding: 0 40px;
+        gap: 32px;
+        position: relative;
+    }
+}
+
+.site-branding {
+    flex: 1 1 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 1001;
+    min-width: 0;
+
+    @media (max-width: 1024px) {
+        flex: 0 1 auto;
+    }
+
+    .site-title a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 1.4rem;
+        font-weight: 700;
+        display: block;
+        transition: color $transition-base;
+        letter-spacing: -0.5px;
+    }
+
+    .custom-logo-link {
+        display: block;
+        line-height: 1;
+
+        img {
+            max-height: 60px;
+            width: auto;
+            display: block;
+            transition: opacity $transition-base;
+        }
+    }
+}
+
+.main-navigation {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: flex-end;
+    min-width: 0;
+    position: relative;
+}
+
+.header-actions {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    min-width: 0;
+
+    @media (max-width: 1024px) {
+        margin-left: auto;
+    }
+
+    .btn.btn-primary {
+        display: none;
+    }
+}
+
+.lang-switcher {
+    color: #fff;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all $transition-base;
+
+    span {
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    svg {
+        stroke: currentColor;
+        transition: transform $transition-base;
+    }
+    
+    &:hover svg {
+        transform: translateY(2px);
+    }
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border: none;
+    cursor: pointer;
+    text-transform: capitalize;
+    letter-spacing: 0.3px;
+
+    &.btn-primary {
+        background-color: #ff3b3b;
+        color: #fff;
+
+        &:hover {
+            background-color: #e62e2e;
+            box-shadow: 0 8px 24px rgba(255, 59, 59, 0.2);
+            transform: translateY(-1px);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+}

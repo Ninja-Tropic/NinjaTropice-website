@@ -1,0 +1,26 @@
+/*
+Theme Name: NinjaTheme
+Theme URI: https://example.com/ninjatheme
+Author: Your Name
+Author URI: https://example.com
+Description: A modern and clean WordPress standalone theme with a focus on performance and user experience.
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: ninjatheme
+Tags: blog, custom-menu, featured-images, threaded-comments, translation-ready, flexible-header, custom-logo
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+*/
+
+// Import SCSS partials (using @use for modern Sass - must come first)
+@use 'variables';
+@use 'fonts';
+@use 'base';
+@use 'header';
+@use 'menu';
+@use 'content';
+@use 'footer';
+@use 'responsive';
+@use 'components';

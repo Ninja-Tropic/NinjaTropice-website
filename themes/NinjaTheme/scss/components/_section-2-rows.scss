@@ -1,0 +1,44 @@
+@use '../variables' as *;
+
+.section-2-rows {
+    padding: 4rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.section-2-rows__grid {
+    align-items: center;
+}
+
+.section-2-rows__image-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.section-2-rows__image {
+    max-width: 350px;
+    width: 100%;
+    height: auto;
+}
+
+// Design variants (match mesh/gradient styles used in other components)
+.section-2-rows--design-simple {
+    background: $color-bg;
+}
+
+.section-2-rows--design-gradient {
+    background: linear-gradient(
+        135deg,
+        rgba($ninja-main-color, 0.06) 0%,
+        rgba($ninja-main-color, 0.02) 60%,
+        $color-bg 100%
+    );
+}
+
+.section-2-rows--design-mesh {
+    background:
+        radial-gradient(circle at 10% 20%, rgba($ninja-main-color, 0.18), transparent 45%),
+        radial-gradient(circle at 80% 10%, rgba(0, 0, 0, 0.06), transparent 40%),
+        radial-gradient(circle at 90% 70%, rgba($ninja-main-color, 0.12), transparent 50%),
+        $color-bg;
+}

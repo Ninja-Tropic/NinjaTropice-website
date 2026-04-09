@@ -1,0 +1,24 @@
+{
+  "name": "ninjatheme",
+  "version": "1.0.0",
+  "description": "NinjaTheme WordPress standalone theme with SCSS support",
+  "scripts": {
+    "build": "sass scss/style.scss style.css && postcss style.css -r",
+    "sass:watch": "sass --watch scss/style.scss:style.css",
+    "postcss:watch": "chokidar 'style.css' -c 'postcss style.css -r' --initial",
+    "build:watch": "sass scss/style.scss style.css && concurrently --kill-others \"npm run sass:watch\" \"npm run postcss:watch\"",
+    "build:prod": "NODE_ENV=production sass scss/style.scss style.css --style=compressed --no-source-map && NODE_ENV=production postcss style.css -r",
+    "dev": "npm run build && concurrently --kill-others \"npm run build:watch\" \"browser-sync start --config bs-config.js\"",
+    "sync": "browser-sync start --config bs-config.js"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.17",
+    "browser-sync": "^2.29.3",
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^8.2.2",
+    "cssnano": "^7.0.6",
+    "postcss": "^8.4.35",
+    "postcss-cli": "^11.0.0",
+    "sass": "^1.77.0"
+  }
+}
