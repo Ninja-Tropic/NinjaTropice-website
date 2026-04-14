@@ -1,2 +1,11 @@
 .env
 
+# Default WordPress plugins (not part of this project)
+plugins/akismet/
+plugins/hello.php
+
+# Default WordPress themes (not part of this project)
+themes/twentytwentythree/
+themes/twentytwentyfour/
+themes/twentytwentyfive/
+
