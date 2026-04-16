@@ -66,6 +66,7 @@ function ninjatheme_setup() {
 	
 	// Add support for wide alignment
 	add_theme_support( 'align-wide' );
+	add_theme_support( 'wp-block-styles' );
 }
 add_action( 'after_setup_theme', 'ninjatheme_setup' );
 
@@ -76,6 +77,22 @@ function ninjatheme_content_width() {
 	$GLOBALS['content_width'] = apply_filters( 'ninjatheme_content_width', 1200 );
 }
 add_action( 'after_setup_theme', 'ninjatheme_content_width', 0 );
+
+
+/**
+ * Enqueue Be Vietnam Pro font (matches NinjaTropic.com)
+ */
+function ninjatheme_fonts() {
+	wp_enqueue_style(
+		'ninjatheme-fonts',
+		'https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Nunito:wght@700;800;900&display=swap',
+		array(),
+		null
+	);
+}
+add_action( 'wp_enqueue_scripts', 'ninjatheme_fonts' );
+add_action( 'enqueue_block_editor_assets', 'ninjatheme_fonts' );
+add_action( 'admin_enqueue_scripts', 'ninjatheme_fonts' );
 
 /**
  * Enqueue scripts and styles
@@ -1397,6 +1414,9 @@ add_filter('manage_edit-post_sortable_columns', 'sortable_last_modified_column')
 function ninjatheme_resource_hints( $hints, $relation_type ) {
 	// Note: Bulma is now self-hosted — no CDN preconnect needed for it.
 	if ( 'preconnect' === $relation_type ) {
+		// Google Fonts — reduces font CSS + woff2 handshake time
+		$hints[] = array( 'href' => 'https://fonts.googleapis.com', 'crossorigin' => 'anonymous' );
+		$hints[] = array( 'href' => 'https://fonts.gstatic.com',    'crossorigin' => 'anonymous' );
 		// HubSpot (used by hubspot-form block)
 		$hints[] = array( 'href' => 'https://js.hsforms.net' );
 		$hints[] = array( 'href' => 'https://forms.hsforms.com' );

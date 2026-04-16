@@ -1,0 +1,344 @@
+@use 'variables' as *;
+
+// ─── Blog Article Typography ──────────────────────────────────────────────────
+// Matches NinjaTropic.com styles exactly.
+// Font: 'Be Vietnam Pro' (loaded via Google Fonts in functions.php)
+// These styles apply automatically to any content pasted in the Gutenberg editor.
+
+$nt-font:        'Be Vietnam Pro', Helvetica, Arial, Lucida, sans-serif;
+$nt-title-font:  'Nunito', Helvetica, Arial, Lucida, sans-serif;
+$nt-black:  #000000;
+$nt-dark:   #2c2c2c;
+$nt-muted:  #666666;
+$nt-orange: #ff641b;
+
+// ── Post Hero (feature image + title) ────────────────────────────────────────
+
+.post-hero {
+    display: flex;
+    align-items: center;
+    background-color: rgba(203, 169, 255, 0.12);
+    overflow: hidden;
+    padding: 54px 0;
+    margin-bottom: 3rem;
+
+    &__image {
+        flex: 0 0 50%;
+        max-width: 50%;
+        margin-right: 58px;
+
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 0 52px 52px 0;
+            margin: 0;
+        }
+    }
+
+    &__text {
+        flex: 1;
+        padding-right: 3rem;
+        max-width: 77%;
+    }
+
+    &__title {
+        font-family: $nt-title-font;
+        font-weight: 900;
+        font-size: 50px;
+        line-height: 60px;
+        color: #000000;
+        margin: 0 0 1rem;
+    }
+
+    .post-meta {
+        display: none;
+    }
+
+    @media (max-width: 997px) {
+        padding: 40px 0;
+
+        &__title { font-size: 36px; line-height: 44px; }
+        &__text { max-width: 69%; }
+    }
+
+    @media (max-width: 767px) {
+        flex-direction: column;
+        padding: 0 0 2rem;
+
+        &__image {
+            flex: none;
+            max-width: 100%;
+            width: 100%;
+            margin-right: 0;
+
+            img { border-radius: 0; }
+        }
+
+        &__text {
+            padding: 1.5rem;
+            max-width: 100%;
+        }
+
+        &__title { font-size: 30px; line-height: 36px; text-align: center; }
+    }
+}
+
+// ── Global post typography ────────────────────────────────────────────────────
+
+.post-content {
+    font-family: $nt-font;
+    color: $nt-dark;
+
+    // H2 — section titles
+    h2,
+    h2.wp-block-heading {
+        font-family: $nt-title-font;
+        font-size: 30px;
+        line-height: 36px;
+        font-weight: 900;
+        color: $nt-black;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+
+        strong, b { font-weight: 900; }
+
+        @media (max-width: 997px) { font-size: 26px; }
+        @media (max-width: 767px) { font-size: 22px; }
+    }
+
+    // H3
+    h3,
+    h3.wp-block-heading {
+        font-family: $nt-title-font;
+        font-size: 30px;
+        font-weight: 900;
+        line-height: 36px;
+        color: $nt-black;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+
+        strong, b { font-weight: 900; }
+
+        @media (max-width: 997px) { font-size: 26px; }
+        @media (max-width: 767px) { font-size: 22px; }
+    }
+
+    // H4 — blurb items (Do: / Don't: / numbered points)
+    // Orange circle icon before each item, matching Divi blurbs
+    h4 {
+        font-family: $nt-font;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 22px;
+        color: $nt-black;
+        margin-bottom: 0.6rem;
+        padding-left: 1.5rem;
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.42em;
+            width: 8px;
+            height: 8px;
+            background: $nt-orange;
+            border-radius: 50%;
+        }
+
+        @media (max-width: 997px) { font-size: 18px; }
+    }
+
+    // Paragraphs
+    p {
+        font-family: $nt-font;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 28px;
+        color: $nt-dark;
+        margin-bottom: 2.5rem;
+
+        @media (max-width: 997px) { font-size: 16px; }
+
+        // "The Rule:" bold callout
+        strong:first-child {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 30px;
+            color: $nt-dark;
+        }
+    }
+
+    // Bold text
+    strong, b {
+        font-weight: 700;
+        color: $nt-dark;
+    }
+
+    // Links
+    a {
+        color: $nt-orange;
+        text-decoration: none;
+
+        &:hover { text-decoration: underline; }
+    }
+
+    // Lists
+    ul, ol {
+        font-family: $nt-font;
+        font-size: 18px;
+        line-height: 28px;
+        color: $nt-dark;
+        margin-bottom: 1rem;
+        margin-left: 2rem;
+        padding-left: 0;
+        list-style: none;
+    }
+
+    ul li {
+        position: relative;
+        padding-left: 2rem;
+        margin-bottom: 1.25rem;
+        font-weight: 500;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.42em;
+            width: 12px;
+            height: 12px;
+            background-color: $nt-orange;
+            border-radius: 2px;
+        }
+
+        // Nested li: small orange outline square
+        li {
+            padding-left: 1.5rem;
+
+            &:first-child {
+                padding-top: 0.75rem;
+
+                &::before { top: calc(0.75rem + 0.42em); }
+            }
+
+            &::before {
+                width: 8px;
+                height: 8px;
+                background-color: transparent;
+                border: 2px solid rgba(255, 100, 27, 0.25);
+                border-radius: 1px;
+                top: 0.42em;
+                left: 0;
+            }
+        }
+    }
+
+    ol {
+        list-style: decimal;
+        padding-left: 1.5rem;
+
+        li { margin-bottom: 0.4rem; }
+    }
+
+    // Images
+    img {
+        width: 100%;
+        height: auto;
+        margin: 1.5rem 0;
+    }
+}
+
+// ── Post Body: white base, alternating stripes injected by JS ────────────────
+
+.post-body-bg {
+    background: #ffffff;
+    padding: 54px 20px 80px;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: clip;
+}
+
+// JS-injected lavender stripes (sit behind the 2-col layout)
+.nt-bg-stripe {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+// ── Post Body inner: 2-column layout (TOC sidebar + content) ─────────────────
+
+.post-body {
+    max-width: 1370px;
+    margin: 0 auto;
+    display: flex;
+    gap: 3rem;
+    align-items: flex-start;
+    position: relative;
+    z-index: 1;
+
+    @media (max-width: 767px) {
+        flex-direction: column;
+    }
+}
+
+// ── TOC sidebar (auto-generated from H2 headings via JS) ─────────────────────
+
+.post-body__toc {
+    flex: 0 0 360px;
+    position: sticky;
+    top: 2rem;
+    align-self: flex-start;
+
+    nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li { margin-bottom: 0.2rem; }
+
+        a {
+            font-family: $nt-font;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 30px;
+            color: $nt-orange;
+            text-decoration: none;
+            display: block;
+
+        }
+    }
+
+    @media (max-width: 767px) {
+        position: static;
+        flex: none;
+        width: 100%;
+    }
+}
+
+// ── Post content column ───────────────────────────────────────────────────────
+
+.post-content {
+    flex: 1;
+    min-width: 0;
+}
+
+// ── Section divider image (injected before start + each H2) ─────────────────
+
+.post-content img.post-section-divider {
+    display: block;
+    width: 80px !important;
+    height: auto;
+    margin: 0;
+    padding: 1.5rem 0 0.75rem;
+}
+
+// ── Sidebar card shadow — scoped to blog post TOC only ───────────────────────
+
+.post-body__toc .custom-sidebar-navigation {
+    box-shadow: 0px 7px 28px 0px rgba(255, 100, 27, 0.3);
+}

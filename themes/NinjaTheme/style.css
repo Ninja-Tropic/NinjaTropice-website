@@ -174,6 +174,7 @@ strong {
   padding: 2rem;
   border-radius: 1rem;
   height: 400px;
+  -webkit-box-shadow: 0px 3px 19px 5px rgba(0, 0, 0, 0.2) !important;
   box-shadow: 0px 3px 19px 5px rgba(0, 0, 0, 0.2) !important;
 }
 .card:last-child {
@@ -232,10 +233,8 @@ i, em {
   pointer-events: none;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
   transition: opacity 0.3s ease;
 }
 .ninja-box > * {
@@ -826,8 +825,7 @@ i, em {
   .clean-menu .mega-menu-icon svg {
     width: 100%;
     height: 100%;
-    -o-object-fit: contain;
-       object-fit: contain;
+    object-fit: contain;
   }
 }
 
@@ -1604,8 +1602,7 @@ body.mobile-menu-open {
 .social-icons .social-icon-image {
   width: 32px;
   height: 32px;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   display: block;
 }
 
@@ -1722,8 +1719,7 @@ body.mobile-menu-open {
   width: auto;
   height: auto;
   display: block;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   transition: transform 0.5s ease;
 }
 .card__image::after {
@@ -1965,8 +1961,7 @@ body.mobile-menu-open {
   height: auto;
   max-width: 120px;
   max-height: 120px;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   display: block;
 }
 
@@ -2182,8 +2177,7 @@ body.mobile-menu-open {
   width: 100%;
   height: auto;
   display: block;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   max-width: 120px;
 }
 .awards__item-content {
@@ -2432,8 +2426,7 @@ body.mobile-menu-open {
 .main-hero__img {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .main-hero__image--has-video {
   cursor: pointer;
@@ -2555,8 +2548,7 @@ body.mobile-menu-open {
 .main-hero__avatar img {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .main-hero__avatar--more {
   background: #111827;
@@ -2663,8 +2655,7 @@ body.has-main-hero-modal {
   inset: 0;
   background-image: linear-gradient(rgba(37, 25, 14, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(37, 25, 14, 0.035) 1px, transparent 1px);
   background-size: 110px 110px;
-  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2), transparent 86%);
-          mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2), transparent 86%);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2), transparent 86%);
   pointer-events: none;
 }
 .page-heading__aurora {
@@ -2854,8 +2845,7 @@ body.has-main-hero-modal {
   width: 100%;
   height: auto;
   min-height: 22rem;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border-radius: 1.3rem;
   aspect-ratio: 4/4.2;
   box-shadow: 0 16px 42px rgba(0, 0, 0, 0.08);
@@ -3066,9 +3056,7 @@ body.has-main-hero-modal {
 .hubspot-form__form .hs-button,
 .hubspot-form__form input[type=submit],
 .hubspot-form__form button {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  appearance: none;
   border: none;
   background: linear-gradient(120deg, #ff7a2a, #ff5b17);
   color: #ffffff;
@@ -3407,8 +3395,7 @@ body.hubspot-form-modal-open {
   height: auto;
   max-width: 42px;
   max-height: 42px;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 .icon-card__content {
   flex: 1;
@@ -3518,8 +3505,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   inset: 0;
   background-image: linear-gradient(rgba(32, 24, 18, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(32, 24, 18, 0.035) 1px, transparent 1px);
   background-size: 110px 110px;
-  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.22), transparent 85%);
-          mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.22), transparent 85%);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.22), transparent 85%);
   pointer-events: none;
 }
 .values-showcase__aurora {
@@ -3684,8 +3670,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   height: auto;
   max-width: 3.4rem;
   max-height: 3.4rem;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 .values-showcase__media--fallback {
   margin-bottom: 1rem;
@@ -3848,8 +3833,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   max-width: 120px;
   max-height: 120px;
   height: auto;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 .related-solutions__content {
   display: flex;
@@ -4003,7 +3987,6 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   display: flex;
   align-items: center;
   gap: 4rem;
-  width: -moz-max-content;
   width: max-content;
   animation: scroll 35s linear infinite;
   will-change: transform;
@@ -4059,8 +4042,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   height: 100%;
   width: auto;
   max-width: 200px;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   display: block;
   filter: brightness(0) invert(1);
   transition: filter 0.3s ease;
@@ -4168,8 +4150,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
 .carousel-post__image {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   display: block;
   transition: transform 0.3s ease;
 }
@@ -4842,8 +4823,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   left: 0;
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border-radius: 16px;
   transform: scale(1.02);
   transition: transform 0.5s ease;
@@ -4988,6 +4968,328 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   66% {
     transform: translate(-5%, 5%) rotate(-2deg);
   }
+}
+.post-hero {
+  display: flex;
+  align-items: center;
+  background-color: rgba(203, 169, 255, 0.12);
+  overflow: hidden;
+  padding: 54px 0;
+  margin-bottom: 3rem;
+}
+.post-hero__image {
+  flex: 0 0 50%;
+  max-width: 50%;
+  margin-right: 58px;
+}
+.post-hero__image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0 52px 52px 0;
+  margin: 0;
+}
+.post-hero__text {
+  flex: 1;
+  padding-right: 3rem;
+  max-width: 77%;
+}
+.post-hero__title {
+  font-family: "Nunito", Helvetica, Arial, Lucida, sans-serif;
+  font-weight: 900;
+  font-size: 50px;
+  line-height: 60px;
+  color: #000000;
+  margin: 0 0 1rem;
+}
+.post-hero .post-meta {
+  display: none;
+}
+@media (max-width: 997px) {
+  .post-hero {
+    padding: 40px 0;
+  }
+  .post-hero__title {
+    font-size: 36px;
+    line-height: 44px;
+  }
+  .post-hero__text {
+    max-width: 69%;
+  }
+}
+@media (max-width: 767px) {
+  .post-hero {
+    flex-direction: column;
+    padding: 0 0 2rem;
+  }
+  .post-hero__image {
+    flex: none;
+    max-width: 100%;
+    width: 100%;
+    margin-right: 0;
+  }
+  .post-hero__image img {
+    border-radius: 0;
+  }
+  .post-hero__text {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
+  .post-hero__title {
+    font-size: 30px;
+    line-height: 36px;
+    text-align: center;
+  }
+}
+
+.post-content {
+  font-family: "Be Vietnam Pro", Helvetica, Arial, Lucida, sans-serif;
+  color: #2c2c2c;
+}
+.post-content h2,
+.post-content h2.wp-block-heading {
+  font-family: "Nunito", Helvetica, Arial, Lucida, sans-serif;
+  font-size: 30px;
+  line-height: 36px;
+  font-weight: 900;
+  color: #000000;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+.post-content h2 strong, .post-content h2 b,
+.post-content h2.wp-block-heading strong,
+.post-content h2.wp-block-heading b {
+  font-weight: 900;
+}
+@media (max-width: 997px) {
+  .post-content h2,
+  .post-content h2.wp-block-heading {
+    font-size: 26px;
+  }
+}
+@media (max-width: 767px) {
+  .post-content h2,
+  .post-content h2.wp-block-heading {
+    font-size: 22px;
+  }
+}
+.post-content h3,
+.post-content h3.wp-block-heading {
+  font-family: "Nunito", Helvetica, Arial, Lucida, sans-serif;
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 36px;
+  color: #000000;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+.post-content h3 strong, .post-content h3 b,
+.post-content h3.wp-block-heading strong,
+.post-content h3.wp-block-heading b {
+  font-weight: 900;
+}
+@media (max-width: 997px) {
+  .post-content h3,
+  .post-content h3.wp-block-heading {
+    font-size: 26px;
+  }
+}
+@media (max-width: 767px) {
+  .post-content h3,
+  .post-content h3.wp-block-heading {
+    font-size: 22px;
+  }
+}
+.post-content h4 {
+  font-family: "Be Vietnam Pro", Helvetica, Arial, Lucida, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
+  color: #000000;
+  margin-bottom: 0.6rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+.post-content h4::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.42em;
+  width: 8px;
+  height: 8px;
+  background: #ff641b;
+  border-radius: 50%;
+}
+@media (max-width: 997px) {
+  .post-content h4 {
+    font-size: 18px;
+  }
+}
+.post-content p {
+  font-family: "Be Vietnam Pro", Helvetica, Arial, Lucida, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+  color: #2c2c2c;
+  margin-bottom: 2.5rem;
+}
+@media (max-width: 997px) {
+  .post-content p {
+    font-size: 16px;
+  }
+}
+.post-content p strong:first-child {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 30px;
+  color: #2c2c2c;
+}
+.post-content strong, .post-content b {
+  font-weight: 700;
+  color: #2c2c2c;
+}
+.post-content a {
+  color: #ff641b;
+  text-decoration: none;
+}
+.post-content a:hover {
+  text-decoration: underline;
+}
+.post-content ul, .post-content ol {
+  font-family: "Be Vietnam Pro", Helvetica, Arial, Lucida, sans-serif;
+  font-size: 18px;
+  line-height: 28px;
+  color: #2c2c2c;
+  margin-bottom: 1rem;
+  margin-left: 2rem;
+  padding-left: 0;
+  list-style: none;
+}
+.post-content ul li {
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 1.25rem;
+  font-weight: 500;
+}
+.post-content ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.42em;
+  width: 12px;
+  height: 12px;
+  background-color: #ff641b;
+  border-radius: 2px;
+}
+.post-content ul li li {
+  padding-left: 1.5rem;
+}
+.post-content ul li li:first-child {
+  padding-top: 0.75rem;
+}
+.post-content ul li li:first-child::before {
+  top: calc(0.75rem + 0.42em);
+}
+.post-content ul li li::before {
+  width: 8px;
+  height: 8px;
+  background-color: transparent;
+  border: 2px solid rgba(255, 100, 27, 0.25);
+  border-radius: 1px;
+  top: 0.42em;
+  left: 0;
+}
+.post-content ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+}
+.post-content ol li {
+  margin-bottom: 0.4rem;
+}
+.post-content img {
+  width: 100%;
+  height: auto;
+  margin: 1.5rem 0;
+}
+
+.post-body-bg {
+  background: #ffffff;
+  padding: 54px 20px 80px;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: clip;
+}
+
+.nt-bg-stripe {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.post-body {
+  max-width: 1370px;
+  margin: 0 auto;
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 767px) {
+  .post-body {
+    flex-direction: column;
+  }
+}
+
+.post-body__toc {
+  flex: 0 0 360px;
+  position: sticky;
+  top: 2rem;
+  align-self: flex-start;
+}
+.post-body__toc nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.post-body__toc nav ul li {
+  margin-bottom: 0.2rem;
+}
+.post-body__toc nav ul a {
+  font-family: "Be Vietnam Pro", Helvetica, Arial, Lucida, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 30px;
+  color: #ff641b;
+  text-decoration: none;
+  display: block;
+}
+@media (max-width: 767px) {
+  .post-body__toc {
+    position: static;
+    flex: none;
+    width: 100%;
+  }
+}
+
+.post-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.post-content img.post-section-divider {
+  display: block;
+  width: 80px !important;
+  height: auto;
+  margin: 0;
+  padding: 1.5rem 0 0.75rem;
+}
+
+.custom-sidebar-navigation {
+  box-shadow: 0px 7px 28px 0px rgba(255, 100, 27, 0.3);
 }
 
 /*# sourceMappingURL=style.css.map */
