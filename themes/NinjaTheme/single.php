@@ -27,17 +27,26 @@ get_header(); ?>
                     </div>
                     <div class="post-hero__text">
                         <h1 class="post-hero__title"><?php the_title(); ?></h1>
-                        <div class="post-meta">
-                            <span class="posted-on"><?php echo get_the_date(); ?></span>
-                            <span class="byline"> by <?php the_author(); ?></span>
-                            <?php
-                            $categories = get_the_category();
-                            if ( ! empty( $categories ) ) {
-                                echo '<span class="cat-links"> in ';
-                                the_category( ', ' );
-                                echo '</span>';
-                            }
-                            ?>
+                        <div class="post-author-card">
+                            <div class="post-author-card__row">
+                                <span class="post-author-card__icon">👉</span>
+                                <span class="post-author-card__label">Author:</span>
+                                <a class="post-author-card__name" href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>"><?php the_author(); ?></a>
+                            </div>
+                            <?php $author_bio = get_the_author_meta( 'description' ); if ( $author_bio ) : ?>
+                            <div class="post-author-card__row">
+                                <span class="post-author-card__icon">🤓</span>
+                                <span class="post-author-card__bio"><?php echo esc_html( $author_bio ); ?></span>
+                            </div>
+                            <?php endif; ?>
+                            <div class="post-author-card__row">
+                                <span class="post-author-card__icon">✉️</span>
+                                <a class="post-author-card__email" href="mailto:<?php echo esc_attr( get_the_author_meta( 'user_email' ) ); ?>"><?php echo esc_html( get_the_author_meta( 'user_email' ) ); ?></a>
+                            </div>
+                            <div class="post-author-card__row">
+                                <span class="post-author-card__icon">📅</span>
+                                <span class="post-author-card__date"><?php echo get_the_date(); ?></span>
+                            </div>
                         </div>
                     </div>
                 </header>
@@ -54,35 +63,62 @@ get_header(); ?>
                             <?php the_content(); ?>
                         </div>
                     </div>
+
+                    <?php
+                    // ── Previous/Next navigation ──────────────────────────────
+                    $prev_post = get_previous_post();
+                    $next_post = get_next_post();
+                    if ( $prev_post || $next_post ) : ?>
+                    <nav class="post-nav">
+                        <div class="post-nav__inner">
+                            <?php if ( $prev_post ) : ?>
+                            <a class="post-nav__item post-nav__item--prev" href="<?php echo esc_url( get_permalink( $prev_post ) ); ?>">
+                                <span class="post-nav__arrow">&#8592;</span>
+                                <span class="post-nav__text">
+                                    <span class="post-nav__label">Previous post</span>
+                                    <span class="post-nav__title"><?php echo esc_html( get_the_title( $prev_post ) ); ?></span>
+                                </span>
+                            </a>
+                            <?php else : ?>
+                            <span></span>
+                            <?php endif; ?>
+
+                            <?php if ( $next_post ) : ?>
+                            <a class="post-nav__item post-nav__item--next" href="<?php echo esc_url( get_permalink( $next_post ) ); ?>">
+                                <span class="post-nav__text">
+                                    <span class="post-nav__label">Next post</span>
+                                    <span class="post-nav__title"><?php echo esc_html( get_the_title( $next_post ) ); ?></span>
+                                </span>
+                                <span class="post-nav__arrow">&#8594;</span>
+                            </a>
+                            <?php endif; ?>
+                        </div>
+                    </nav>
+                    <?php endif; ?>
                 </div>
 
-                <div class="container">
-                    <?php
-                    wp_link_pages( array(
-                        'before' => '<div class="page-links">' . esc_html__( 'Pages:' ),
-                        'after'  => '</div>',
-                    ) );
-                    ?>
-                    <footer class="entry-footer">
-                        <?php
-                        $tags = get_the_tags();
-                        if ( $tags ) {
-                            echo '<div class="post-tags">';
-                            the_tags( 'Tags: ', ', ', '' );
-                            echo '</div>';
-                        }
-                        ?>
-                    </footer>
-                </div>
             </article>
 
             <?php
-            // Previous/next post navigation
-            the_post_navigation( array(
-                'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:' ) . '</span> <span class="nav-title">%title</span>',
-                'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:' ) . '</span> <span class="nav-title">%title</span>',
-            ) );
+            // ── CTA Banner ────────────────────────────────────────────────────
+            $cta_url = 'https://www.ninjatropic.com/contact-us/?hsCtaAttrib=143096257696';
+            ?>
+            <div class="post-cta">
+                <div class="post-cta__inner">
+                    <?php
+                    $logo_id = get_theme_mod( 'custom_logo' );
+                    if ( $logo_id ) :
+                        $logo_src = wp_get_attachment_image_url( $logo_id, 'medium' );
+                        ?>
+                        <img class="post-cta__logo" src="<?php echo esc_url( $logo_src ); ?>" alt="<?php bloginfo( 'name' ); ?>">
+                    <?php else : ?>
+                        <span class="post-cta__site-name"><?php bloginfo( 'name' ); ?></span>
+                    <?php endif; ?>
+                    <a class="post-cta__btn" href="<?php echo esc_url( $cta_url ); ?>">Contact us!</a>
+                </div>
+            </div>
 
+            <?php
             // Comments
             if ( comments_open() || get_comments_number() ) :
                 comments_template();
