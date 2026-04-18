@@ -23,6 +23,11 @@ body {
   line-height: 1.6;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Nunito", Helvetica, Arial, Lucida, sans-serif;
+  font-weight: 900;
+}
+
 h1 {
   font-size: 2rem;
   line-height: 1.1;
@@ -5126,10 +5131,8 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
 }
 .post-content h2,
 .post-content h2.wp-block-heading {
-  font-family: "Nunito", Helvetica, Arial, Lucida, sans-serif;
   font-size: 30px;
   line-height: 36px;
-  font-weight: 900;
   color: #000000;
   margin-top: 2rem;
   margin-bottom: 1rem;
@@ -5153,9 +5156,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
 }
 .post-content h3,
 .post-content h3.wp-block-heading {
-  font-family: "Nunito", Helvetica, Arial, Lucida, sans-serif;
   font-size: 30px;
-  font-weight: 900;
   line-height: 36px;
   color: #000000;
   margin-top: 1.5rem;

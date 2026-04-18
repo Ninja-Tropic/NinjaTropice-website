@@ -157,10 +157,8 @@ $nt-orange: #ff641b;
     // H2 — section titles
     h2,
     h2.wp-block-heading {
-        font-family: $nt-title-font;
         font-size: 30px;
         line-height: 36px;
-        font-weight: 900;
         color: $nt-black;
         margin-top: 2rem;
         margin-bottom: 1rem;
@@ -174,9 +172,7 @@ $nt-orange: #ff641b;
     // H3
     h3,
     h3.wp-block-heading {
-        font-family: $nt-title-font;
         font-size: 30px;
-        font-weight: 900;
         line-height: 36px;
         color: $nt-black;
         margin-top: 1.5rem;

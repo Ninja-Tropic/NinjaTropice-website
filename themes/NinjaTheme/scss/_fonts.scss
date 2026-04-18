@@ -12,6 +12,11 @@ body {
 }
 
 // Mobile (default up to 768px)
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Nunito', Helvetica, Arial, Lucida, sans-serif;
+    font-weight: 900;
+}
+
 h1 { font-size: 2rem; line-height: 1.1; }
 h2 { font-size: 1.75rem; line-height: 1.15; }
 h3 { font-size: 1.5rem; line-height: 1.2; }
