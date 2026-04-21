@@ -99,24 +99,6 @@ get_header(); ?>
 
             </article>
 
-            <?php
-            // ── CTA Banner ────────────────────────────────────────────────────
-            $cta_url = 'https://www.ninjatropic.com/contact-us/?hsCtaAttrib=143096257696';
-            ?>
-            <div class="post-cta">
-                <div class="post-cta__inner">
-                    <?php
-                    $logo_id = get_theme_mod( 'custom_logo' );
-                    if ( $logo_id ) :
-                        $logo_src = wp_get_attachment_image_url( $logo_id, 'medium' );
-                        ?>
-                        <img class="post-cta__logo" src="<?php echo esc_url( $logo_src ); ?>" alt="<?php bloginfo( 'name' ); ?>">
-                    <?php else : ?>
-                        <span class="post-cta__site-name"><?php bloginfo( 'name' ); ?></span>
-                    <?php endif; ?>
-                    <a class="post-cta__btn" href="<?php echo esc_url( $cta_url ); ?>">Contact us!</a>
-                </div>
-            </div>
 
             <?php
             // Comments
@@ -128,13 +110,14 @@ get_header(); ?>
         ?>
 </main>
 
+<?php $cta_url = 'https://www.ninjatropic.com/contact-us/?hsCtaAttrib=143096257696'; ?>
 <script>
 (function () {
     var imgUrl  = '<?php echo esc_url( content_url( "uploads/2026/04/image.png" ) ); ?>';
     var LAVENDER = 'rgba(203,169,255,0.12)';
     var WAVE_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 220" preserveAspectRatio="none" style="display:block;width:100%;height:100%"><path fill="#ffffff" d="M0,110 C280,220 1160,0 1440,110 L1440,220 L0,220 Z"/></svg>';
 
-    // ── Phase 1: DOM ready — inject divider images + build TOC ───────────────
+    // ── Phase 1: DOM ready — inject divider images, CTA, and build TOC ──────
     document.addEventListener('DOMContentLoaded', function () {
         var content  = document.querySelector('.post-content');
         var headings = document.querySelectorAll('.post-content h2, .post-content h3');
@@ -146,11 +129,53 @@ get_header(); ?>
             return img;
         }
 
+        function makeCta() {
+            var ctaUrl  = '<?php echo esc_url( $cta_url ); ?>';
+            var logoId  = '<?php echo esc_attr( get_theme_mod( "custom_logo" ) ); ?>';
+            var logoSrc = '<?php
+                $logo_id  = get_theme_mod( "custom_logo" );
+                echo $logo_id ? esc_url( wp_get_attachment_image_url( $logo_id, "medium" ) ) : "";
+            ?>';
+            var siteName = '<?php bloginfo( "name" ); ?>';
+
+            var wrap = document.createElement('div');
+            wrap.className = 'post-cta post-cta--inline';
+
+            var inner = document.createElement('div');
+            inner.className = 'post-cta__inner';
+
+            if (logoSrc) {
+                var img = document.createElement('img');
+                img.src = logoSrc; img.alt = siteName; img.className = 'post-cta__logo';
+                inner.appendChild(img);
+            } else {
+                var name = document.createElement('span');
+                name.className = 'post-cta__site-name';
+                name.textContent = siteName;
+                inner.appendChild(name);
+            }
+
+            var btn = document.createElement('a');
+            btn.href = ctaUrl; btn.className = 'post-cta__btn';
+            btn.textContent = 'Contact us!';
+            inner.appendChild(btn);
+
+            wrap.appendChild(inner);
+            return wrap;
+        }
+
         if (content) content.insertBefore(makeDivider(), content.firstChild);
 
         document.querySelectorAll('.post-content h2').forEach(function (h) {
             h.parentNode.insertBefore(makeDivider(), h);
         });
+
+        // Inject CTA before the 3rd H3, fallback to last H3 if fewer than 3
+        var h3s = document.querySelectorAll('.post-content h3');
+        if (h3s.length > 0) {
+            var target = h3s.length >= 3 ? h3s[2] : h3s[h3s.length - 1];
+            target.parentNode.insertBefore(makeCta(), target);
+        }
 
         if (!headings.length || !tocList) return;
         headings.forEach(function (h, i) {

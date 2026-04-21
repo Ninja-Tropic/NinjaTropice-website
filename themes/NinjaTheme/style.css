@@ -5377,6 +5377,11 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   padding: 60px 20px;
   box-sizing: border-box;
 }
+.post-cta--inline {
+  border-radius: 16px;
+  padding: 48px 32px;
+  margin: 2.5rem 0;
+}
 .post-cta__inner {
   max-width: 1370px;
   margin: 0 auto;
@@ -5387,7 +5392,11 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
 }
 .post-cta__logo {
   max-height: 90px;
+  max-width: 260px;
   width: auto;
+  height: auto;
+  -o-object-fit: contain;
+     object-fit: contain;
   filter: brightness(0) invert(1);
 }
 .post-cta__site-name {

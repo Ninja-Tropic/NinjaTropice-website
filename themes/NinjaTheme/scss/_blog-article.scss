@@ -411,6 +411,13 @@ $nt-orange: #ff641b;
     padding: 60px 20px;
     box-sizing: border-box;
 
+    // Inline variant — injected inside post content column
+    &--inline {
+        border-radius: 16px;
+        padding: 48px 32px;
+        margin: 2.5rem 0;
+    }
+
     &__inner {
         max-width: 1370px;
         margin: 0 auto;
@@ -422,7 +429,10 @@ $nt-orange: #ff641b;
 
     &__logo {
         max-height: 90px;
+        max-width: 260px;
         width: auto;
+        height: auto;
+        object-fit: contain;
         filter: brightness(0) invert(1);
     }
 
