@@ -1306,11 +1306,11 @@ add_action( 'init', 'ninjatheme_performance_optimizations' );
 function ninjatheme_add_menu_icons( $item_output, $item, $depth, $args ) {
 	// Only add icons to first-level items (categories) in mega menu
 	if ( $depth === 1 ) {
-		// Icon mapping: menu title => icon path
+		// Icon mapping: menu title => attachment ID
 		$icon_map = array(
-			'Instructional Design Services' => 'http://localhost:8888/ninja26/wp-content/uploads/2026/02/instructional-design-transparent.png',
-			'Custom eLearning Development'  => 'http://localhost:8888/ninja26/wp-content/uploads/2026/02/elearning-development-transparent.png',
-			'LMS Support Services'           => 'http://localhost:8888/ninja26/wp-content/uploads/2026/02/lms-support-transparent.png',
+			'Instructional Design Services' => wp_get_attachment_url( 271 ),
+			'Custom eLearning Development'  => wp_get_attachment_url( 269 ),
+			'LMS Support Services'           => wp_get_attachment_url( 270 ),
 		);
 
 		// Check if this menu item has an icon mapped

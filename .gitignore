@@ -1,8 +1,8 @@
 .env
 
-# Default WordPress plugins (not part of this project)
-plugins/akismet/
-plugins/hello.php
+# WordPress plugins — ignore everything, keep directory marker
+plugins/*
+!plugins/.gitkeep
 
 # Default WordPress themes (not part of this project)
 themes/twentytwentythree/
