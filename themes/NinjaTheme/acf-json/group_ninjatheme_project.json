@@ -1,0 +1,140 @@
+{
+    "key": "group_ninjatheme_project",
+    "title": "Project Details",
+    "fields": [
+        {
+            "key": "field_project_video",
+            "label": "Video URL",
+            "name": "project_video",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "YouTube or Vimeo URL for the main project video.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_project_industry",
+            "label": "Industry",
+            "name": "project_industry",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "e.g. Medical, Retail, Finance",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_project_main_goal",
+            "label": "Main Goal",
+            "name": "project_main_goal",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "e.g. Rising awareness on genetic studies",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "rows": 3,
+            "new_lines": "br",
+            "placeholder": ""
+        },
+        {
+            "key": "field_project_animation_style",
+            "label": "Animation Style",
+            "name": "project_animation_style",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "e.g. Motion Graphic, 2D Animation",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_project_training_topic",
+            "label": "Training Topic",
+            "name": "project_training_topic",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "e.g. Customer Education \/ Healthcare Training",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "rows": 3,
+            "new_lines": "br",
+            "placeholder": ""
+        },
+        {
+            "key": "field_project_art_style",
+            "label": "Art Style",
+            "name": "project_art_style",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "e.g. Comic Book \/ Friendly, Flat Design",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "project"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1747612800
+}
