@@ -1,5 +1,8 @@
 .env
 
+# Database dumps — only track compressed versions
+db/*.sql
+
 # WordPress plugins — ignore everything, keep directory marker
 plugins/*
 !plugins/.gitkeep
