@@ -32,6 +32,7 @@ services:
       - wp_data:/var/www/html
       - ./themes:/var/www/html/wp-content/themes
       - ./plugins:/var/www/html/wp-content/plugins
+      - ./mu-plugins:/var/www/html/wp-content/mu-plugins
       - ./uploads:/var/www/html/wp-content/uploads
       - ./php-config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     networks:
