@@ -1,6 +1,10 @@
 @use 'variables' as *;
 
 // Base Styles
+:root {
+    --bulma-body-background-color: #ffffff;
+}
+
 * {
     margin: 0;
     padding: 0;
