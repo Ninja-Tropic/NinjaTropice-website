@@ -37,6 +37,25 @@ services:
     networks:
       - wordpress_net
 
+  browsersync:
+    image: node:20-alpine
+    container_name: ninjatropice_bs
+    working_dir: /app
+    volumes:
+      - ./themes/NinjaTheme:/app
+      - theme_node_modules:/app/node_modules
+    command: sh -c "npm install && npm run dev"
+    ports:
+      - "3001:3001"
+    environment:
+      WP_URL: http://wordpress:80
+      WP_PUBLIC_URL: http://localhost:8080
+      SHELL: /bin/sh
+    depends_on:
+      - wordpress
+    networks:
+      - wordpress_net
+
   phpmyadmin:
     image: phpmyadmin:latest
     container_name: ninjatropice_pma
@@ -55,6 +74,7 @@ services:
 volumes:
   db_data:
   wp_data:
+  theme_node_modules:
 
 networks:
   wordpress_net:

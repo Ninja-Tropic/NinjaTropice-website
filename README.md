@@ -34,7 +34,7 @@ docker compose up -d --build
 
 ### Auto-importación de la base de datos
 
-Al ejecutar `docker compose up` por primera vez (volumen vacío), MySQL importa automáticamente el archivo `db/dump.sql` si existe.
+Al ejecutar `docker compose up` por primera vez (volumen vacío), MySQL importa automáticamente el archivo `db/dump.sql.gz` si existe.
 
 > Este proceso solo ocurre cuando el volumen `db_data` no tiene datos. Si el contenedor ya fue inicializado, el dump no se vuelve a importar.
 
@@ -42,7 +42,7 @@ Para forzar una reimportación desde cero:
 
 ```bash
 docker compose down -v          # elimina volúmenes
-docker compose up -d --build    # levanta e importa dump.sql automaticamente
+docker compose up -d --build    # levanta e importa dump.sql.gz automaticamente
 ```
 
 Después de reimportar, actualiza las URLs:
@@ -67,19 +67,21 @@ docker compose down -v
 
 ## Backup de la base de datos
 
-Genera un dump con fecha en la carpeta `db/`:
+Genera un dump comprimido con fecha en la carpeta `db/`:
 
 ```bash
-docker exec ninjatropice_db mysqldump -u root -p"$(grep MYSQL_ROOT_PASSWORD .env | cut -d= -f2)" wordpress > db/backup-$(date +%Y%m%d-%H%M).sql
+docker exec ninjatropice_db mysqldump -u root -p"$(grep MYSQL_ROOT_PASSWORD .env | cut -d= -f2)" wordpress | gzip > db/backup-$(date +%Y%m%d-%H%M).sql.gz
 ```
 
-El archivo se guardará como `db/backup-YYYYMMDD-HHMM.sql`.
+El archivo se guardará como `db/backup-YYYYMMDD-HHMM.sql.gz`.
+
+> Los archivos `.sql` planos están excluidos de git. Usa siempre `.sql.gz` para evitar que GitHub detecte credenciales en el dump.
 
 Para restaurar un backup manualmente:
 
 ```bash
-# 1. Copia el backup como dump.sql
-cp db/backup-YYYYMMDD-HHMM.sql db/dump.sql
+# 1. Copia el backup como dump.sql.gz
+cp db/backup-YYYYMMDD-HHMM.sql.gz db/dump.sql.gz
 
 # 2. Baja el entorno eliminando volúmenes y vuelve a levantar
 docker compose down -v
@@ -110,7 +112,7 @@ npm run build:prod
 
 ```
 NinjaTropice-website/
-├── db/                  # dump.sql se auto-importa al levantar por primera vez
+├── db/                  # dump.sql.gz se auto-importa al levantar por primera vez
 ├── php-config/
 │   └── uploads.ini      # limites de subida (128MB)
 ├── plugins/             # plugins locales (montados en el contenedor)
