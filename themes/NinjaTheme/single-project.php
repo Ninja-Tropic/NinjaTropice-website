@@ -22,9 +22,13 @@ function ninjatheme_project_embed_url( $url ) {
 		return 'https://www.youtube-nocookie.com/embed/' . $m[1];
 	}
 
-	// Vimeo: vimeo.com/ID
-	if ( preg_match( '/vimeo\.com\/(\d+)/', $url, $m ) ) {
-		return 'https://player.vimeo.com/video/' . $m[1];
+	// Vimeo: vimeo.com/ID or vimeo.com/ID/HASH (unlisted/private videos)
+	if ( preg_match( '/vimeo\.com\/(\d+)(?:\/([a-f0-9]+))?/', $url, $m ) ) {
+		$embed = 'https://player.vimeo.com/video/' . $m[1];
+		if ( ! empty( $m[2] ) ) {
+			$embed .= '?h=' . $m[2];
+		}
+		return $embed;
 	}
 
 	return '';
@@ -39,11 +43,11 @@ while ( have_posts() ) :
 	$industry         = get_field( 'project_industry' );
 	$main_goal        = get_field( 'project_main_goal' );
 	$animation_style  = get_field( 'project_animation_style' );
-	$training_topic   = get_field( 'project_training_topic' );
+	$training_topic   = get_the_terms( get_the_ID(), 'category' );
 	$art_style        = get_field( 'project_art_style' );
 
 	$archive_link = get_post_type_archive_link( 'project' );
-	$has_meta     = $industry || $main_goal || $animation_style || $training_topic || $art_style;
+	$has_meta     = $industry || $main_goal || $animation_style || ( $training_topic && ! is_wp_error( $training_topic ) ) || $art_style;
 	$embed_url    = ninjatheme_project_embed_url( $video_url );
 	$has_media    = $embed_url || has_post_thumbnail();
 ?>
@@ -83,7 +87,7 @@ while ( have_posts() ) :
 					src="<?php echo esc_url( $embed_url ); ?>"
 					title="<?php echo esc_attr( get_the_title() ); ?>"
 					frameborder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+					allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
 					allowfullscreen
 					loading="lazy"
 				></iframe>
@@ -128,10 +132,10 @@ while ( have_posts() ) :
 				</div>
 				<?php endif; ?>
 
-				<?php if ( $training_topic ) : ?>
+				<?php if ( $training_topic && ! is_wp_error( $training_topic ) ) : ?>
 				<div class="project-single__meta-item">
 					<span class="project-single__meta-label">Training Topic</span>
-					<span class="project-single__meta-value"><?php echo nl2br( esc_html( wp_strip_all_tags( $training_topic ) ) ); ?></span>
+					<span class="project-single__meta-value"><?php echo esc_html( implode( ', ', wp_list_pluck( $training_topic, 'name' ) ) ); ?></span>
 				</div>
 				<?php endif; ?>
 

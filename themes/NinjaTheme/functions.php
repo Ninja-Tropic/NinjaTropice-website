@@ -1237,6 +1237,7 @@ function ninjatheme_register_projects_cpt() {
 		'menu_icon'           => 'dashicons-portfolio',
 		'supports'            => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions' ),
 		'rewrite'             => array( 'slug' => 'projects' ),
+		'taxonomies'          => array( 'category', 'post_tag' ),
 	);
 
 	register_post_type( 'project', $args );
