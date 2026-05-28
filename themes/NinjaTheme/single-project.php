@@ -46,7 +46,7 @@ while ( have_posts() ) :
 	$training_topic   = get_the_terms( get_the_ID(), 'category' );
 	$art_style        = get_field( 'project_art_style' );
 
-	$archive_link = get_post_type_archive_link( 'project' );
+	$archive_link = ninjatheme_get_projects_page_url();
 	$has_meta     = $industry || $main_goal || $animation_style || ( $training_topic && ! is_wp_error( $training_topic ) ) || $art_style;
 	$embed_url    = ninjatheme_project_embed_url( $video_url );
 	$has_media    = $embed_url || has_post_thumbnail();
