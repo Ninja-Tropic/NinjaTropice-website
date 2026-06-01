@@ -1279,11 +1279,11 @@ function ninjatheme_register_case_studies_cpt() {
 		'label'        => __( 'Case Studies' ),
 		'labels'       => $labels,
 		'public'       => true,
-		'has_archive'  => true,
+		'has_archive'  => false,
 		'show_in_rest' => true,
 		'menu_position'=> 21,
 		'menu_icon'    => 'dashicons-media-document',
-		'supports'     => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions' ),
+		'supports'     => array( 'title', 'thumbnail', 'excerpt', 'revisions' ),
 		'rewrite'      => array( 'slug' => 'case-studies' ),
 	);
 
@@ -1470,6 +1470,19 @@ function ninjatheme_clean_head() {
 	remove_action( 'wp_head', 'wp_shortlink_wp_head' );
 }
 add_action( 'init', 'ninjatheme_clean_head' );
+
+// ── Case Study template ───────────────────────────────────────────────────────
+
+/**
+ * Prevent Divi Theme Builder from overriding single-case-studies.php.
+ * Divi's priority-98 template_include filter would replace our template with
+ * its own, injecting the blog hero. Removing it here keeps our layout intact.
+ */
+function ninjatheme_disable_divi_tb_for_case_study() {
+	if ( ! is_singular( 'case-studies' ) ) return;
+	remove_filter( 'template_include', 'et_theme_builder_frontend_override_template', 98 );
+}
+add_action( 'wp', 'ninjatheme_disable_divi_tb_for_case_study', 1 );
 
 /**
  * Add loading="lazy" to all iframes output via the_content.

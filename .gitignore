@@ -11,4 +11,10 @@ plugins/*
 themes/twentytwentythree/
 themes/twentytwentyfour/
 themes/twentytwentyfive/
+themes/Divi/
+themes/Divi-child/
+
+# macOS system files
+.DS_Store
+**/.DS_Store
 

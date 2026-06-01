@@ -1,0 +1,12 @@
+{
+    "files.exclude": {
+        "plugins/!(Ninja-tropic|divi-to-gutenberg-migrator)": true,
+        "themes/Divi": true,
+        "themes/Divi-child": true,
+        "themes/twentytwentythree": true,
+        "themes/twentytwentyfour": true,
+        "themes/twentytwentyfive": true,
+        "uploads": true,
+        "db": true
+    }
+}

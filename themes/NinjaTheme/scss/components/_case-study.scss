@@ -1,0 +1,796 @@
+@use 'sass:color';
+@use '../variables' as *;
+
+// ─── Case Study Template Styles ───────────────────────────────────────────────
+//
+// These styles are specific to single-case-studies.php.
+// They deliberately reuse existing classes wherever possible:
+//
+//   .post-content  (wysiwyg typography)  → _blog-article.scss
+//   .post-nav      (prev/next nav)       → _blog-article.scss
+//   .container                           → _base.scss
+//
+// Only case-study-specific pieces are defined here.
+
+$cs-lavender: rgba(203, 169, 255, 0.12);
+$cs-section-padding: clamp(3.5rem, 7vw, 6rem);
+
+// ── Hero: full-width image with title overlay ─────────────────────────────────
+
+.cs-hero {
+    position: relative;
+    min-height: 480px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    // Warm cream gradient matching Projects pages (when no featured image)
+    background: linear-gradient(160deg, #fff8f2 0%, #fff2e5 55%, #fff8f2 100%);
+
+    // Background image (featured image)
+    &__bg {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    // Gradient overlay — dark at bottom for legibility, fades to top
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.78) 0%,
+            rgba(0, 0, 0, 0.35) 45%,
+            rgba(0, 0, 0, 0.05) 100%
+        );
+    }
+
+    // When no image: hide overlay, keep lavender bg
+    &:not(.cs-hero--has-image) &__overlay {
+        display: none;
+    }
+
+    // Title + badge positioned over image
+    &__content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        padding: clamp(3rem, 6vw, 5rem) 0 clamp(2.5rem, 5vw, 4rem);
+    }
+
+    &__title {
+        font-family: 'Nunito', sans-serif;
+        font-weight: 900;
+        font-size: clamp(2rem, 5vw, 3.375rem);
+        line-height: 1.08;
+        letter-spacing: -0.04em;
+        margin: 0.75rem 0 0;
+
+        // White on image, dark on lavender fallback
+        .cs-hero--has-image & {
+            color: #fff;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        .cs-hero:not(.cs-hero--has-image) & {
+            color: #1d2327;
+        }
+    }
+
+    @media (max-width: $breakpoint-mobile) {
+        min-height: 320px;
+    }
+}
+
+// ── Client badge ──────────────────────────────────────────────────────────────
+
+.cs-client-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 50px;
+    padding: 0.35rem 1rem;
+
+    // Default (on lavender bg)
+    background: #fff;
+    border: 1.5px solid rgba($ninja-main-color, 0.25);
+
+    // On top of image — semi-transparent white pill
+    .cs-hero--has-image & {
+        background: rgba(255, 255, 255, 0.18);
+        border-color: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(8px);
+    }
+
+    &__label {
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+
+        .cs-hero--has-image & { color: rgba(255, 255, 255, 0.75); }
+        .cs-hero:not(.cs-hero--has-image) & { color: $color-text-light; }
+    }
+
+    &__name {
+        font-size: 14px;
+        font-weight: 700;
+
+        .cs-hero--has-image & { color: #fff; }
+        .cs-hero:not(.cs-hero--has-image) & { color: $ninja-main-color; }
+    }
+}
+
+// ── 2-column text layout (optional per section) ───────────────────────────────
+
+.post-content--2col {
+    columns: 2;
+    column-gap: clamp(2rem, 5vw, 4rem);
+
+    // Keep headings, images and individual items from breaking across columns
+    h2, h3, h4, figure, li { break-inside: avoid; }
+
+    @media (max-width: 640px) {
+        columns: 1;
+    }
+}
+
+// ── Body wrapper ──────────────────────────────────────────────────────────────
+
+$cs-grid: linear-gradient(rgba(37, 25, 14, 0.038) 1px, transparent 1px),
+           linear-gradient(90deg, rgba(37, 25, 14, 0.038) 1px, transparent 1px);
+$cs-grid-size: 70px 70px;
+
+.cs-body {
+    position: relative;
+    background: transparent;
+
+    // Grid visible at top, fades out — only the ::before is masked, not the content
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background-image: $cs-grid;
+        background-size: $cs-grid-size;
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 20%, transparent 50%);
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 20%, transparent 50%);
+    }
+}
+
+// Back bar
+.cs-back-bar {
+    padding: 1rem 0;
+    position: relative;
+    z-index: 1;
+}
+
+.cs-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $ninja-main-color;
+    text-decoration: none;
+    transition: color 0.2s ease, gap 0.2s ease;
+
+    svg { flex-shrink: 0; transition: transform 0.2s ease; }
+
+    &:hover {
+        color: $ninja-main-color;
+        gap: 0.6rem;
+        svg { transform: translateX(-3px); }
+    }
+}
+
+// Sections sit above the grid ::before
+.cs-client-intro,
+.cs-section {
+    position: relative;
+    z-index: 1;
+}
+
+// ── Client intro: WYSIWYG text + logo ─────────────────────────────────────────
+
+.cs-client-intro {
+    padding: $cs-section-padding 0;
+    border-bottom: 1px solid $color-border;
+
+    &__inner {
+        display: flex;
+        align-items: center;
+        gap: clamp(2rem, 5vw, 5rem);
+    }
+
+    &__text {
+        flex: 1;
+        min-width: 0;
+    }
+
+    &__logo {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__logo-img {
+        display: block;
+        max-width: 220px;
+        max-height: 160px;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+    }
+
+    @media (max-width: $breakpoint-mobile) {
+        &__inner {
+            flex-direction: column;
+        }
+
+        &__logo {
+            width: 100%;
+        }
+
+        &__logo-img {
+            max-width: 160px;
+        }
+    }
+}
+
+// ── Section 50/50 split (text + image) ───────────────────────────────────────
+
+.cs-section__split {
+    display: flex;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 4rem);
+
+    &--rtl {
+        flex-direction: row-reverse;
+    }
+
+    &-text {
+        flex: 1;
+        min-width: 0;
+    }
+
+    &-media {
+        flex: 0 0 45%;
+        max-width: 45%;
+    }
+
+    &-img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        object-fit: cover;
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column !important;
+
+        &-media {
+            flex: none;
+            max-width: 100%;
+            width: 100%;
+        }
+    }
+}
+
+// ── Generic content section ───────────────────────────────────────────────────
+
+.cs-section {
+    padding: $cs-section-padding 0;
+    background: transparent;
+
+    // Lavender alternate stripe — semi-transparent so blob shows through
+    &--alt {
+        background: rgba(203, 169, 255, 0.06);
+    }
+}
+
+// Section heading with orange left-border accent
+.cs-section__heading {
+    font-size: clamp(1.6rem, 3vw, 2.25rem);
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    color: #1f1812;
+    margin: 0 0 1.75rem;
+    padding-left: 1rem;
+    border-left: 4px solid $ninja-main-color;
+}
+
+// ── Full-width solution image ─────────────────────────────────────────────────
+
+.cs-full-image {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+
+    &__img {
+        display: block;
+        width: 100%;
+        height: auto;
+        max-height: 560px;
+        object-fit: cover;
+        margin: 0;
+    }
+}
+
+// ── Key Metrics grid ──────────────────────────────────────────────────────────
+
+.cs-stats {
+    padding: $cs-section-padding 0;
+    background: linear-gradient(
+        135deg,
+        rgba($ninja-main-color, 0.06) 0%,
+        rgba($ninja-main-color, 0.02) 60%,
+        #fff 100%
+    );
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: clamp(1.5rem, 3vw, 2.5rem);
+    }
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.4rem;
+        padding: 1.5rem 1rem;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    &__value {
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 900;
+        line-height: 1;
+        color: $ninja-main-color;
+        letter-spacing: -0.02em;
+    }
+
+    &__label {
+        font-size: 14px;
+        font-weight: 600;
+        color: $color-text-light;
+        line-height: 1.4;
+        max-width: 12rem;
+    }
+}
+
+// ── Closing CTA (Why Choose Ninja Tropic) ────────────────────────────────────
+
+.cs-cta {
+    padding: $cs-section-padding 0;
+    background: $ninja-main-color;
+
+    &__inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1.25rem;
+        max-width: 720px;
+        margin-inline: auto;
+    }
+
+    &__title {
+        font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+        font-weight: 900;
+        line-height: 1.1;
+        color: #fff;
+        margin: 0;
+    }
+
+    &__description {
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 1.0625rem;
+        line-height: 1.7;
+
+        p { margin: 0; }
+
+        a {
+            color: #fff;
+            text-decoration: underline;
+        }
+    }
+
+    // White pill button (inverted from .btn)
+    &__btn {
+        display: inline-block;
+        font-weight: 700;
+        font-size: 1rem;
+        color: $ninja-main-color;
+        background: #fff;
+        border-radius: 50px;
+        padding: 0.875rem 2.25rem;
+        text-decoration: none;
+        transition: background $transition-base, transform $transition-base;
+        margin-top: 0.5rem;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.88);
+            transform: translateY(-2px);
+        }
+    }
+}
+
+// ─── Case Studies Archive Page (page-case-studies.php) ────────────────────────
+
+.cs-archive {
+
+    // ── Hero: 50/50 layout ────────────────────────────────────────────────────
+    &__hero {
+        position: relative;
+        padding: clamp(4rem, 7vw, 6rem) 0;
+        background:
+            radial-gradient(46rem 28rem at 6% 6%, rgba(255, 104, 27, 0.10), transparent 72%),
+            radial-gradient(34rem 24rem at 92% 12%, rgba(255, 209, 174, 0.18), transparent 70%),
+            linear-gradient(180deg, #fffdfa 0%, #fff8f3 50%, #ffffff 100%);
+        overflow: hidden;
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(37, 25, 14, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(37, 25, 14, 0.03) 1px, transparent 1px);
+            background-size: 110px 110px;
+            mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2), transparent 90%);
+            pointer-events: none;
+        }
+    }
+
+    &__hero-inner {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: clamp(2.5rem, 6vw, 5rem);
+    }
+
+    &__hero-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    &__accent {
+        display: inline-flex;
+        width: 5rem;
+        height: 0.4rem;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #ff681b 0%, rgba(255, 104, 27, 0.25) 100%);
+        margin-bottom: 1.25rem;
+    }
+
+    &__title {
+        margin: 0 0 0.75rem;
+        color: #1f1812;
+        letter-spacing: -0.04em;
+    }
+
+    &__description {
+        color: rgba(56, 41, 29, 0.78);
+        max-width: 42rem;
+        font-size: 1.0625rem;
+        line-height: 1.75;
+        margin: 0;
+    }
+
+    &__hero-media {
+        flex: 0 0 45%;
+        max-width: 45%;
+    }
+
+    &__hero-media-frame {
+        border-radius: 16px;
+        overflow: hidden;
+        line-height: 0;
+    }
+
+    &__hero-img {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    @media (max-width: 768px) {
+        &__hero-inner {
+            flex-direction: column;
+        }
+
+        &__hero-media {
+            flex: none;
+            max-width: 100%;
+            width: 100%;
+        }
+    }
+
+    // ── Grid ──────────────────────────────────────────────────────────────────
+    &__body {
+        padding: 3.5rem 0 5rem;
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+
+        @media (max-width: 900px) {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        @media (max-width: $breakpoint-mobile) {
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+        }
+    }
+
+    // ── Card ──────────────────────────────────────────────────────────────────
+    &__item {
+        background: #fff;
+        border-radius: 16px;
+        border: 1px solid rgba(0, 0, 0, 0.07);
+        box-shadow:
+            0 6px 20px rgba(0, 0, 0, 0.06),
+            0 2px 6px rgba(0, 0, 0, 0.04);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+
+        &:hover {
+            transform: translateY(-6px);
+            box-shadow:
+                0 20px 42px rgba(0, 0, 0, 0.10),
+                0 8px 16px rgba(0, 0, 0, 0.07);
+            border-color: rgba(255, 100, 27, 0.15);
+        }
+    }
+
+    &__link {
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    &__media {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        background: #f0f0f0;
+        flex-shrink: 0;
+    }
+
+    &__image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.35s ease;
+    }
+
+    &__image-placeholder {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #f7f4f2 0%, #ebe9e7 100%);
+    }
+
+    &__link:hover &__image {
+        transform: scale(1.04);
+    }
+
+    &__body-inner {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    &__item-title {
+        margin: 0;
+        color: $color-text;
+        font-size: 1.125rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.3;
+        transition: color 0.25s ease;
+    }
+
+    &__link:hover &__item-title {
+        color: $ninja-main-color;
+    }
+
+    &__tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+    }
+
+    &__tag {
+        display: inline-block;
+        padding: 0.2rem 0.75rem;
+        background: rgba(255, 100, 27, 0.08);
+        color: color.adjust(#FF641B, $lightness: -5%);
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        line-height: 1.6;
+        letter-spacing: 0.01em;
+    }
+
+    &__excerpt {
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: $color-text-light;
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    &__cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        margin-top: auto;
+        padding-top: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: $ninja-main-color;
+        transition: gap 0.2s ease;
+
+        svg { transition: transform 0.2s ease; }
+    }
+
+    &__link:hover &__cta {
+        gap: 0.6rem;
+        svg { transform: translateX(2px); }
+    }
+
+    // ── Pagination ────────────────────────────────────────────────────────────
+    .page-numbers {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        text-decoration: none;
+        color: $color-text;
+        font-weight: 600;
+        transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        margin-top: 3rem;
+
+        &.current, &:hover {
+            background: $ninja-main-color;
+            color: #fff;
+            border-color: $ninja-main-color;
+        }
+
+        &.dots {
+            border: none;
+            background: transparent;
+            cursor: default;
+        }
+
+        &.prev, &.next {
+            width: auto;
+            padding: 0 1.25rem;
+            border-radius: 999px;
+        }
+    }
+
+    // ── Empty state ───────────────────────────────────────────────────────────
+    &__empty {
+        text-align: center;
+        padding: 4rem 0;
+        color: $color-text-light;
+        font-size: 1.125rem;
+    }
+
+    // ── Content (HubSpot form area) ───────────────────────────────────────────
+    &__content {
+        padding-bottom: 2rem;
+    }
+}
+
+// ── Ambient blob — fixed gradient orb that moves with scroll ──────────────────
+
+
+// Warm static gradient — same as project archive header
+body.single-case-studies {
+    background:
+        radial-gradient(46rem 28rem at 6% 6%, rgba(255, 104, 27, 0.10), transparent 72%),
+        radial-gradient(34rem 24rem at 92% 12%, rgba(255, 209, 174, 0.18), transparent 70%),
+        linear-gradient(180deg, #fffdfa 0%, #fff8f3 50%, #ffffff 100%);
+}
+
+#main.site-main {
+    background: transparent;
+}
+
+// ── Linked Project section ─────────────────────────────────────────────────────
+
+.cs-projects {
+    padding: $cs-section-padding 0;
+    background: transparent;
+
+    &__intro {
+        margin-bottom: 2.5rem;
+    }
+
+    &__video {
+        position: relative;
+        padding-bottom: 56.25%; // 16:9
+        height: 0;
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 2rem;
+        background: #0d0d0d;
+        box-shadow:
+            0 16px 40px rgba(0, 0, 0, 0.18),
+            0 0 0 1px rgba(255, 100, 27, 0.12),
+            0 0 40px rgba(255, 100, 27, 0.07);
+
+        iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    &__link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: 2px solid $ninja-main-color;
+        color: $ninja-main-color;
+        font-weight: 700;
+        font-size: 0.9375rem;
+        padding: 0.625rem 1.375rem;
+        border-radius: 999px;
+        text-decoration: none;
+        transition: background 0.2s ease, color 0.2s ease;
+
+        svg { transition: transform 0.2s ease; }
+
+        &:hover {
+            background: $ninja-main-color;
+            color: #fff;
+            svg { transform: translateX(3px); }
+        }
+    }
+}
+
