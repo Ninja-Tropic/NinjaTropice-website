@@ -1,0 +1,71 @@
+{
+    "key": "group_ninjatheme_cs_archive",
+    "title": "Case Studies Archive Settings",
+    "fields": [
+        {
+            "key": "field_ninjatheme_cs_archive_description",
+            "label": "Hero Description",
+            "name": "cs_archive_description",
+            "type": "wysiwyg",
+            "instructions": "HTML text shown in the hero section beneath the page title.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "", "class": "", "id": "" },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 0,
+            "delay": 0
+        },
+        {
+            "key": "field_ninjatheme_cs_archive_image_position",
+            "label": "Image Position",
+            "name": "cs_archive_image_position",
+            "type": "true_false",
+            "instructions": "Toggle ON to show the featured image on the LEFT side.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "30", "class": "", "id": "" },
+            "message": "Image on the left",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "Left",
+            "ui_off_text": "Right"
+        },
+        {
+            "key": "field_ninjatheme_cs_archive_posts_per_page",
+            "label": "Case Studies Per Page",
+            "name": "cs_archive_posts_per_page",
+            "type": "number",
+            "instructions": "How many case study cards to show per page. Default: 9.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "30", "class": "", "id": "" },
+            "default_value": 9,
+            "min": 1,
+            "max": 48,
+            "step": 1,
+            "placeholder": "9",
+            "prepend": "",
+            "append": "per page"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "page-case-studies.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Settings for the Case Studies archive page template.",
+    "show_in_rest": 0
+}

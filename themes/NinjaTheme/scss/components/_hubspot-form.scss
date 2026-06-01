@@ -5,6 +5,19 @@
     padding: 5rem 0;
     overflow: hidden;
 
+    // Subtle grid overlay on the form section
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background-image:
+            linear-gradient(rgba(37, 25, 14, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(37, 25, 14, 0.05) 1px, transparent 1px);
+        background-size: 70px 70px;
+    }
+
     &__container {
         max-width: 1100px;
         position: relative;
