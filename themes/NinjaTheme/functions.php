@@ -14,6 +14,11 @@ if ( file_exists( get_stylesheet_directory() . '/inc/performance.php' ) ) {
 	require_once get_stylesheet_directory() . '/inc/performance.php';
 }
 
+// [projects_grid] shortcode with stacked-axis filter UI
+if ( file_exists( get_stylesheet_directory() . '/inc/shortcode-projects-grid.php' ) ) {
+	require_once get_stylesheet_directory() . '/inc/shortcode-projects-grid.php';
+}
+
 /**
  * Theme setup
  */
