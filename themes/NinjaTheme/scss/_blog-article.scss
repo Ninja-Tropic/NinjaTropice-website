@@ -12,6 +12,9 @@ $nt-dark:   #2c2c2c;
 $nt-muted:  #666666;
 $nt-orange: #ff641b;
 
+// ── Scoped to post type = post only ──────────────────────────────────────────
+body.single-post {
+
 // ── Post Hero (feature image + title) ────────────────────────────────────────
 
 .post-hero {
@@ -535,3 +538,5 @@ $nt-orange: #ff641b;
         &__item--next { margin-left: 0; text-align: left; }
     }
 }
+
+} // end body.single-post
