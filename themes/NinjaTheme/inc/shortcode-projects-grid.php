@@ -332,29 +332,44 @@ function ninjatheme_projects_grid_shortcode( $atts ) {
 			'per_page' => 12,
 			'orderby'  => 'menu_order',
 			'order'    => 'ASC',
+			'category' => '',
+			'filter'   => 'true',
 		),
 		$atts,
 		'projects_grid'
 	);
 
-	$per_page = max( 1, intval( $atts['per_page'] ) );
-	$orderby  = sanitize_key( $atts['orderby'] );
-	$order    = in_array( strtoupper( $atts['order'] ), array( 'ASC', 'DESC' ), true )
+	$per_page           = max( 1, intval( $atts['per_page'] ) );
+	$orderby            = sanitize_key( $atts['orderby'] );
+	$order              = in_array( strtoupper( $atts['order'] ), array( 'ASC', 'DESC' ), true )
 		? strtoupper( $atts['order'] )
 		: 'ASC';
+	$default_categories = array_values( array_filter( array_map( 'sanitize_text_field', explode( ',', $atts['category'] ) ) ) );
+	$show_filter        = filter_var( $atts['filter'], FILTER_VALIDATE_BOOLEAN );
 
-	$filter_values     = ninjatheme_get_project_filter_values();
-	$all_projects_data = ninjatheme_get_all_projects_filter_data_for_js();
+	$filter_values     = $show_filter ? ninjatheme_get_project_filter_values() : array( 'industry' => array(), 'animation_style' => array(), 'art_style' => array(), 'category' => array() );
+	$all_projects_data = $show_filter ? ninjatheme_get_all_projects_filter_data_for_js() : array();
 
 	// Only load the first page.
-	$query = new WP_Query( array(
+	$initial_query_args = array(
 		'post_type'      => 'project',
 		'posts_per_page' => $per_page,
 		'paged'          => 1,
 		'orderby'        => $orderby,
 		'order'          => $order,
 		'post_status'    => 'publish',
-	) );
+	);
+	if ( ! empty( $default_categories ) ) {
+		$initial_query_args['tax_query'] = array(
+			array(
+				'taxonomy' => 'category',
+				'field'    => 'slug',
+				'terms'    => $default_categories,
+				'operator' => 'IN',
+			),
+		);
+	}
+	$query = new WP_Query( $initial_query_args );
 
 	$total    = $query->found_posts;
 	$has_more = 1 < $query->max_num_pages;
@@ -370,15 +385,25 @@ function ninjatheme_projects_grid_shortcode( $atts ) {
 
 	// Enqueue JS and pass server data to the client.
 	wp_enqueue_script( 'ninjatheme-projects-filter' );
+	// Resolve slugs → display names so JS chips and AJAX use the human-readable label.
+	$default_categories_names = array();
+	foreach ( $default_categories as $slug ) {
+		$term = get_term_by( 'slug', $slug, 'category' );
+		if ( $term && ! is_wp_error( $term ) ) {
+			$default_categories_names[] = $term->name;
+		}
+	}
+
 	wp_localize_script( 'ninjatheme-projects-filter', 'pfData', array(
-		'ajaxUrl'  => admin_url( 'admin-ajax.php' ),
-		'nonce'    => wp_create_nonce( 'ninjatheme_projects_filter' ),
-		'perPage'  => $per_page,
-		'orderby'  => $orderby,
-		'order'    => $order,
-		'total'    => $total,
-		'hasMore'  => $has_more,
-		'projects' => $all_projects_data,
+		'ajaxUrl'         => admin_url( 'admin-ajax.php' ),
+		'nonce'           => wp_create_nonce( 'ninjatheme_projects_filter' ),
+		'perPage'         => $per_page,
+		'orderby'         => $orderby,
+		'order'           => $order,
+		'total'           => $total,
+		'hasMore'         => $has_more,
+		'projects'        => $all_projects_data,
+		'defaultCategory' => $default_categories_names,
 	) );
 
 	// Build the filter axes (only axes that have values).
@@ -413,6 +438,7 @@ function ninjatheme_projects_grid_shortcode( $atts ) {
 	?>
 	<div class="pf" id="projects-filter-wrap">
 
+		<?php if ( $show_filter ) : ?>
 		<!-- Sticky bar — appears when .pf__axes scrolls out of viewport -->
 		<div class="pf__sticky-bar" id="pf-sticky-bar" aria-label="<?php esc_attr_e( 'Active filters' ); ?>">
 			<div class="pf__sticky-inner">
@@ -495,8 +521,9 @@ function ninjatheme_projects_grid_shortcode( $atts ) {
 			<?php endforeach; ?>
 		</div>
 		<?php endif; ?>
+		<?php endif; // $show_filter ?>
 
-		<div class="pf__meta-bar">
+		<div class="pf__meta-bar"<?php echo ! $show_filter ? ' hidden' : ''; ?>>
 			<div class="pf__active" id="pf-active-chips" aria-live="polite" hidden></div>
 			<p class="pf__count" id="pf-count" aria-live="polite"></p>
 		</div>

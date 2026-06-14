@@ -39,24 +39,22 @@ $options = get_fields('option');
 					<h3 class="footer-section-title"><?php echo esc_html($options['service_title']); ?></h3>
 				<?php endif; ?>
 				
-			<?php if( have_rows('resource_links', 'option') ): ?>
+			<?php if( have_rows('service_links', 'option') ): ?>
 				<ul class="footer-links">
-					<?php while( have_rows('resource_links', 'option') ): the_row(); 
+					<?php while( have_rows('service_links', 'option') ): the_row();
 						$link = get_sub_field('link');
-						
-						if( $link ): 
+						$label = get_sub_field('label');
+
+						if( $link ):
 							$link_url = is_array($link) ? $link['url'] : $link;
 							$link_target = is_array($link) && !empty($link['target']) ? $link['target'] : '_self';
-							
-							// Get post ID from URL (cached)
-							$post_id = ninjatheme_get_post_id_from_url($link_url);
-							$link_title = 'Link';
-							
-							if( $post_id ) {
-								$post = get_post($post_id);
-								if( $post ) {
-									$link_title = $post->post_name;
-								}
+							if( $label ) {
+								$link_title = $label;
+							} elseif( is_array($link) && !empty($link['title']) ) {
+								$link_title = $link['title'];
+							} else {
+								$post_id = url_to_postid($link_url);
+								$link_title = $post_id ? get_the_title($post_id) : basename(rtrim($link_url, '/'));
 							}
 							?>
 							<li>
@@ -78,20 +76,18 @@ $options = get_fields('option');
 					<ul class="footer-links">
 						<?php while( have_rows('ninja_links', 'option') ): the_row();
 							$link = get_sub_field('link');
+							$label = get_sub_field('label');
 
 							if( $link ):
 								$link_url = is_array($link) ? $link['url'] : $link;
 								$link_target = is_array($link) && !empty($link['target']) ? $link['target'] : '_self';
-
-								// Get post ID from URL (cached via transient)
-								$post_id = ninjatheme_get_post_id_from_url($link_url);
-								$link_title = 'Link';
-
-								if( $post_id ) {
-									$post = get_post($post_id);
-									if( $post ) {
-										$link_title = $post->post_name;
-									}
+								if( $label ) {
+									$link_title = $label;
+								} elseif( is_array($link) && !empty($link['title']) ) {
+									$link_title = $link['title'];
+								} else {
+									$post_id = url_to_postid($link_url);
+									$link_title = $post_id ? get_the_title($post_id) : basename(rtrim($link_url, '/'));
 								}
 								?>
 								<li>
@@ -113,20 +109,18 @@ $options = get_fields('option');
 					<ul class="footer-links">
 						<?php while( have_rows('resource_links', 'option') ): the_row();
 							$link = get_sub_field('link');
+							$label = get_sub_field('label');
 
 							if( $link ):
 								$link_url = is_array($link) ? $link['url'] : $link;
 								$link_target = is_array($link) && !empty($link['target']) ? $link['target'] : '_self';
-
-								// Get post ID from URL (cached via transient)
-								$post_id = ninjatheme_get_post_id_from_url($link_url);
-								$link_title = 'Link';
-
-								if( $post_id ) {
-									$post = get_post($post_id);
-									if( $post ) {
-										$link_title = $post->post_name;
-									}
+								if( $label ) {
+									$link_title = $label;
+								} elseif( is_array($link) && !empty($link['title']) ) {
+									$link_title = $link['title'];
+								} else {
+									$post_id = url_to_postid($link_url);
+									$link_title = $post_id ? get_the_title($post_id) : basename(rtrim($link_url, '/'));
 								}
 								?>
 								<li>

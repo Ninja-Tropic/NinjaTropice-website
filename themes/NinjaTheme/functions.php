@@ -19,6 +19,16 @@ if ( file_exists( get_stylesheet_directory() . '/inc/shortcode-projects-grid.php
 	require_once get_stylesheet_directory() . '/inc/shortcode-projects-grid.php';
 }
 
+// [blog_grid] shortcode with category/tag filter UI
+if ( file_exists( get_stylesheet_directory() . '/inc/shortcode-blog-grid.php' ) ) {
+	require_once get_stylesheet_directory() . '/inc/shortcode-blog-grid.php';
+}
+
+// [case_studies_grid] shortcode with AJAX load more
+if ( file_exists( get_stylesheet_directory() . '/inc/shortcode-case-studies-grid.php' ) ) {
+	require_once get_stylesheet_directory() . '/inc/shortcode-case-studies-grid.php';
+}
+
 /**
  * Theme setup
  */
@@ -1290,6 +1300,7 @@ function ninjatheme_register_case_studies_cpt() {
 		'menu_icon'    => 'dashicons-media-document',
 		'supports'     => array( 'title', 'thumbnail', 'excerpt', 'revisions' ),
 		'rewrite'      => array( 'slug' => 'case-studies' ),
+		'taxonomies'   => array( 'category' ),
 	);
 
 	register_post_type( 'case-studies', $args );

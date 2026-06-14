@@ -4,8 +4,8 @@
  *
  * Page template for the Case Studies listing page.
  * Hero: page title + description (left) / featured image (right) — 50/50.
- * Grid: WP_Query on case-studies CPT, posts-per-page configurable via ACF.
- * Footer: the_content() — editor places the HubSpot Form block here.
+ * Grid: first page server-rendered; subsequent pages via AJAX load more.
+ * Footer: consultation form template part.
  *
  * @package NinjaTheme
  */
@@ -19,19 +19,33 @@ if ( ! have_posts() ) {
 
 the_post();
 
-$description    = get_field( 'cs_archive_description' ) ?: '';
-$image_left     = (bool) get_field( 'cs_archive_image_position' );
-$posts_per_page = max( 1, (int) ( get_field( 'cs_archive_posts_per_page' ) ?: 9 ) );
-$paged          = max( 1, (int) ( $_GET['paged'] ?? get_query_var( 'paged' ) ?: 1 ) );
+$description = get_field( 'cs_archive_description' ) ?: '';
+$image_left  = (bool) get_field( 'cs_archive_image_position' );
+$per_page    = max( 1, (int) ( get_field( 'cs_archive_posts_per_page' ) ?: 9 ) );
 
-$cs_query = new WP_Query( [
+$cs_query = new WP_Query( array(
 	'post_type'      => 'case-studies',
-	'posts_per_page' => $posts_per_page,
-	'paged'          => $paged,
+	'posts_per_page' => $per_page,
+	'paged'          => 1,
 	'post_status'    => 'publish',
 	'orderby'        => 'date',
 	'order'          => 'DESC',
-] );
+) );
+
+$total    = $cs_query->found_posts;
+$has_more = 1 < $cs_query->max_num_pages;
+
+// Enqueue JS and pass server data to the client.
+wp_enqueue_script( 'ninjatheme-case-studies-filter' );
+wp_localize_script( 'ninjatheme-case-studies-filter', 'csfData', array(
+	'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+	'nonce'   => wp_create_nonce( 'ninjatheme_case_studies_filter' ),
+	'perPage' => $per_page,
+	'orderby' => 'date',
+	'order'   => 'DESC',
+	'total'   => $total,
+	'hasMore' => $has_more,
+) );
 ?>
 
 <main id="main" class="site-main cs-archive">
@@ -43,7 +57,7 @@ $cs_query = new WP_Query( [
 			<?php if ( has_post_thumbnail() && $image_left ) : ?>
 			<div class="cs-archive__hero-media">
 				<div class="cs-archive__hero-media-frame">
-					<?php the_post_thumbnail( 'large', [ 'class' => 'cs-archive__hero-img', 'loading' => 'eager' ] ); ?>
+					<?php the_post_thumbnail( 'large', array( 'class' => 'cs-archive__hero-img', 'loading' => 'eager' ) ); ?>
 				</div>
 			</div>
 			<?php endif; ?>
@@ -59,7 +73,7 @@ $cs_query = new WP_Query( [
 			<?php if ( has_post_thumbnail() && ! $image_left ) : ?>
 			<div class="cs-archive__hero-media">
 				<div class="cs-archive__hero-media-frame">
-					<?php the_post_thumbnail( 'large', [ 'class' => 'cs-archive__hero-img', 'loading' => 'eager' ] ); ?>
+					<?php the_post_thumbnail( 'large', array( 'class' => 'cs-archive__hero-img', 'loading' => 'eager' ) ); ?>
 				</div>
 			</div>
 			<?php endif; ?>
@@ -69,76 +83,37 @@ $cs_query = new WP_Query( [
 
 	<!-- ② GRID -->
 	<div class="cs-archive__body">
-		<div class="container">
+		<div class="container" id="case-studies-filter-wrap">
 
-			<?php if ( $cs_query->have_posts() ) : ?>
-			<div class="cs-archive__grid">
-				<?php while ( $cs_query->have_posts() ) : $cs_query->the_post();
-					$client_name = get_field( 'client_name' );
+			<div class="cs-archive__grid" id="csf-grid">
+				<?php
+				if ( $cs_query->have_posts() ) {
+					while ( $cs_query->have_posts() ) {
+						$cs_query->the_post();
+						echo ninjatheme_render_case_study_card( get_the_ID() );
+					}
+					wp_reset_postdata();
+				}
 				?>
-				<article id="post-<?php the_ID(); ?>" <?php post_class( 'cs-archive__item' ); ?>>
-					<a class="cs-archive__link" href="<?php the_permalink(); ?>">
-
-						<div class="cs-archive__media">
-							<?php if ( has_post_thumbnail() ) : ?>
-								<?php the_post_thumbnail( 'large', [
-									'class'   => 'cs-archive__image',
-									'loading' => 'lazy',
-									'alt'     => get_the_title(),
-								] ); ?>
-							<?php else : ?>
-								<div class="cs-archive__image-placeholder"></div>
-							<?php endif; ?>
-						</div>
-
-						<div class="cs-archive__body-inner">
-							<h2 class="cs-archive__item-title"><?php the_title(); ?></h2>
-
-							<?php if ( $client_name ) : ?>
-							<div class="cs-archive__tags">
-								<span class="cs-archive__tag"><?php echo esc_html( $client_name ); ?></span>
-							</div>
-							<?php endif; ?>
-
-							<?php if ( has_excerpt() ) : ?>
-							<p class="cs-archive__excerpt"><?php echo esc_html( get_the_excerpt() ); ?></p>
-							<?php endif; ?>
-
-							<span class="cs-archive__cta">
-								Read case study
-								<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-									<path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-								</svg>
-							</span>
-						</div>
-
-					</a>
-				</article>
-				<?php endwhile; wp_reset_postdata(); ?>
 			</div>
 
-			<?php
-			if ( $cs_query->max_num_pages > 1 ) :
-				echo paginate_links( [
-					'base'      => trailingslashit( get_permalink() ) . '%_%',
-					'format'    => '?paged=%#%',
-					'current'   => $paged,
-					'total'     => $cs_query->max_num_pages,
-					'prev_text' => '&larr; Previous',
-					'next_text' => 'Next &rarr;',
-					'type'      => 'plain',
-				] );
-			endif;
-			?>
+			<p class="cs-archive__empty" id="csf-empty" hidden>
+				<?php esc_html_e( 'No case studies found.' ); ?>
+			</p>
 
-			<?php else : ?>
-			<p class="cs-archive__empty">No case studies found.</p>
-			<?php endif; ?>
+			<div class="pf__load-more-wrap" id="csf-load-more-wrap"<?php echo ! $has_more ? ' hidden' : ''; ?>>
+				<button class="pf__load-more" id="csf-load-more" type="button">
+					<span class="pf__load-more-label">Load more case studies</span>
+					<svg class="pf__spinner" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+						<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.5" stroke-dasharray="42 15" stroke-linecap="round"/>
+					</svg>
+				</button>
+			</div>
 
 		</div>
 	</div>
 
-	<!-- ③ CONSULTATION FORM — same as other pages -->
+	<!-- ③ CONSULTATION FORM -->
 	<?php get_template_part( 'template-parts/consultation-form' ); ?>
 
 </main>

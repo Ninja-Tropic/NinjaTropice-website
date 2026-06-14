@@ -1,40 +1,34 @@
 ( function () {
 	'use strict';
 
-	var wrap = document.getElementById( 'projects-filter-wrap' );
-	if ( ! wrap || typeof pfData === 'undefined' ) return;
+	var wrap = document.getElementById( 'blog-filter-wrap' );
+	if ( ! wrap || typeof bfData === 'undefined' ) return;
 
-	var grid         = document.getElementById( 'pf-grid' );
-	var chipsWrap    = document.getElementById( 'pf-active-chips' );
-	var emptyMsg     = document.getElementById( 'pf-empty' );
-	var countEl      = document.getElementById( 'pf-count' );
-	var loadMoreWrap = document.getElementById( 'pf-load-more-wrap' );
-	var loadMoreBtn  = document.getElementById( 'pf-load-more' );
+	var grid         = document.getElementById( 'bf-grid' );
+	var chipsWrap    = document.getElementById( 'bf-active-chips' );
+	var emptyMsg     = document.getElementById( 'bf-empty' );
+	var countEl      = document.getElementById( 'bf-count' );
+	var loadMoreWrap = document.getElementById( 'bf-load-more-wrap' );
+	var loadMoreBtn  = document.getElementById( 'bf-load-more' );
 	var allPills     = Array.from( wrap.querySelectorAll( '.pf__pill' ) );
 
-	// Active filter state — camelCase keys match the browser dataset API.
+	// Active filter state — camelCase keys match the data-axis attributes.
 	var state = {
-		industry       : new Set(),
-		animationStyle : new Set(),
-		artStyle       : new Set(),
-		category       : new Set(),
+		category : new Set(),
+		tag      : new Set(),
 	};
 
 	// AJAX param names sent to the server.
 	var axisParams = {
-		industry       : 'industry',
-		animationStyle : 'animation_style',
-		artStyle       : 'art_style',
-		category       : 'category',
+		category : 'category',
+		tag      : 'tag',
 	};
 
-	// Maps JS state keys to property names in pfData.projects entries.
-	// 'cats' is an array; all others are strings.
+	// Maps JS state keys to property names in bfData.posts entries.
+	// Both axes are arrays (a post can have multiple categories and tags).
 	var axisDataProp = {
-		industry       : 'industry',
-		animationStyle : 'animStyle',
-		artStyle       : 'artStyle',
-		category       : 'cats',
+		category : 'cats',
+		tag      : 'tags',
 	};
 
 	var currentPage = 1;
@@ -43,8 +37,8 @@
 	// ── Cascading pill availability ───────────────────────────────────────────────
 
 	function updatePillAvailability() {
-		var projects = pfData.projects;
-		if ( ! projects || ! projects.length ) return;
+		var posts = bfData.posts;
+		if ( ! posts || ! posts.length ) return;
 
 		allPills.forEach( function ( pill ) {
 			var axis  = pill.dataset.axis;
@@ -56,26 +50,22 @@
 				return;
 			}
 
-			// Show pill only if at least one project matches this value
+			// Show pill only if at least one post matches this value
 			// combined with the active selections on all other axes.
-			var hasMatch = projects.some( function ( p ) {
-				// Does project have this pill's value?
-				var matchesAxis = axis === 'category'
-					? p.cats.indexOf( value ) !== -1
-					: p[ axisDataProp[ axis ] ] === value;
+			var hasMatch = posts.some( function ( p ) {
+				var prop = axisDataProp[ axis ];
+				if ( ! p[ prop ] ) return false;
 
+				var matchesAxis = p[ prop ].indexOf( value ) !== -1;
 				if ( ! matchesAxis ) return false;
 
-				// Does project also satisfy every other axis's active selection?
 				return Object.keys( state ).every( function ( a ) {
 					if ( a === axis ) return true;
 					if ( state[ a ].size === 0 ) return true;
-					if ( a === 'category' ) {
-						return Array.from( state[ a ] ).some( function ( v ) {
-							return p.cats.indexOf( v ) !== -1;
-						} );
-					}
-					return state[ a ].has( p[ axisDataProp[ a ] ] );
+					var aProp = axisDataProp[ a ];
+					return Array.from( state[ a ] ).some( function ( v ) {
+						return p[ aProp ] && p[ aProp ].indexOf( v ) !== -1;
+					} );
 				} );
 			} );
 
@@ -85,18 +75,18 @@
 
 	// ── AJAX fetch ────────────────────────────────────────────────────────────────
 
-	function fetchProjects( page, replace, _alreadyVisible ) {
+	function fetchPosts( page, replace, _alreadyVisible ) {
 		if ( isLoading ) return;
 		isLoading = true;
 		setLoadingState( true );
 
 		var params = new URLSearchParams();
-		params.set( 'action',   'ninjatheme_projects_filter' );
-		params.set( 'nonce',    pfData.nonce );
+		params.set( 'action',   'ninjatheme_blog_filter' );
+		params.set( 'nonce',    bfData.nonce );
 		params.set( 'page',     String( page ) );
-		params.set( 'per_page', String( pfData.perPage ) );
-		params.set( 'orderby',  pfData.orderby );
-		params.set( 'order',    pfData.order );
+		params.set( 'per_page', String( bfData.perPage ) );
+		params.set( 'orderby',  bfData.orderby );
+		params.set( 'order',    bfData.order );
 
 		Object.keys( state ).forEach( function ( axis ) {
 			var param = axisParams[ axis ];
@@ -105,7 +95,7 @@
 			} );
 		} );
 
-		fetch( pfData.ajaxUrl, {
+		fetch( bfData.ajaxUrl, {
 			method  : 'POST',
 			headers : { 'Content-Type': 'application/x-www-form-urlencoded' },
 			body    : params.toString(),
@@ -120,11 +110,10 @@
 
 				var d = data.data;
 
-				// Count cards in this batch to track how many will be visible.
 				var tmp = document.createElement( 'div' );
 				tmp.innerHTML = d.html;
-				var batchCount   = tmp.children.length;
-				var nowVisible   = ( _alreadyVisible || 0 ) + batchCount;
+				var batchCount = tmp.children.length;
+				var nowVisible = ( _alreadyVisible || 0 ) + batchCount;
 
 				if ( replace ) {
 					replaceGrid( d.html );
@@ -137,10 +126,8 @@
 				isLoading = false;
 				setLoadingState( false );
 
-				// Auto-fetch the next page if we still have fewer than the minimum
-				// and the server has more results available.
-				if ( d.has_more && nowVisible < pfData.perPage ) {
-					fetchProjects( page + 1, false, nowVisible );
+				if ( d.has_more && nowVisible < bfData.perPage ) {
+					fetchPosts( page + 1, false, nowVisible );
 				}
 			} )
 			.catch( function () {
@@ -154,7 +141,6 @@
 	function replaceGrid( html ) {
 		var existing = Array.from( grid.children );
 
-		// Fade out current cards.
 		existing.forEach( function ( card ) {
 			card.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
 			card.style.opacity    = '0';
@@ -185,11 +171,10 @@
 			card.style.transform  = 'translateY(16px) scale(0.97)';
 			card.style.transition = 'none';
 
-			// Stagger each card by 50ms.
 			setTimeout( function () {
-				card.style.transition       = 'opacity 0.38s ease, transform 0.38s ease';
-				card.style.opacity          = '';
-				card.style.transform        = '';
+				card.style.transition = 'opacity 0.38s ease, transform 0.38s ease';
+				card.style.opacity    = '';
+				card.style.transform  = '';
 			}, i * 50 );
 		} );
 	}
@@ -197,27 +182,24 @@
 	// ── Meta bar ──────────────────────────────────────────────────────────────────
 
 	function updateMeta( hasMore, total ) {
-		// Load More button.
 		if ( loadMoreWrap ) {
 			loadMoreWrap.hidden = ! hasMore;
 		}
 
-		// Empty state.
 		if ( emptyMsg ) {
 			emptyMsg.hidden = grid.children.length > 0;
 		}
 
-		// Count line.
 		if ( countEl ) {
 			var showing = grid.children.length;
 			if ( total === 0 ) {
 				countEl.textContent = '';
 			} else if ( hasMore ) {
-				countEl.textContent = 'Showing ' + showing + ' of ' + total + ' projects';
+				countEl.textContent = 'Showing ' + showing + ' of ' + total + ' articles';
 			} else {
 				var activeFilters = Object.values( state ).some( function ( s ) { return s.size > 0; } );
 				countEl.textContent = activeFilters
-					? total + ' project' + ( total !== 1 ? 's' : '' ) + ' match your filters'
+					? total + ' article' + ( total !== 1 ? 's' : '' ) + ' match your filters'
 					: '';
 			}
 		}
@@ -232,10 +214,8 @@
 	// ── Active filter chips ───────────────────────────────────────────────────────
 
 	var axisLabels = {
-		industry       : 'Industry',
-		animationStyle : 'Animation Style',
-		artStyle       : 'Art Style',
-		category       : 'Training Topic',
+		category : 'Category',
+		tag      : 'Topic',
 	};
 
 	function renderChips() {
@@ -262,7 +242,7 @@
 						state[ a ].delete( v );
 						syncPillState( a );
 						renderChips();
-						fetchProjects( 1, true );
+						fetchPosts( 1, true );
 					} );
 				} )( axis, val );
 
@@ -307,7 +287,7 @@
 			syncPillState( axis );
 		} );
 		renderChips();
-		fetchProjects( 1, true );
+		fetchPosts( 1, true );
 	}
 
 	// ── Pill click handler ────────────────────────────────────────────────────────
@@ -329,7 +309,7 @@
 
 			syncPillState( axis );
 			renderChips();
-			fetchProjects( 1, true );
+			fetchPosts( 1, true );
 		} );
 	} );
 
@@ -337,16 +317,16 @@
 
 	if ( loadMoreBtn ) {
 		loadMoreBtn.addEventListener( 'click', function () {
-			fetchProjects( currentPage + 1, false );
+			fetchPosts( currentPage + 1, false );
 		} );
 	}
 
 	// ── Sticky filter bar ─────────────────────────────────────────────────────────
 
 	function initStickyBar() {
-		var stickyBar   = document.getElementById( 'pf-sticky-bar' );
-		var axesPanel   = document.getElementById( 'pf-axes-panel' );
-		var stickyClear = document.getElementById( 'pf-sticky-clear' );
+		var stickyBar   = document.getElementById( 'bf-sticky-bar' );
+		var axesPanel   = document.getElementById( 'bf-axes-panel' );
+		var stickyClear = document.getElementById( 'bf-sticky-clear' );
 
 		if ( ! stickyBar || ! axesPanel ) return;
 
@@ -387,7 +367,7 @@
 	// ── Sticky dropdown logic ─────────────────────────────────────────────────────
 
 	function initStickyDropdowns() {
-		var stickyBar = document.getElementById( 'pf-sticky-bar' );
+		var stickyBar = document.getElementById( 'bf-sticky-bar' );
 		if ( ! stickyBar ) return;
 
 		var dropdowns = Array.from( stickyBar.querySelectorAll( '.pf__sd' ) );
@@ -428,7 +408,7 @@
 				syncPillState( axis );
 				syncStickyDropdown( sd, axis );
 				renderChips();
-				fetchProjects( 1, true );
+				fetchPosts( 1, true );
 			} );
 
 			panel.addEventListener( 'click', function ( e ) { e.stopPropagation(); } );
@@ -467,15 +447,14 @@
 			item.classList.toggle( 'is-selected', isSelected );
 		} );
 
-		// Move selected items to the top of the list.
 		var selected   = items.filter( function ( i ) { return activeVals.has( i.dataset.value ); } );
 		var unselected = items.filter( function ( i ) { return ! activeVals.has( i.dataset.value ); } );
 		selected.concat( unselected ).forEach( function ( item ) { list.appendChild( item ); } );
 	}
 
 	function syncAllStickyDropdowns() {
-		var stickyBar   = document.getElementById( 'pf-sticky-bar' );
-		var stickyClear = document.getElementById( 'pf-sticky-clear' );
+		var stickyBar   = document.getElementById( 'bf-sticky-bar' );
+		var stickyClear = document.getElementById( 'bf-sticky-clear' );
 
 		if ( ! stickyBar ) return;
 
@@ -540,8 +519,6 @@
 		} );
 	}
 
-	// ── Init ──────────────────────────────────────────────────────────────────────
-
 	// ── Session persistence ───────────────────────────────────────────────────────
 
 	function saveFilterState() {
@@ -553,15 +530,15 @@
 					saved[ axis ] = Array.from( state[ axis ] );
 				}
 			} );
-			sessionStorage.setItem( 'pf_filter_state', JSON.stringify( saved ) );
+			sessionStorage.setItem( 'bf_filter_state', JSON.stringify( saved ) );
 		} else {
-			sessionStorage.removeItem( 'pf_filter_state' );
+			sessionStorage.removeItem( 'bf_filter_state' );
 		}
 	}
 
 	function restoreFilterState() {
 		try {
-			var raw = sessionStorage.getItem( 'pf_filter_state' );
+			var raw = sessionStorage.getItem( 'bf_filter_state' );
 			if ( ! raw ) return false;
 
 			var saved = JSON.parse( raw );
@@ -579,7 +556,7 @@
 			if ( hasActive ) {
 				Object.keys( state ).forEach( function ( axis ) { syncPillState( axis ); } );
 				renderChips();
-				fetchProjects( 1, true );
+				fetchPosts( 1, true );
 				return true;
 			}
 		} catch ( e ) { /* ignore */ }
@@ -591,16 +568,24 @@
 	initArrows();
 	initStickyBar();
 
-	if ( pfData.defaultCategory && pfData.defaultCategory.length ) {
-		pfData.defaultCategory.forEach( function ( cat ) {
-			state.category.add( cat );
-		} );
+	var hasDefaults = (
+		( bfData.defaultCategory && bfData.defaultCategory.length ) ||
+		( bfData.defaultTag && bfData.defaultTag.length )
+	);
+
+	if ( hasDefaults ) {
+		if ( bfData.defaultCategory ) {
+			bfData.defaultCategory.forEach( function ( cat ) { state.category.add( cat ); } );
+		}
+		if ( bfData.defaultTag ) {
+			bfData.defaultTag.forEach( function ( tag ) { state.tag.add( tag ); } );
+		}
 		Object.keys( state ).forEach( function ( axis ) { syncPillState( axis ); } );
 		renderChips();
-		updateMeta( pfData.hasMore, pfData.total );
+		updateMeta( bfData.hasMore, bfData.total );
 		updatePillAvailability();
 	} else if ( ! restoreFilterState() ) {
-		updateMeta( pfData.hasMore, pfData.total );
+		updateMeta( bfData.hasMore, bfData.total );
 		updatePillAvailability();
 	}
 

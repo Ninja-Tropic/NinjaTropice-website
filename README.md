@@ -108,6 +108,78 @@ npm run build:prod
 
 ---
 
+## Shortcodes
+
+### `[projects_grid]`
+
+Muestra el grid de proyectos con filtros interactivos (Industry, Animation Style, Art Style, Training Topic).
+
+| Atributo | Default | Descripción |
+|----------|---------|-------------|
+| `per_page` | `12` | Proyectos por página |
+| `orderby` | `menu_order` | Campo de ordenamiento (`menu_order`, `date`, `title`) |
+| `order` | `ASC` | Dirección (`ASC` / `DESC`) |
+| `category` | — | Slug de categoría para pre-filtrar (separar varios con coma) |
+
+**Ejemplos:**
+```
+[projects_grid]
+[projects_grid per_page="6" order="DESC"]
+[projects_grid category="motion-graphics"]
+[projects_grid category="motion-graphics,explainer-video"]
+```
+
+---
+
+### `[blog_grid]`
+
+Muestra el grid de artículos del blog con filtros por Category y Topic (tag).
+
+| Atributo | Default | Descripción |
+|----------|---------|-------------|
+| `per_page` | `9` | Artículos por página |
+| `orderby` | `date` | Campo de ordenamiento |
+| `order` | `DESC` | Dirección (`ASC` / `DESC`) |
+| `category` | — | Slug de categoría para pre-filtrar (separar varios con coma) |
+| `tag` | — | Slug de tag para pre-filtrar (separar varios con coma) |
+
+**Ejemplos:**
+```
+[blog_grid]
+[blog_grid per_page="6"]
+[blog_grid category="tutorials"]
+[blog_grid category="tutorials" tag="motion-graphics"]
+```
+
+---
+
+### `[case_studies_grid]`
+
+Muestra el grid de case studies con botón "Load more".
+
+| Atributo | Default | Descripción |
+|----------|---------|-------------|
+| `per_page` | `9` | Case studies por página |
+| `orderby` | `date` | Campo de ordenamiento |
+| `order` | `DESC` | Dirección (`ASC` / `DESC`) |
+| `category` | — | Slug de categoría para pre-filtrar (separar varios con coma) |
+
+**Ejemplos:**
+```
+[case_studies_grid]
+[case_studies_grid per_page="3"]
+[case_studies_grid category="saas"]
+[case_studies_grid category="saas,fintech"]
+```
+
+---
+
+### Cómo encontrar el slug de una categoría
+
+En el WP Admin ve a **Posts → Categories**. El slug aparece en la columna *Slug* de cada categoría. Siempre es minúsculas con guiones: `motion-graphics`, `saas`, `training-videos`.
+
+---
+
 ## Estructura del proyecto
 
 ```
