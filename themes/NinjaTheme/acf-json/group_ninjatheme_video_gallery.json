@@ -1,0 +1,198 @@
+{
+    "key": "group_ninjatheme_video_gallery",
+    "title": "Block: Video Gallery",
+    "fields": [
+        {
+            "key": "field_vg_tabs",
+            "label": "Tabs",
+            "name": "tabs",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Each tab becomes a filter pill. Add a title, description, and the video sections that belong to it.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 1,
+            "max": 0,
+            "collapsed": "field_vg_tab_title",
+            "button_label": "Add Tab",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_vg_tab_title",
+                    "label": "Tab Title",
+                    "name": "tab_title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Shown as a filter pill above the gallery.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "e.g. Articulate Storyline 360",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_vg_tabs"
+                },
+                {
+                    "key": "field_vg_tab_description",
+                    "label": "Tab Description",
+                    "name": "tab_description",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "Optional short description shown below the pills when this tab is active.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "rows": 3,
+                    "new_lines": "br",
+                    "parent_repeater": "field_vg_tabs"
+                },
+                {
+                    "key": "field_vg_sections",
+                    "label": "Sections",
+                    "name": "sections",
+                    "aria-label": "",
+                    "type": "repeater",
+                    "instructions": "Each row becomes a video card in this tab.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "layout": "block",
+                    "pagination": 0,
+                    "min": 0,
+                    "max": 0,
+                    "collapsed": "field_vg_section_title",
+                    "button_label": "Add Section",
+                    "rows_per_page": 20,
+                    "parent_repeater": "field_vg_tabs",
+                    "sub_fields": [
+                        {
+                            "key": "field_vg_section_title",
+                            "label": "Title",
+                            "name": "title",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "Section title",
+                            "prepend": "",
+                            "append": "",
+                            "parent_repeater": "field_vg_sections"
+                        },
+                        {
+                            "key": "field_vg_section_tagline",
+                            "label": "Tagline",
+                            "name": "tagline",
+                            "aria-label": "",
+                            "type": "wysiwyg",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "tabs": "all",
+                            "toolbar": "full",
+                            "media_upload": 1,
+                            "default_value": "",
+                            "delay": 0,
+                            "parent_repeater": "field_vg_sections"
+                        },
+                        {
+                            "key": "field_vg_section_description",
+                            "label": "Description",
+                            "name": "description",
+                            "aria-label": "",
+                            "type": "wysiwyg",
+                            "instructions": "",
+                            "required": false,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "tabs": "all",
+                            "toolbar": "full",
+                            "media_upload": 1,
+                            "default_value": "",
+                            "delay": 0,
+                            "parent_repeater": "field_vg_sections"
+                        },
+                        {
+                            "key": "field_vg_section_video",
+                            "label": "Video URL",
+                            "name": "video_url",
+                            "aria-label": "",
+                            "type": "url",
+                            "instructions": "Paste a YouTube or Vimeo URL.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "https:\/\/www.youtube.com\/watch?v=...",
+                            "parent_repeater": "field_vg_sections"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/video-gallery"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "modified": 1781492048
+}

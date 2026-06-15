@@ -733,6 +733,22 @@ function ninjatheme_register_acf_assets() {
 		),
 	));
 
+	// Register Video Gallery block
+	acf_register_block_type(array(
+		'name'            => 'video-gallery',
+		'title'           => __('Video Gallery'),
+		'description'     => __('A filtered grid of video cards organised by tabs. Pills let visitors show all or filter by category.'),
+		'render_template' => 'blocks/video-gallery.php',
+		'category'        => 'media',
+		'icon'            => 'format-video',
+		'keywords'        => array('video', 'gallery', 'tabs', 'filter'),
+		'supports'        => array(
+			'align'  => false,
+			'anchor' => true,
+			'jsx'    => false,
+		),
+	));
+
 	// Register Tab Panel helper block for InnerBlocks mode
 	acf_register_block_type(array(
 		'name'              => 'tab-panel',

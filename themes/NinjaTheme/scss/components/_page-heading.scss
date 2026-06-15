@@ -138,10 +138,14 @@
 
     &__description {
         max-width: 38rem;
-        color: rgba(56, 41, 29, 0.78);
+        
+        h2.wp-block-heading {
+        	margin-bottom: 15px;
+    	}
 
         > *:first-child {
             margin-top: 0;
+            margin-bottom: 15px;
         }
 
         > *:last-child {
@@ -394,4 +398,7 @@
             transition: none;
         }
     }
+}
+h2.wp-block-heading {
+    margin-bottom: 15px;
 }
