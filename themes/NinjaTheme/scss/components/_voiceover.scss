@@ -1,0 +1,82 @@
+@use '../variables' as *;
+
+.page-id-502 {
+    .wp-block-group {
+        counter-reset: voice-counter;
+    }
+
+    .wp-block-group.is-layout-flex {
+        align-items: center;
+    }
+
+    .wp-block-columns.container {
+        gap: 1.5rem;
+    }
+
+    .wp-block-column.mb-6 {
+        counter-increment: voice-counter;
+        position: relative;
+        background: linear-gradient(180deg, #ffffff 0%, #fff8f3 100%);
+        border: 1px solid rgba(255, 104, 27, 0.1);
+        border-radius: 1.25rem;
+        padding: 1.5rem 1.5rem 1.25rem;
+        box-shadow:
+            0 4px 16px rgba(91, 64, 40, 0.06),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow:
+                0 12px 28px rgba(255, 104, 27, 0.12),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+        }
+
+        &::before {
+            content: counter(voice-counter);
+            position: absolute;
+            top: -0.85rem;
+            left: 1.25rem;
+            width: 1.75rem;
+            height: 1.75rem;
+            background: linear-gradient(135deg, #ff681b, #ff8641);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.78rem;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(255, 104, 27, 0.3);
+        }
+
+        h3.wp-block-heading {
+            margin: 0.25rem 0 1rem;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1f1812;
+            letter-spacing: -0.02em;
+        }
+
+        .wp-block-audio {
+            margin: 0;
+
+            audio {
+                width: 100%;
+                height: 36px;
+                border-radius: 999px;
+                accent-color: #ff681b;
+            }
+        }
+    }
+
+    .wp-block-group > h2.wp-block-heading {
+        font-size: clamp(1.3rem, 2vw, 1.6rem);
+        color: #1f1812;
+        letter-spacing: -0.03em;
+        padding-bottom: 0.5rem;
+        border-bottom: 3px solid #ff681b;
+        display: inline-block;
+        margin-bottom: 0;
+    }
+}

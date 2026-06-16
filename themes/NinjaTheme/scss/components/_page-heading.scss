@@ -266,10 +266,10 @@
         display: block;
         width: 100%;
         height: auto;
-        min-height: 22rem;
+        min-height: auto;
         object-fit: cover;
         border-radius: 1.3rem;
-        aspect-ratio: 4 / 4.2;
+        aspect-ratio: revert-layer;
         box-shadow: 0 16px 42px rgba(0, 0, 0, 0.08);
     }
 
