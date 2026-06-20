@@ -1,5 +1,15 @@
 @use 'variables' as *;
 
+// Limit portrait images in column blocks on mobile
+@media (max-width: 767px) {
+    .wp-block-columns .wp-block-column .wp-block-image img {
+        max-height: 400px;
+        width: auto;
+        margin: 0 auto;
+        object-fit: contain;
+    }
+}
+
 // Main Content
 .site-main {
     //padding: $spacing-md 0;

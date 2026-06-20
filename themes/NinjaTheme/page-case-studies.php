@@ -52,7 +52,7 @@ wp_localize_script( 'ninjatheme-case-studies-filter', 'csfData', array(
 
 	<!-- ① HERO — title + description / featured image (50/50, direction via toggle) -->
 	<div class="cs-archive__hero">
-		<div class="container cs-archive__hero-inner<?php echo $image_left ? ' cs-archive__hero-inner--rtl' : ''; ?>">
+		<div class="cs-archive__hero-inner<?php echo $image_left ? ' cs-archive__hero-inner--rtl' : ''; ?>">
 
 			<?php if ( has_post_thumbnail() && $image_left ) : ?>
 			<div class="cs-archive__hero-media">

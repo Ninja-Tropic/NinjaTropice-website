@@ -133,6 +133,12 @@
             line-height: 1.16;
             letter-spacing: -0.03em;
             color: #2a2d33;
+            padding-left: 0;
+
+            &::before {
+                display: none !important;
+                content: none !important;
+            }
         }
 
         p {
