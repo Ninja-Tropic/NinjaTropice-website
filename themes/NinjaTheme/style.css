@@ -576,10 +576,10 @@ i, em {
     border: 1px solid rgba(255, 255, 255, 0.6);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
     border-radius: 16px;
-    display: none;
+    display: grid;
     opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    visibility: hidden;
+    transition: opacity 0s linear 0.3s, visibility 0s linear 0.3s;
     grid-template-columns: repeat(3, 1fr);
     gap: 40px;
     margin-top: 0;
@@ -587,10 +587,10 @@ i, em {
   .clean-menu .sub-menu::before {
     content: "";
     position: absolute;
-    top: -8px;
+    top: -20px;
     left: 0;
     right: 0;
-    height: 8px;
+    height: 20px;
   }
   .clean-menu .sub-menu {
     min-width: 800px;
@@ -633,19 +633,23 @@ i, em {
     display: flex;
     flex-direction: column;
   }
-  .clean-menu .menu-item-has-children:hover > .sub-menu {
-    display: grid;
+  .clean-menu .menu-item-has-children:hover > .sub-menu,
+  .clean-menu .menu-item-has-children:has(> .sub-menu:hover) > .sub-menu {
     opacity: 1;
+    visibility: visible;
     transform: translateX(-50%) translateY(0);
     pointer-events: auto;
     z-index: 1000;
+    transition: opacity 0.25s ease 0s, visibility 0s linear 0s;
   }
-  .clean-menu .has-mega-menu:hover > .sub-menu {
-    display: grid;
+  .clean-menu .has-mega-menu:hover > .sub-menu,
+  .clean-menu .has-mega-menu:has(> .sub-menu:hover) > .sub-menu {
     transform: translateX(-50%) translateY(0);
     opacity: 1;
+    visibility: visible;
     pointer-events: auto;
     z-index: 1000;
+    transition: opacity 0.25s ease 0s, visibility 0s linear 0s;
   }
   .site-header.scrolled .clean-menu .sub-menu {
     background: rgba(255, 255, 255, 0.9);
@@ -660,7 +664,10 @@ i, em {
     /* ====================================================================== */
   }
   .clean-menu .has-mega-menu > .sub-menu {
-    display: none;
+    display: grid;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0s linear 0.3s, visibility 0s linear 0.3s;
     grid-template-columns: repeat(3, 1fr);
     min-width: 800px;
     max-width: calc(100vw - 80px);
@@ -675,10 +682,10 @@ i, em {
   .clean-menu .has-mega-menu > .sub-menu::before {
     content: "";
     position: absolute;
-    top: -8px;
+    top: -20px;
     left: 0;
     right: 0;
-    height: 8px;
+    height: 20px;
   }
   .clean-menu .has-mega-menu > .sub-menu > li {
     display: flex;
@@ -738,7 +745,7 @@ i, em {
   .clean-menu .has-mega-menu > .sub-menu > li .sub-menu li.current-menu-item > a, .clean-menu .has-mega-menu > .sub-menu > li .sub-menu li.current-menu-ancestor > a, .clean-menu .has-mega-menu > .sub-menu > li .sub-menu li.current-menu-parent > a, .clean-menu .has-mega-menu > .sub-menu > li .sub-menu li.current_page_item > a, .clean-menu .has-mega-menu > .sub-menu > li .sub-menu li.current_page_parent > a, .clean-menu .has-mega-menu > .sub-menu > li .sub-menu li.current_page_ancestor > a {
     color: #FF641B;
   }
-  .clean-menu .has-mega-menu:hover > .sub-menu > li .sub-menu {
+  .clean-menu .has-mega-menu:hover > .sub-menu > li .sub-menu, .clean-menu .has-mega-menu:has(> .sub-menu:hover) > .sub-menu > li .sub-menu {
     position: static;
     visibility: visible;
     opacity: 1;
@@ -753,7 +760,7 @@ i, em {
        2nd level items are displayed in 3 columns with simple styling */
   }
   .clean-menu li.has-mega-menu-simple.menu-item-has-children > .sub-menu {
-    display: none !important;
+    display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
     grid-auto-flow: row !important;
     min-width: 800px !important;
@@ -773,8 +780,8 @@ i, em {
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12) !important;
     border-radius: 16px !important;
     opacity: 0 !important;
-    pointer-events: none !important;
-    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    visibility: hidden !important;
+    transition: opacity 0s linear 0.3s, visibility 0s linear 0.3s !important;
     width: auto !important;
     height: auto !important;
     text-align: left !important;
@@ -783,10 +790,10 @@ i, em {
   .clean-menu li.has-mega-menu-simple.menu-item-has-children > .sub-menu::before {
     content: "";
     position: absolute;
-    top: -8px;
+    top: -20px;
     left: 0;
     right: 0;
-    height: 8px;
+    height: 20px;
   }
   .clean-menu li.has-mega-menu-simple.menu-item-has-children > .sub-menu > li {
     display: block !important;
@@ -823,11 +830,12 @@ i, em {
     height: 0 !important;
     overflow: hidden !important;
   }
-  .clean-menu li.has-mega-menu-simple.menu-item-has-children:hover > .sub-menu {
-    display: grid !important;
+  .clean-menu li.has-mega-menu-simple.menu-item-has-children:hover > .sub-menu, .clean-menu li.has-mega-menu-simple.menu-item-has-children:has(> .sub-menu:hover) > .sub-menu {
     opacity: 1 !important;
+    visibility: visible !important;
     pointer-events: auto !important;
     z-index: 1000 !important;
+    transition: opacity 0.25s ease 0s, visibility 0s linear 0s !important;
   }
   .site-header.scrolled .clean-menu li.has-mega-menu-simple.menu-item-has-children > .sub-menu {
     background: rgba(255, 255, 255, 0.9) !important;
