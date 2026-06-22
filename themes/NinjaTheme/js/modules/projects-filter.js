@@ -586,22 +586,67 @@
 		return false;
 	}
 
+	// ── Query-param pre-selection ─────────────────────────────────────────────────
+	// Supports links like ?category=Employee+Onboarding&industry=Education
+	// Param names match axisParams values; matching is case-insensitive.
+
+	function restoreFromQueryParams() {
+		if ( ! window.URLSearchParams ) return false;
+
+		var params = new URLSearchParams( window.location.search );
+		if ( ! params.toString() ) return false;
+
+		var paramToAxis = {};
+		Object.keys( axisParams ).forEach( function ( axis ) {
+			paramToAxis[ axisParams[ axis ] ] = axis;
+		} );
+
+		var hasActive = false;
+
+		params.forEach( function ( rawVal, paramName ) {
+			var axis = paramToAxis[ paramName ];
+			if ( ! axis || ! state[ axis ] ) return;
+
+			var normalized = rawVal.toLowerCase();
+			var match = allPills.find( function ( p ) {
+				return p.dataset.axis === axis &&
+					p.dataset.value !== '' &&
+					p.dataset.value.toLowerCase() === normalized;
+			} );
+
+			if ( match ) {
+				state[ axis ].add( match.dataset.value );
+				hasActive = true;
+			}
+		} );
+
+		if ( hasActive ) {
+			Object.keys( state ).forEach( function ( axis ) { syncPillState( axis ); } );
+			renderChips();
+			fetchProjects( 1, true );
+			return true;
+		}
+		return false;
+	}
+
 	// ── Init ──────────────────────────────────────────────────────────────────────
 
 	initArrows();
 	initStickyBar();
 
-	if ( pfData.defaultCategory && pfData.defaultCategory.length ) {
-		pfData.defaultCategory.forEach( function ( cat ) {
-			state.category.add( cat );
-		} );
-		Object.keys( state ).forEach( function ( axis ) { syncPillState( axis ); } );
-		renderChips();
-		updateMeta( pfData.hasMore, pfData.total );
-		updatePillAvailability();
-	} else if ( ! restoreFilterState() ) {
-		updateMeta( pfData.hasMore, pfData.total );
-		updatePillAvailability();
+	if ( ! restoreFromQueryParams() ) {
+		if ( pfData.defaultCategory && pfData.defaultCategory.length ) {
+			pfData.defaultCategory.forEach( function ( cat ) {
+				state.category.add( cat );
+			} );
+			Object.keys( state ).forEach( function ( axis ) { syncPillState( axis ); } );
+			renderChips();
+			updateMeta( pfData.hasMore, pfData.total );
+			updatePillAvailability();
+		} else if ( ! restoreFilterState() ) {
+			updateMeta( pfData.hasMore, pfData.total );
+			updatePillAvailability();
+		}
 	}
 
 } )();
