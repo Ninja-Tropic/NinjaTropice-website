@@ -96,6 +96,24 @@
                 }
             }
 
+            // Extend hover zone below the nav item to bridge the gap to the fixed dropdown.
+            // When the mouse crosses from the li into this invisible area, li:hover stays
+            // true, keeping the submenu visible during the diagonal cursor movement.
+            &.menu-item-has-children,
+            &.has-mega-menu,
+            &.has-mega-menu-simple {
+                position: relative;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    top: 100%;
+                    left: -20px;
+                    right: -20px;
+                    height: 60px;
+                }
+            }
+
             // Desktop indicator for items with children
             &.menu-item-has-children > a::after,
             &.has-mega-menu > a::after {
@@ -172,11 +190,10 @@
             border: 1px solid rgba(255, 255, 255, 0.6);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
             border-radius: 16px;
-            display: grid;
+            display: none;
             opacity: 0;
-            visibility: hidden;
-            // Delay hiding so mouse has time to traverse the gap between nav and dropdown
-            transition: opacity 0s linear 0.3s, visibility 0s linear 0.3s;
+            pointer-events: none;
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             grid-template-columns: repeat(3, 1fr);
             gap: 40px;
             margin-top: 0;
@@ -242,25 +259,21 @@
             }
         }
 
-        .menu-item-has-children:hover > .sub-menu,
-        .menu-item-has-children:has(> .sub-menu:hover) > .sub-menu {
+        .menu-item-has-children:hover > .sub-menu {
+            display: grid;
             opacity: 1;
-            visibility: visible;
             transform: translateX(-50%) translateY(0);
             pointer-events: auto;
             z-index: 1000;
-            transition: opacity 0.25s ease 0s, visibility 0s linear 0s;
         }
 
         // Mega menu hover - centered transform
-        .has-mega-menu:hover > .sub-menu,
-        .has-mega-menu:has(> .sub-menu:hover) > .sub-menu {
+        .has-mega-menu:hover > .sub-menu {
+            display: grid;
             transform: translateX(-50%) translateY(0);
             opacity: 1;
-            visibility: visible;
             pointer-events: auto;
             z-index: 1000;
-            transition: opacity 0.25s ease 0s, visibility 0s linear 0s;
         }
 
         // Scrolled state - submenu blur effect
@@ -277,10 +290,7 @@
         /* ====================================================================== */
         .has-mega-menu {
             > .sub-menu {
-                display: grid;
-                opacity: 0;
-                visibility: hidden;
-                transition: opacity 0s linear 0.3s, visibility 0s linear 0.3s;
+                display: none;
                 grid-template-columns: repeat(3, 1fr);
                 min-width: 800px;
                 max-width: calc(100vw - 80px);
@@ -380,8 +390,7 @@
                 }
             }
 
-            &:hover > .sub-menu > li .sub-menu,
-            &:has(> .sub-menu:hover) > .sub-menu > li .sub-menu {
+            &:hover > .sub-menu > li .sub-menu {
                 position: static;
                 visibility: visible;
                 opacity: 1;
@@ -397,7 +406,7 @@
            2nd level items are displayed in 3 columns with simple styling */
         li.has-mega-menu-simple.menu-item-has-children {
             > .sub-menu {
-                display: grid !important;
+                display: none !important;
                 grid-template-columns: repeat(3, 1fr) !important;
                 grid-auto-flow: row !important;
                 min-width: 800px !important;
@@ -417,9 +426,8 @@
                 box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12) !important;
                 border-radius: 16px !important;
                 opacity: 0 !important;
-                visibility: hidden !important;
-                // Delay hiding so mouse has time to traverse the gap between nav and dropdown
-                transition: opacity 0s linear 0.3s, visibility 0s linear 0.3s !important;
+                pointer-events: none !important;
+                transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
                 width: auto !important;
                 height: auto !important;
                 text-align: left !important;
@@ -482,13 +490,11 @@
                 }
             }
 
-            &:hover > .sub-menu,
-            &:has(> .sub-menu:hover) > .sub-menu {
+            &:hover > .sub-menu {
+                display: grid !important;
                 opacity: 1 !important;
-                visibility: visible !important;
                 pointer-events: auto !important;
                 z-index: 1000 !important;
-                transition: opacity 0.25s ease 0s, visibility 0s linear 0s !important;
             }
         }
 
