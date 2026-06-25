@@ -37,8 +37,45 @@
 		category       : 'cats',
 	};
 
-	var currentPage = 1;
-	var isLoading   = false;
+	var currentPage  = 1;
+	var isLoading    = false;
+	var searchQuery  = '';
+	var searchTimer  = null;
+
+	// ── Search input ──────────────────────────────────────────────────────────────
+
+	var searchInput = document.getElementById( 'pf-search' );
+
+	if ( searchInput ) {
+		searchInput.addEventListener( 'input', function () {
+			clearTimeout( searchTimer );
+			searchTimer = setTimeout( function () {
+				searchQuery = searchInput.value.trim();
+				fetchProjects( 1, true );
+			}, 350 );
+		} );
+
+		searchInput.addEventListener( 'keydown', function ( e ) {
+			if ( e.key === 'Escape' ) {
+				searchInput.value = '';
+				searchQuery = '';
+				fetchProjects( 1, true );
+			}
+		} );
+	}
+
+	// Sync the sticky bar's mirrored search input.
+	var stickySearchInput = document.querySelector( '.pf__sticky-search input' );
+	if ( stickySearchInput && searchInput ) {
+		stickySearchInput.addEventListener( 'input', function () {
+			searchInput.value = stickySearchInput.value;
+			clearTimeout( searchTimer );
+			searchTimer = setTimeout( function () {
+				searchQuery = searchInput.value.trim();
+				fetchProjects( 1, true );
+			}, 350 );
+		} );
+	}
 
 	// ── Cascading pill availability ───────────────────────────────────────────────
 
@@ -97,6 +134,10 @@
 		params.set( 'per_page', String( pfData.perPage ) );
 		params.set( 'orderby',  pfData.orderby );
 		params.set( 'order',    pfData.order );
+
+		if ( searchQuery ) {
+			params.set( 'search', searchQuery );
+		}
 
 		Object.keys( state ).forEach( function ( axis ) {
 			var param = axisParams[ axis ];
@@ -204,7 +245,7 @@
 
 		// Empty state.
 		if ( emptyMsg ) {
-			emptyMsg.hidden = grid.children.length > 0;
+			emptyMsg.hidden = total > 0;
 		}
 
 		// Count line.
@@ -306,6 +347,9 @@
 			state[ axis ].clear();
 			syncPillState( axis );
 		} );
+		searchQuery = '';
+		if ( searchInput ) searchInput.value = '';
+		if ( stickySearchInput ) stickySearchInput.value = '';
 		renderChips();
 		fetchProjects( 1, true );
 	}

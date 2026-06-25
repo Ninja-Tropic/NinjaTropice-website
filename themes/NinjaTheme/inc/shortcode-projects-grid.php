@@ -173,6 +173,28 @@ function ninjatheme_get_all_projects_filter_data_for_js() {
 }
 
 /**
+ * Returns a thumbnail URL from a YouTube or Vimeo video URL.
+ * Vimeo thumbnails must be pre-cached in post meta (_video_thumbnail_url).
+ */
+function ninjatheme_video_thumbnail_url( $video_url, $post_id ) {
+	if ( empty( $video_url ) ) {
+		return '';
+	}
+
+	// YouTube: youtu.be/{id} or youtube.com/watch?v={id}
+	if ( preg_match( '/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|v\/))([a-zA-Z0-9_-]{11})/', $video_url, $m ) ) {
+		return 'https://img.youtube.com/vi/' . $m[1] . '/maxresdefault.jpg';
+	}
+
+	// Vimeo: use pre-cached meta
+	if ( strpos( $video_url, 'vimeo' ) !== false ) {
+		return (string) get_post_meta( $post_id, '_video_thumbnail_url', true );
+	}
+
+	return '';
+}
+
+/**
  * Render a single project card (shared by shortcode + AJAX handler).
  *
  * @param int $post_id
@@ -196,6 +218,15 @@ function ninjatheme_render_project_card( $post_id ) {
 			)
 		)
 		: '';
+
+	if ( ! $thumbnail ) {
+		$video_url        = get_field( 'project_video', $post_id );
+		$video_thumb_url  = ninjatheme_video_thumbnail_url( $video_url, $post_id );
+		if ( $video_thumb_url ) {
+			$fallback  = esc_url( str_replace( 'maxresdefault', 'hqdefault', $video_thumb_url ) );
+			$thumbnail = '<img class="project-archive__image" src="' . esc_url( $video_thumb_url ) . '" alt="' . esc_attr( $title ) . '" width="1280" height="720" loading="lazy" onerror="this.onerror=null;this.src=\'' . $fallback . '\'">';
+		}
+	}
 
 	ob_start();
 	?>
@@ -266,6 +297,7 @@ function ninjatheme_projects_filter_ajax() {
 	$f_anim_style = array_values( array_filter( array_map( 'sanitize_text_field', (array) ( $_POST['animation_style'] ?? array() ) ) ) );
 	$f_art_style  = array_values( array_filter( array_map( 'sanitize_text_field', (array) ( $_POST['art_style']       ?? array() ) ) ) );
 	$f_category   = array_values( array_filter( array_map( 'sanitize_text_field', (array) ( $_POST['category']        ?? array() ) ) ) );
+	$f_search     = sanitize_text_field( $_POST['search'] ?? '' );
 
 	$meta_query = array( 'relation' => 'AND' );
 
@@ -287,6 +319,60 @@ function ninjatheme_projects_filter_ajax() {
 		'order'          => $order,
 		'post_status'    => 'publish',
 	);
+
+	if ( $f_search !== '' ) {
+		// Find projects by title match.
+		$title_q = new WP_Query( array(
+			'post_type'      => 'project',
+			'post_status'    => 'publish',
+			's'              => $f_search,
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+		) );
+		$ids_by_title = (array) $title_q->posts;
+		wp_reset_postdata();
+
+		// Find projects matching category name, industry, animation style, or art style.
+		global $wpdb;
+		$like = '%' . $wpdb->esc_like( $f_search ) . '%';
+
+		$ids_by_cat = $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT DISTINCT p.ID
+				 FROM {$wpdb->posts} p
+				 INNER JOIN {$wpdb->term_relationships} tr ON p.ID = tr.object_id
+				 INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+				 INNER JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
+				 WHERE tt.taxonomy = 'category'
+				   AND t.name LIKE %s
+				   AND p.post_type = 'project'
+				   AND p.post_status = 'publish'",
+				$like
+			)
+		);
+
+		$ids_by_meta = $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT DISTINCT pm.post_id
+				 FROM {$wpdb->postmeta} pm
+				 INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
+				 WHERE pm.meta_key IN ('project_industry', 'project_animation_style', 'project_art_style')
+				   AND pm.meta_value LIKE %s
+				   AND p.post_type = 'project'
+				   AND p.post_status = 'publish'",
+				$like
+			)
+		);
+
+		$merged_ids = array_unique( array_map( 'intval', array_merge( $ids_by_title, $ids_by_cat, $ids_by_meta ) ) );
+
+		if ( ! empty( $merged_ids ) ) {
+			$query_args['post__in'] = $merged_ids;
+			$query_args['orderby']  = 'post__in';
+		} else {
+			$query_args['post__in'] = array( 0 );
+		}
+	}
 
 	if ( count( $meta_query ) > 1 ) {
 		$query_args['meta_query'] = $meta_query;

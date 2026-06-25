@@ -40,10 +40,6 @@ get_header(); ?>
                             </div>
                             <?php endif; ?>
                             <div class="post-author-card__row">
-                                <span class="post-author-card__icon">✉️</span>
-                                <a class="post-author-card__email" href="mailto:<?php echo esc_attr( get_the_author_meta( 'user_email' ) ); ?>"><?php echo esc_html( get_the_author_meta( 'user_email' ) ); ?></a>
-                            </div>
-                            <div class="post-author-card__row">
                                 <span class="post-author-card__icon">📅</span>
                                 <span class="post-author-card__date"><?php echo get_the_date(); ?></span>
                             </div>

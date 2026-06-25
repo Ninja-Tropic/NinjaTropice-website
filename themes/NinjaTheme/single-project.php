@@ -50,14 +50,41 @@ while ( have_posts() ) :
 	$has_meta     = $industry || $main_goal || $animation_style || ( $training_topic && ! is_wp_error( $training_topic ) ) || $art_style;
 	$embed_url    = ninjatheme_project_embed_url( $video_url );
 	$has_media    = $embed_url || has_post_thumbnail();
+
+	// ── VideoObject / CreativeWork schema ──────────────────────────────────────
+	$schema = array(
+		'@context' => 'https://schema.org',
+		'@type'    => 'CreativeWork',
+		'name'     => get_the_title(),
+		'url'      => get_permalink(),
+		'author'   => array(
+			'@type' => 'Organization',
+			'name'  => 'Ninja Tropic',
+			'url'   => home_url(),
+		),
+	);
+
+	if ( $video_url ) {
+		$thumb_url = ninjatheme_video_thumbnail_url( $video_url, get_the_ID() );
+		$schema['@type']        = 'VideoObject';
+		$schema['embedUrl']     = $embed_url ?: $video_url;
+		$schema['thumbnailUrl'] = $thumb_url ?: '';
+		$schema['uploadDate']   = get_the_date( 'c' );
+		$schema['description']  = wp_strip_all_tags( get_the_excerpt() ?: get_the_title() );
+	}
+
+	if ( $industry ) {
+		$schema['genre'] = $industry;
+	}
 ?>
+<script type="application/ld+json"><?php echo wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ); ?></script>
 
 <main id="main" class="site-main project-single">
 
 	<!-- ── Back button ── -->
 	<div class="project-single__back-wrap">
 		<div class="container">
-			<a href="<?php echo esc_url( $archive_link ?: home_url( '/projects/' ) ); ?>"
+			<a href="<?php echo esc_url( home_url( '/projects/' ) ); ?>"
 			   class="project-single__back-link">
 				<svg width="8" height="14" viewBox="0 0 8 14" fill="none" aria-hidden="true">
 					<path d="M7 1L1 7l6 6" stroke="currentColor" stroke-width="1.75"
@@ -153,16 +180,45 @@ while ( have_posts() ) :
 
 	<!-- ── Related projects carousel ── -->
 	<?php
-	$related_query = new WP_Query( array(
-		'post_type'      => 'project',
-		'posts_per_page' => 6,
-		'post__not_in'   => array( get_the_ID() ),
-		'orderby'        => 'rand',
-		'no_found_rows'  => true,
-	) );
+	$current_id   = get_the_ID();
+	$cur_industry = get_field( 'project_industry', $current_id );
+	$cur_anim     = get_field( 'project_animation_style', $current_id );
+	$cur_art      = get_field( 'project_art_style', $current_id );
+
+	$related_ids = array();
+
+	// Collect related projects by shared meta values.
+	if ( $cur_industry || $cur_anim || $cur_art ) {
+		$meta_query = array( 'relation' => 'OR' );
+		if ( $cur_industry ) $meta_query[] = array( 'key' => 'project_industry',        'value' => $cur_industry );
+		if ( $cur_anim )     $meta_query[] = array( 'key' => 'project_animation_style', 'value' => $cur_anim );
+		if ( $cur_art )      $meta_query[] = array( 'key' => 'project_art_style',       'value' => $cur_art );
+
+		$related_ids = get_posts( array(
+			'post_type'      => 'project',
+			'posts_per_page' => 9,
+			'post__not_in'   => array( $current_id ),
+			'fields'         => 'ids',
+			'orderby'        => 'rand',
+			'meta_query'     => $meta_query,
+		) );
+	}
+
+	// Fill remaining slots with random projects.
+	if ( count( $related_ids ) < 9 ) {
+		$exclude   = array_merge( array( $current_id ), $related_ids );
+		$filler    = get_posts( array(
+			'post_type'      => 'project',
+			'posts_per_page' => 9 - count( $related_ids ),
+			'post__not_in'   => $exclude,
+			'fields'         => 'ids',
+			'orderby'        => 'rand',
+		) );
+		$related_ids = array_merge( $related_ids, $filler );
+	}
 	?>
 
-	<?php if ( $related_query->have_posts() ) : ?>
+	<?php if ( ! empty( $related_ids ) ) : ?>
 	<section class="project-single__related card--carousel" aria-label="More projects">
 		<div class="container">
 			<div class="project-single__related-header">
@@ -180,25 +236,37 @@ while ( have_posts() ) :
 
 		<div class="card__track-wrap">
 			<div class="card__track" role="list">
-				<?php while ( $related_query->have_posts() ) : $related_query->the_post(); ?>
+				<?php foreach ( $related_ids as $related_id ) :
+					$r_title     = get_the_title( $related_id );
+					$r_permalink = get_permalink( $related_id );
+					$r_thumb     = has_post_thumbnail( $related_id )
+						? get_the_post_thumbnail( $related_id, 'large', array(
+							'class'   => 'project-single__related-image',
+							'loading' => 'lazy',
+							'alt'     => esc_attr( $r_title ),
+						) )
+						: '';
+
+					if ( ! $r_thumb ) {
+						$r_video_url = get_field( 'project_video', $related_id );
+						$r_thumb_url = ninjatheme_video_thumbnail_url( $r_video_url, $related_id );
+						if ( $r_thumb_url ) {
+							$r_fallback = esc_url( str_replace( 'maxresdefault', 'hqdefault', $r_thumb_url ) );
+						$r_thumb = '<img class="project-single__related-image" src="' . esc_url( $r_thumb_url ) . '" alt="' . esc_attr( $r_title ) . '" width="1280" height="720" loading="lazy" onerror="this.onerror=null;this.src=\'' . $r_fallback . '\'">';
+						}
+					}
+				?>
 				<article class="card__item project-single__related-card" role="listitem">
-					<a class="project-single__related-link" href="<?php the_permalink(); ?>">
-						<div class="project-single__related-media<?php echo has_post_thumbnail() ? '' : ' project-single__related-media--empty'; ?>">
-							<?php if ( has_post_thumbnail() ) : ?>
-								<?php the_post_thumbnail( 'large', array(
-									'class'   => 'project-single__related-image',
-									'loading' => 'lazy',
-									'alt'     => get_the_title(),
-								) ); ?>
-							<?php endif; ?>
+					<a class="project-single__related-link" href="<?php echo esc_url( $r_permalink ); ?>">
+						<div class="project-single__related-media<?php echo $r_thumb ? '' : ' project-single__related-media--empty'; ?>">
+							<?php echo $r_thumb; ?>
 						</div>
 						<div class="project-single__related-body">
-							<h3 class="project-single__related-item-title"><?php the_title(); ?></h3>
+							<h3 class="project-single__related-item-title"><?php echo esc_html( $r_title ); ?></h3>
 						</div>
 					</a>
 				</article>
-				<?php endwhile; ?>
-				<?php wp_reset_postdata(); ?>
+				<?php endforeach; ?>
 			</div>
 		</div>
 	</section>

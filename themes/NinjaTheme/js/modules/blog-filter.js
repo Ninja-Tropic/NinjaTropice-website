@@ -33,6 +33,7 @@
 
 	var currentPage = 1;
 	var isLoading   = false;
+	var hasMore     = !! bfData.hasMore;
 
 	// ── Cascading pill availability ───────────────────────────────────────────────
 
@@ -181,9 +182,12 @@
 
 	// ── Meta bar ──────────────────────────────────────────────────────────────────
 
-	function updateMeta( hasMore, total ) {
+	function updateMeta( newHasMore, total ) {
+		hasMore = !! newHasMore;
+
 		if ( loadMoreWrap ) {
-			loadMoreWrap.hidden = ! hasMore;
+			loadMoreWrap.hidden        = ! hasMore;
+			loadMoreWrap.style.display = hasMore ? '' : 'none';
 		}
 
 		if ( emptyMsg ) {
@@ -317,6 +321,10 @@
 
 	if ( loadMoreBtn ) {
 		loadMoreBtn.addEventListener( 'click', function () {
+			if ( ! hasMore ) {
+				updateMeta( false, 0 );
+				return;
+			}
 			fetchPosts( currentPage + 1, false );
 		} );
 	}
