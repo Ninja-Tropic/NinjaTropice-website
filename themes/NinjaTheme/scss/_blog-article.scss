@@ -354,8 +354,13 @@ body.single-post {
 .post-body__toc {
     flex: 0 0 360px;
     position: sticky;
-    top: 2rem;
+    top: 10rem;
     align-self: flex-start;
+    max-height: calc(82vh - 4rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
 
     nav ul {
         list-style: none;
@@ -467,8 +472,10 @@ body.single-post {
 // ── Post prev/next navigation ─────────────────────────────────────────────────
 
 .post-nav {
-    background: #ffffff;
+    background: transparent;
     padding: 2rem 20px;
+    position: relative;
+    z-index: 1;
 
     &__inner {
         max-width: 1370px;
