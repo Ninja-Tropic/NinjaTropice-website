@@ -170,7 +170,7 @@ if ( empty( $solutions ) ) {
 								<div class="related-solutions__actions">
 									<a
 										href="<?php echo esc_url($item_link['url']); ?>"
-										class="btn-ghost related-solutions__link"
+										class="btn related-solutions__link"
 										<?php if ( !empty($item_link['target']) ): ?>target="<?php echo esc_attr($item_link['target']); ?>"<?php endif; ?>
 										<?php if ( !empty($item_link['title']) ): ?>aria-label="<?php echo esc_attr($item_link['title']); ?>"<?php endif; ?>
 									>
