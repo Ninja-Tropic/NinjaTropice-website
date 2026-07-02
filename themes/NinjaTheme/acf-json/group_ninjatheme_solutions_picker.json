@@ -1,0 +1,124 @@
+{
+    "key": "group_ninjatheme_solutions_picker",
+    "title": "Block: Solutions Picker",
+    "fields": [
+        {
+            "key": "field_sp_section_title",
+            "label": "Section Title",
+            "name": "section_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Optional heading shown above the cards.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Related Solutions",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_sp_solution_1",
+            "label": "Solution 1",
+            "name": "solution_1",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "Selecciona el primer Related Solution.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "related_solution"
+            ],
+            "post_status": "",
+            "taxonomy": [],
+            "return_format": "object",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_sp_solution_2",
+            "label": "Solution 2",
+            "name": "solution_2",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "Selecciona el segundo Related Solution.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "related_solution"
+            ],
+            "post_status": "",
+            "taxonomy": [],
+            "return_format": "object",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_sp_solution_3",
+            "label": "Solution 3",
+            "name": "solution_3",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "Selecciona el tercer Related Solution.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "related_solution"
+            ],
+            "post_status": "",
+            "taxonomy": [],
+            "return_format": "object",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/solutions-picker"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "modified": 1782963008
+}

@@ -748,6 +748,21 @@ function ninjatheme_register_acf_assets() {
 		),
 	));
 
+	// Register Solutions Picker block (CPT-based, picks from Related Solutions post type)
+	acf_register_block_type(array(
+		'name'            => 'solutions-picker',
+		'title'           => __( 'Related Solutions — CPT' ),
+		'description'     => __( 'Selecciona hasta 3 entradas del CPT Related Solutions y muéstralas como tarjetas.' ),
+		'render_template' => 'blocks/solutions-picker.php',
+		'category'        => 'layout',
+		'icon'            => 'networking',
+		'keywords'        => array( 'solutions', 'related', 'picker', 'cards', 'cpt' ),
+		'supports'        => array(
+			'align'  => false,
+			'anchor' => true,
+		),
+	));
+
 	// Register Tab Panel helper block for InnerBlocks mode
 	acf_register_block_type(array(
 		'name'              => 'tab-panel',
@@ -1201,6 +1216,7 @@ function ninjatheme_register_acf_assets() {
 	}
 
 }
+// Block: Solutions Picker — field group loaded from acf-json/group_ninjatheme_solutions_picker.json
 add_action( 'acf/init', 'ninjatheme_register_acf_assets' );
 
 // Project Details field group is loaded from acf-json/group_ninjatheme_project.json
@@ -1321,6 +1337,48 @@ function ninjatheme_register_case_studies_cpt() {
 	register_post_type( 'case-studies', $args );
 }
 add_action( 'init', 'ninjatheme_register_case_studies_cpt' );
+
+/**
+ * Register Related Solutions custom post type
+ */
+function ninjatheme_register_related_solutions_cpt() {
+	$labels = array(
+		'name'                  => _x( 'Related Solutions', 'Post Type General Name' ),
+		'singular_name'         => _x( 'Related Solution', 'Post Type Singular Name' ),
+		'menu_name'             => __( 'Related Solutions' ),
+		'name_admin_bar'        => __( 'Related Solution' ),
+		'add_new'               => __( 'Add New' ),
+		'add_new_item'          => __( 'Add New Related Solution' ),
+		'new_item'              => __( 'New Related Solution' ),
+		'edit_item'             => __( 'Edit Related Solution' ),
+		'view_item'             => __( 'View Related Solution' ),
+		'all_items'             => __( 'All Related Solutions' ),
+		'search_items'          => __( 'Search Related Solutions' ),
+		'not_found'             => __( 'No related solutions found.' ),
+		'not_found_in_trash'    => __( 'No related solutions found in Trash.' ),
+		'featured_image'        => __( 'Solution Image' ),
+		'set_featured_image'    => __( 'Set solution image' ),
+		'remove_featured_image' => __( 'Remove solution image' ),
+		'use_featured_image'    => __( 'Use as solution image' ),
+	);
+
+	$args = array(
+		'label'         => __( 'Related Solutions' ),
+		'labels'        => $labels,
+		'public'        => false,
+		'show_ui'       => true,
+		'show_in_menu'  => true,
+		'show_in_rest'  => true,
+		'menu_position' => 22,
+		'menu_icon'     => 'dashicons-networking',
+		'supports'      => array( 'title', 'revisions' ),
+		'has_archive'   => false,
+		'rewrite'       => false,
+	);
+
+	register_post_type( 'related_solution', $args );
+}
+add_action( 'init', 'ninjatheme_register_related_solutions_cpt' );
 
 /**
  * Add performance optimizations
