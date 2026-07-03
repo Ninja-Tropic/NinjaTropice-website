@@ -46,7 +46,7 @@ if( !$f ) {
                 <?php if( !empty($f['form']) ): ?>
                     <div class="hubspot-form__form-card">
                         <div class="hubspot-form__form">
-                            <?php echo ninjatheme_defer_hubspot_embed( $f['form'] ); ?>
+                            <?php echo $f['form']; ?>
                         </div>
                     </div>
                 <?php endif; ?>
