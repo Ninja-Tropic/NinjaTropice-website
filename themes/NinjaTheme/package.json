@@ -7,11 +7,12 @@
     "sass:watch": "sass --watch scss/style.scss:style.css",
     "postcss:watch": "chokidar 'style.css' -c 'postcss style.css -r' --initial",
     "build:watch": "sass scss/style.scss style.css && concurrently --kill-others \"npm run sass:watch\" \"npm run postcss:watch\"",
-    "build:prod": "NODE_ENV=production sass scss/style.scss style.css --style=compressed --no-source-map && NODE_ENV=production postcss style.css -r",
+    "build:prod": "NODE_ENV=production sass scss/style.scss:style.css scss/critical.scss:critical.css --style=compressed --no-source-map && NODE_ENV=production postcss style.css assets/css/bulma.min.css critical.css -r",
     "dev": "npm run build && concurrently --kill-others \"npm run build:watch\" \"browser-sync start --config bs-config.js\"",
     "sync": "browser-sync start --config bs-config.js"
   },
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^8.0.0",
     "autoprefixer": "^10.4.17",
     "browser-sync": "^2.29.3",
     "chokidar-cli": "^3.0.0",

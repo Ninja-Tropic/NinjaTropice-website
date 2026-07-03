@@ -160,7 +160,20 @@ get_header(); ?>
             return wrap;
         }
 
-        if (content) content.insertBefore(makeDivider(), content.firstChild);
+        if (content) {
+            var firstElement = null;
+            for (var i = 0; i < content.children.length; i++) {
+                var tagName = content.children[i].tagName.toLowerCase();
+                if (tagName !== 'script' && tagName !== 'style') {
+                    firstElement = content.children[i];
+                    break;
+                }
+            }
+
+            if (!firstElement || firstElement.tagName.toLowerCase() !== 'h2') {
+                content.insertBefore(makeDivider(), content.firstChild);
+            }
+        }
 
         document.querySelectorAll('.post-content h2').forEach(function (h) {
             h.parentNode.insertBefore(makeDivider(), h);
