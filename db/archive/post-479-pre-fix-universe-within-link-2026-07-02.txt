@@ -1,0 +1,49 @@
+<!-- wp:acf/page-heading {"name":"acf/page-heading","data":{"title":"\u003ch1\u003ePave a Path Forward with High Quality eLearning\r\n\u003c/h1\u003e","_title":"field_699a0f54e75a3","description":"The transition between the fun and excitement of video games and sitting still all day listening to lectures or doing independent desk work tugs at the attention span of students of all ages. As the world progresses to advanced technology in the way that we live, so should learning.\r\n\r\nAnimated video eLearning solutions provide high-quality educational content with engaging animated learning that’s perfect for any homeschool curriculum, school classroom, or district-wide initiative. Video eLearning is also the perfect tool for teachers’ professional development days – just because we’re adults, doesn’t mean we like boring slide decks.","_description":"field_699a0f65e75a4","image":1656,"_image":"field_699a0f73e75a5","link_1":{"title":"Contact us","url":"#","target":""},"_link_1":"field_699a0f7ee75a6","link_2":"","_link_2":"field_699a0f96e75a7","right_to_left":"0","_right_to_left":"field_699a0f9de75a8","design":"simple","_design":"field_699a0fefe75a9"},"mode":"preview"} /-->
+
+<!-- wp:group {"className":"container ninja-box px-6 py-6","layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch"}} -->
+<div class="wp-block-group container ninja-box px-6 py-6"><!-- wp:heading {"style":{"typography":{"textAlign":"center"}}} -->
+<h2 class="wp-block-heading has-text-align-center">Engagement Improves Education Through Video Learning</h2>
+<!-- /wp:heading -->
+
+<!-- wp:separator {"className":"is-style-dots","backgroundColor":"luminous-vivid-orange"} -->
+<hr class="wp-block-separator has-text-color has-luminous-vivid-orange-color has-alpha-channel-opacity has-luminous-vivid-orange-background-color has-background is-style-dots"/>
+<!-- /wp:separator -->
+
+<!-- wp:spacer {"height":"0px","style":{"layout":{"selfStretch":"fixed","flexSize":"4rem"}}} -->
+<div style="height:0px" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer -->
+
+<!-- wp:columns {"className":"container"} -->
+<div class="wp-block-columns container"><!-- wp:column -->
+<div class="wp-block-column"><!-- wp:image {"lightbox":{"enabled":false},"id":1660,"sizeSlug":"large","linkDestination":"custom","className":"shadow"} -->
+<figure class="wp-block-image size-large shadow"><a href="http://localhost:8080/projects/strongmind/"><img src="http://localhost:8080/wp-content/uploads/2026/03/K-12_Strongmind-1024x576.webp" alt="K 12 Strongmind" class="wp-image-1660"/></a><figcaption class="wp-element-caption">K 12 Strongmind</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:heading {"level":3,"style":{"typography":{"textAlign":"center"}}} -->
+<h3 class="wp-block-heading has-text-align-center">Strongmind</h3>
+<!-- /wp:heading --></div>
+<!-- /wp:column -->
+
+<!-- wp:column -->
+<div class="wp-block-column"><!-- wp:image {"lightbox":{"enabled":false},"id":1661,"sizeSlug":"full","linkDestination":"custom","className":"shadow"} -->
+<figure class="wp-block-image size-full shadow"><a href="http://localhost:8080/projects/strongmind/"><img src="http://localhost:8080/wp-content/uploads/2026/03/K-12_Universe-Within.webp" alt="K 12 Universe Within" class="wp-image-1661"/></a><figcaption class="wp-element-caption">K 12 Universe Within</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:heading {"level":3,"style":{"typography":{"textAlign":"center"}}} -->
+<h3 class="wp-block-heading has-text-align-center">Universe Within</h3>
+<!-- /wp:heading --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+
+<!-- wp:spacer {"height":"0px","style":{"layout":{"selfStretch":"fixed","flexSize":"2rem"}}} -->
+<div style="height:0px" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer --></div>
+<!-- /wp:group -->
+
+<!-- wp:spacer {"height":"6rem"} -->
+<div style="height:6rem" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer -->
+
+<!-- wp:acf/carousel {"name":"acf/carousel","data":{"title":"Shaping the Future – One Partner At a Time","_title":"field_6976c912ae7f2","carousel_items_0_image":1662,"_carousel_items_0_image":"field_6976c951ae7f4","carousel_items_0_title":"","_carousel_items_0_title":"field_6976c960ae7f5","carousel_items_0_link":"","_carousel_items_0_link":"field_6976c96bae7f6","carousel_items_1_image":1663,"_carousel_items_1_image":"field_6976c951ae7f4","carousel_items_1_title":"","_carousel_items_1_title":"field_6976c960ae7f5","carousel_items_1_link":"","_carousel_items_1_link":"field_6976c96bae7f6","carousel_items_2_image":1664,"_carousel_items_2_image":"field_6976c951ae7f4","carousel_items_2_title":"","_carousel_items_2_title":"field_6976c960ae7f5","carousel_items_2_link":"","_carousel_items_2_link":"field_6976c96bae7f6","carousel_items_3_image":1665,"_carousel_items_3_image":"field_6976c951ae7f4","carousel_items_3_title":"","_carousel_items_3_title":"field_6976c960ae7f5","carousel_items_3_link":"","_carousel_items_3_link":"field_6976c96bae7f6","carousel_items_4_image":1666,"_carousel_items_4_image":"field_6976c951ae7f4","carousel_items_4_title":"","_carousel_items_4_title":"field_6976c960ae7f5","carousel_items_4_link":"","_carousel_items_4_link":"field_6976c96bae7f6","carousel_items_5_image":1667,"_carousel_items_5_image":"field_6976c951ae7f4","carousel_items_5_title":"","_carousel_items_5_title":"field_6976c960ae7f5","carousel_items_5_link":"","_carousel_items_5_link":"field_6976c96bae7f6","carousel_items_6_image":1668,"_carousel_items_6_image":"field_6976c951ae7f4","carousel_items_6_title":"","_carousel_items_6_title":"field_6976c960ae7f5","carousel_items_6_link":"","_carousel_items_6_link":"field_6976c96bae7f6","carousel_items":7,"_carousel_items":"field_6976c93eae7f3"},"mode":"edit"} /-->
+
+<!-- wp:acf/hubspot-form {"name":"acf/hubspot-form","data":{"title":"Get a Quote","_title":"field_697ad122e258a","description":"We understand that associations and nonprofit organizations are looking to maximize the results of their efforts and investments, and that’s exactly what we strive to provide for our clients. \u003cstrong\u003eContact the team at Ninja Tropic\u003c/strong\u003e to set up a free consultation and let’s chat about all the ways an interactive eLearning solution can drive your organization forward – and crush your goals.\r\n","_description":"field_697ad133e258b","form":"\u003cscript charset=\u0022utf-8\u0022 type=\u0022text/javascript\u0022 src=\u0022//js.hsforms.net/forms/embed/v2.js\u0022\u003e\u003cspan data-mce-type=\u0022bookmark\u0022 style=\u0022display: inline-block; width: 0px; overflow: hidden; line-height: 0;\u0022 class=\u0022mce_SELRES_start\u0022\u003e﻿\u003c/span\u003e\u003cspan data-mce-type=\u0022bookmark\u0022 style=\u0022display: inline-block; width: 0px; overflow: hidden; line-height: 0;\u0022 class=\u0022mce_SELRES_start\u0022\u003e﻿\u003c/span\u003e\u003cspan data-mce-type=\u0022bookmark\u0022 style=\u0022display: inline-block; width: 0px; overflow: hidden; line-height: 0;\u0022 class=\u0022mce_SELRES_start\u0022\u003e﻿\u003c/span\u003e\u003cspan data-mce-type=\u0022bookmark\u0022 style=\u0022display: inline-block; width: 0px; overflow: hidden; line-height: 0;\u0022 class=\u0022mce_SELRES_start\u0022\u003e﻿\u003c/span\u003e\u003c/script\u003e\r\n\u003cscript\u003e\r\n  hbspt.forms.create({\r\n    region: \u0022na1\u0022,\r\n    portalId: \u00227816367\u0022,\r\n    formId: \u0022394c2aa7-ab2d-43b4-8cf2-d230dd4662bf\u0022\r\n  });\r\n\u003c/script\u003e","_form":"field_697ad143e258c"},"mode":"preview"} /-->
