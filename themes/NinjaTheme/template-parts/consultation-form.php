@@ -23,11 +23,14 @@
             <div class="hubspot-form__actions">
                 <div class="hubspot-form__form-card">
                     <div class="hubspot-form__form">
-                        <?php
-                        $hs_embed = '<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>'
-                            . '<script>hbspt.forms.create({region:"na1",portalId:"7816367",formId:"394c2aa7-ab2d-43b4-8cf2-d230dd4662bf"});</script>';
-                        echo ninjatheme_defer_hubspot_embed( $hs_embed );
-                        ?>
+                        <script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
+                        <script>
+                            hbspt.forms.create({
+                                region: "na1",
+                                portalId: "7816367",
+                                formId: "394c2aa7-ab2d-43b4-8cf2-d230dd4662bf"
+                            });
+                        </script>
                     </div>
                 </div>
             </div>
