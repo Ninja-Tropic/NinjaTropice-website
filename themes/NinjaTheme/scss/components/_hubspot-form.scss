@@ -49,6 +49,65 @@
         p:last-child {
             margin-bottom: 0;
         }
+
+        .nt-faq-accordion {
+            display: grid;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .nt-faq-accordion__title {
+            margin: 0 0 0.25rem;
+            color: $color-text;
+        }
+
+        .nt-faq-accordion__item {
+            overflow: hidden;
+            border: 1px solid rgba(16, 24, 40, 0.12);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.88);
+            box-shadow: 0 12px 28px rgba(16, 24, 40, 0.08);
+        }
+
+        .nt-faq-accordion__item summary {
+            position: relative;
+            display: block;
+            padding: 1rem 3rem 1rem 1rem;
+            color: $color-text;
+            font-weight: 700;
+            line-height: 1.35;
+            cursor: pointer;
+            list-style: none;
+        }
+
+        .nt-faq-accordion__item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .nt-faq-accordion__item summary::after {
+            content: '+';
+            position: absolute;
+            top: 50%;
+            right: 1rem;
+            color: #ff681b;
+            font-size: 1.4rem;
+            line-height: 1;
+            transform: translateY(-50%);
+        }
+
+        .nt-faq-accordion__item[open] summary::after {
+            content: '-';
+        }
+
+        .nt-faq-accordion__body {
+            padding: 0 1rem 1rem;
+            color: $color-text-light;
+            line-height: 1.6;
+        }
+
+        .nt-faq-accordion__body p {
+            margin: 0;
+        }
     }
 
     &__actions {
@@ -122,8 +181,9 @@
         }
 
         textarea {
-            min-height: 140px;
-            resize: vertical;
+            min-height: 140px !important;
+            resize: vertical !important;
+            overflow: auto;
         }
 
         .hs-input:focus,
@@ -190,6 +250,14 @@
             gap: 0.5rem;
         }
     }
+}
+
+textarea[name='tell_us_more_about_your_big_elearning_video_goals'],
+.tell_us_more_about_your_big_elearning_video_goals textarea,
+.hs_tell_us_more_about_your_big_elearning_video_goals textarea {
+    min-height: 140px !important;
+    resize: vertical !important;
+    overflow: auto !important;
 }
 
 @media (max-width: 768px) {

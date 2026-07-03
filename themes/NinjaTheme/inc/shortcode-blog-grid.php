@@ -203,6 +203,7 @@ function ninjatheme_blog_filter_ajax() {
 
 	$f_category = array_values( array_filter( array_map( 'sanitize_text_field', (array) ( $_POST['category'] ?? array() ) ) ) );
 	$f_tag      = array_values( array_filter( array_map( 'sanitize_text_field', (array) ( $_POST['tag']      ?? array() ) ) ) );
+	$f_search   = sanitize_text_field( $_POST['search'] ?? '' );
 
 	$query_args = array(
 		'post_type'      => 'post',
@@ -212,6 +213,42 @@ function ninjatheme_blog_filter_ajax() {
 		'order'          => $order,
 		'post_status'    => 'publish',
 	);
+
+	if ( $f_search !== '' ) {
+		global $wpdb;
+		$like = '%' . $wpdb->esc_like( $f_search ) . '%';
+
+		// Posts matching title/content.
+		$title_q = new WP_Query( array(
+			'post_type'      => 'post',
+			'post_status'    => 'publish',
+			's'              => $f_search,
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+		) );
+		$ids_by_title = (array) $title_q->posts;
+		wp_reset_postdata();
+
+		// Posts in matching categories or tags.
+		$ids_by_tax = $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT DISTINCT tr.object_id
+				 FROM {$wpdb->term_relationships} tr
+				 INNER JOIN {$wpdb->term_taxonomy} tt ON tr.term_taxonomy_id = tt.term_taxonomy_id
+				 INNER JOIN {$wpdb->terms} t ON tt.term_id = t.term_id
+				 INNER JOIN {$wpdb->posts} p ON tr.object_id = p.ID
+				 WHERE tt.taxonomy IN ('category','post_tag')
+				   AND t.name LIKE %s
+				   AND p.post_type = 'post'
+				   AND p.post_status = 'publish'",
+				$like
+			)
+		);
+
+		$merged = array_unique( array_map( 'intval', array_merge( $ids_by_title, $ids_by_tax ) ) );
+		$query_args['post__in'] = ! empty( $merged ) ? $merged : array( 0 );
+		$query_args['orderby']  = 'post__in';
+	}
 
 	$tax_query = array( 'relation' => 'AND' );
 
@@ -380,10 +417,37 @@ function ninjatheme_blog_grid_shortcode( $atts ) {
 	?>
 	<div class="pf pf--wrap-pills" id="blog-filter-wrap">
 
+		<!-- Search bar -->
+		<div class="pf__search-bar">
+			<div class="pf__search-wrap">
+				<svg class="pf__search-icon" width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+					<circle cx="7.5" cy="7.5" r="5.75" stroke="currentColor" stroke-width="1.75"/>
+					<path d="M12 12L15 15" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+				</svg>
+				<input
+					class="pf__search-input"
+					id="bf-search"
+					type="search"
+					placeholder="Search articles by title, category or topic…"
+					aria-label="Search articles"
+					autocomplete="off"
+				>
+			</div>
+		</div>
+
 		<?php if ( $show_filter ) : ?>
 		<!-- Sticky bar — appears when .pf__axes scrolls out of viewport -->
 		<div class="pf__sticky-bar" id="bf-sticky-bar" aria-label="<?php esc_attr_e( 'Active filters' ); ?>">
 			<div class="pf__sticky-inner">
+				<!-- Sticky search -->
+				<div class="pf__sticky-search">
+					<svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+						<circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.75"/>
+						<path d="M10.5 10.5L13.5 13.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+					</svg>
+					<input type="search" placeholder="Search articles…" aria-label="Search articles" tabindex="-1">
+				</div>
+
 				<?php foreach ( $axes as $axis ) : ?>
 				<div class="pf__sd" data-axis="<?php echo esc_attr( $axis['key'] ); ?>" data-param="<?php echo esc_attr( $axis['param'] ); ?>">
 					<button class="pf__sd-trigger" type="button">

@@ -96,7 +96,9 @@ add_action( 'after_setup_theme', 'ninjatheme_content_width', 0 );
 
 /**
  * Enqueue self-hosted fonts (Be Vietnam Pro + Nunito, latin subset).
- * Eliminates the Google Fonts external request that blocks rendering.
+ * On the frontend the @font-face rules are inlined in <head> alongside
+ * critical.css (zero HTTP request). The enqueue only runs for editor/admin
+ * where inline injection is not available.
  */
 function ninjatheme_fonts() {
 	$fonts_css = get_stylesheet_directory() . '/fonts/fonts.css';
@@ -107,9 +109,28 @@ function ninjatheme_fonts() {
 		file_exists( $fonts_css ) ? filemtime( $fonts_css ) : null
 	);
 }
-add_action( 'wp_enqueue_scripts', 'ninjatheme_fonts' );
 add_action( 'enqueue_block_editor_assets', 'ninjatheme_fonts' );
 add_action( 'admin_enqueue_scripts', 'ninjatheme_fonts' );
+
+/**
+ * Preload critical font files so the browser fetches them immediately,
+ * before it parses fonts.css. Reduces FOUT and improves LCP/CLS scores.
+ * Only the two most-used weights are preloaded to avoid bandwidth waste.
+ */
+function ninjatheme_preload_fonts() {
+	$fonts_uri = get_stylesheet_directory_uri() . '/fonts/';
+	$preloads  = array(
+		'be-vietnam-pro-400.woff2', // body text
+		'be-vietnam-pro-700.woff2', // headings / bold
+	);
+	foreach ( $preloads as $file ) {
+		printf(
+			'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin="anonymous">' . "\n",
+			esc_url( $fonts_uri . $file )
+		);
+	}
+}
+add_action( 'wp_head', 'ninjatheme_preload_fonts', 2 );
 
 /**
  * Enqueue scripts and styles
@@ -214,6 +235,210 @@ function ninjatheme_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'ninjatheme_scripts' );
+
+/**
+ * Guard HubSpot textarea fields from being resized until their content is illegible.
+ */
+function ninjatheme_hubspot_textarea_resize_guard() {
+	if ( is_admin() ) {
+		return;
+	}
+
+	$needs_guard = false;
+
+	if ( is_singular() ) {
+		$post_content = get_post_field( 'post_content', get_the_ID() );
+		$needs_guard  = strpos( $post_content, 'hbspt.forms.create' ) !== false
+			|| has_block( 'acf/hubspot-form' )
+			|| strpos( $post_content, '"name":"acf/hubspot-form"' ) !== false;
+	}
+
+	if ( is_page_template( 'page-case-studies.php' ) || is_singular( array( 'case-studies', 'case_study' ) ) ) {
+		$needs_guard = true;
+	}
+
+	if ( ! $needs_guard ) {
+		return;
+	}
+	?>
+	<script>
+	(function() {
+		'use strict';
+
+		var fieldName = 'tell_us_more_about_your_big_elearning_video_goals';
+		var minHeight = 140;
+		var textareaCss = 'textarea[name="' + fieldName + '"], .' + fieldName + ' textarea, .hs_' + fieldName + ' textarea { min-height: ' + minHeight + 'px !important; resize: vertical !important; overflow: auto !important; }';
+		var formCss = [
+			'html, body { background: transparent !important; }',
+			'body { margin: 0 !important; color: #2a3240 !important; font-family: "Be Vietnam Pro", Arial, sans-serif !important; }',
+			'h1 { margin: 0 0 28px !important; color: #2b2f36 !important; font-size: 42px !important; line-height: 1.15 !important; font-weight: 800 !important; text-align: center !important; letter-spacing: 0 !important; }',
+			'.hs-form { display: block !important; margin: 0 !important; }',
+			'.hs-form fieldset { display: flex !important; gap: 24px !important; max-width: none !important; margin: 0 0 22px !important; padding: 0 !important; border: 0 !important; }',
+			'.hs-form .form-columns-1 .hs-form-field { width: 100% !important; }',
+			'.hs-form .form-columns-2 .hs-form-field { flex: 1 1 0 !important; float: none !important; width: auto !important; }',
+			'.hs-form .hs-form-field { display: block !important; margin: 0 !important; padding: 0 !important; height: auto !important; overflow: visible !important; }',
+			'.hs-form label { display: block !important; margin: 0 0 8px !important; color: #2a3240 !important; font-size: 18px !important; font-weight: 700 !important; line-height: 1.35 !important; }',
+			'.hs-form .hs-form-required { color: #ff681b !important; margin-left: 3px !important; }',
+			'.hs-form .input { margin: 0 !important; padding: 0 !important; height: auto !important; overflow: visible !important; background: transparent !important; border: 0 !important; }',
+			'.hs-form .form-columns-2 .input { margin-right: 0 !important; }',
+			'.hs-form .hs-input, .hs-form input[type="text"], .hs-form input[type="email"], .hs-form input[type="tel"], .hs-form input[type="url"], .hs-form input[type="number"], .hs-form select, .hs-form textarea { display: block !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; padding: 14px 18px !important; border: 1px solid rgba(16, 24, 40, 0.22) !important; border-radius: 14px !important; background: #ffffff !important; color: #1f2328 !important; box-shadow: none !important; font-size: 16px !important; line-height: 1.4 !important; }',
+			'.hs-form textarea { min-height: 140px !important; resize: vertical !important; overflow: auto !important; }',
+			'.hs-form .hs-input:focus, .hs-form input:focus, .hs-form textarea:focus, .hs-form select:focus { outline: none !important; border-color: rgba(255, 104, 27, 0.75) !important; box-shadow: 0 0 0 4px rgba(255, 104, 27, 0.14) !important; }',
+			'.hs-form .hs-error-msgs, .hs-form .hs-error-msg { margin: 6px 0 0 !important; color: #d84c5f !important; font-size: 14px !important; line-height: 1.35 !important; }',
+			'.hs-form .hs_submit { margin-top: 26px !important; clear: both !important; }',
+			'.hs-form .actions { margin: 0 !important; padding: 0 !important; }',
+			'.hs-form .hs-button, .hs-form input[type="submit"], .hs-form button { appearance: none !important; border: 0 !important; border-radius: 999px !important; background: #ff681b !important; color: #ffffff !important; cursor: pointer !important; font-weight: 800 !important; font-size: 16px !important; line-height: 1 !important; padding: 18px 34px !important; box-shadow: 0 14px 28px rgba(255, 104, 27, 0.25) !important; text-transform: uppercase !important; }',
+			'@media (max-width: 640px) { h1 { font-size: 30px !important; } .hs-form fieldset { display: block !important; margin-bottom: 0 !important; } .hs-form .form-columns-2 .hs-form-field { width: 100% !important; margin-bottom: 20px !important; } .hs-form .form-columns-1 .hs-form-field { margin-bottom: 20px !important; } }'
+		].join('\n');
+		var hubspotCss = formCss + '\n' + textareaCss;
+		var hbsptValue = window.hbspt;
+
+		function clampTextarea(textarea) {
+			if (!textarea || textarea.dataset.ninjaTextareaGuard === 'true') {
+				return;
+			}
+
+			textarea.dataset.ninjaTextareaGuard = 'true';
+			textarea.style.minHeight = minHeight + 'px';
+			textarea.style.resize = 'vertical';
+			textarea.style.overflow = 'auto';
+
+			var clamp = function() {
+				if (textarea.offsetHeight && textarea.offsetHeight < minHeight) {
+					textarea.style.height = minHeight + 'px';
+				}
+			};
+
+			clamp();
+			textarea.addEventListener('mouseup', clamp);
+			textarea.addEventListener('input', clamp);
+			textarea.addEventListener('blur', clamp);
+		}
+
+		function clampTextareas(root) {
+			if (!root || !root.querySelectorAll) {
+				return;
+			}
+
+			root.querySelectorAll('textarea[name="' + fieldName + '"], .' + fieldName + ' textarea, .hs_' + fieldName + ' textarea').forEach(clampTextarea);
+		}
+
+		function enhanceOptions(options) {
+			options = options || {};
+
+			options.css = options.css ? options.css + '\n' + hubspotCss : hubspotCss;
+
+			var originalReady = options.onFormReady;
+			options.onFormReady = function(form) {
+				var formNode = form && form.jquery ? form.get(0) : form;
+
+				if (formNode && formNode.length && formNode[0]) {
+					formNode = formNode[0];
+				}
+
+				clampTextareas(formNode || document);
+
+				if (typeof originalReady === 'function') {
+					originalReady.apply(this, arguments);
+				}
+			};
+
+			return options;
+		}
+
+		function wrapCreate(originalCreate) {
+			if (typeof originalCreate !== 'function' || originalCreate.ninjaTextareaGuard) {
+				return originalCreate;
+			}
+
+			var wrappedCreate = function(options) {
+				return originalCreate.call(this, enhanceOptions(options));
+			};
+
+			wrappedCreate.ninjaTextareaGuard = true;
+			return wrappedCreate;
+		}
+
+		function watchCreate(forms) {
+			if (!forms || forms.ninjaCreateWatcher) {
+				return;
+			}
+
+			var createValue = forms.create;
+
+			try {
+				Object.defineProperty(forms, 'create', {
+					configurable: true,
+					get: function() {
+						return createValue;
+					},
+					set: function(nextValue) {
+						createValue = wrapCreate(nextValue);
+					}
+				});
+
+				forms.ninjaCreateWatcher = true;
+				forms.create = createValue;
+			} catch (error) {
+				if (typeof forms.create === 'function') {
+					forms.create = wrapCreate(forms.create);
+				}
+			}
+		}
+
+		function patchHbspt(hbspt) {
+			if (!hbspt) {
+				return;
+			}
+
+			if (hbspt.ninjaFormsWatcher) {
+				watchCreate(hbspt.forms);
+				return;
+			}
+
+			var formsValue = hbspt.forms;
+
+			try {
+				Object.defineProperty(hbspt, 'forms', {
+					configurable: true,
+					get: function() {
+						return formsValue;
+					},
+					set: function(nextValue) {
+						formsValue = nextValue;
+						watchCreate(formsValue);
+					}
+				});
+
+				hbspt.ninjaFormsWatcher = true;
+				hbspt.forms = formsValue;
+			} catch (error) {
+				watchCreate(hbspt.forms);
+			}
+		}
+
+		try {
+			Object.defineProperty(window, 'hbspt', {
+				configurable: true,
+				get: function() {
+					return hbsptValue;
+				},
+				set: function(nextValue) {
+					hbsptValue = nextValue;
+					patchHbspt(hbsptValue);
+				}
+			});
+		} catch (error) {}
+
+		patchHbspt(hbsptValue);
+		document.addEventListener('DOMContentLoaded', function() {
+			clampTextareas(document);
+		});
+	})();
+	</script>
+	<?php
+}
+add_action( 'wp_head', 'ninjatheme_hubspot_textarea_resize_guard', 5 );
 
 /**
  * Register widget areas
@@ -1633,6 +1858,47 @@ function ninjatheme_script_defer_fallback( $tag, $handle, $src ) {
 add_filter( 'script_loader_tag', 'ninjatheme_script_defer_fallback', 10, 3 );
 
 /**
+ * 1. WebP — convert uploaded JPEG/PNG to WebP on the fly (WP 5.8+).
+ * New uploads generate WebP sub-sizes automatically; existing images need
+ * "Regenerate Thumbnails" (e.g. WP-CLI: wp media regenerate --yes).
+ */
+add_filter( 'image_editor_output_format', function( $formats ) {
+	$formats['image/jpeg'] = 'image/webp';
+	$formats['image/png']  = 'image/webp';
+	return $formats;
+} );
+
+/**
+ * 2. Critical CSS — inline fonts.css + critical.css directly in <head>.
+ * Merging both into one <style> block eliminates every render-blocking CSS
+ * request: @font-face rules are available instantly, and above-the-fold
+ * layout/styles render without waiting for external files.
+ * Run `npm run build:prod` to regenerate critical.css after SCSS changes.
+ */
+function ninjatheme_inline_critical_css() {
+	if ( is_admin() ) {
+		return;
+	}
+	$dir      = get_stylesheet_directory();
+	$fonts    = $dir . '/fonts/fonts.css';
+	$critical = $dir . '/critical.css';
+
+	$css = '';
+	if ( file_exists( $fonts ) ) {
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$css .= file_get_contents( $fonts );
+	}
+	if ( file_exists( $critical ) ) {
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$css .= file_get_contents( $critical );
+	}
+	if ( $css ) {
+		echo '<style id="ninjatheme-critical">' . $css . '</style>' . "\n";
+	}
+}
+add_action( 'wp_head', 'ninjatheme_inline_critical_css', 1 );
+
+/**
  * Async CSS loading — converts render-blocking stylesheets to non-blocking.
  *
  * Uses the media="print" trick: the browser fetches the file immediately
@@ -1640,9 +1906,67 @@ add_filter( 'script_loader_tag', 'ninjatheme_script_defer_fallback', 10, 3 );
  * A <noscript> fallback covers JS-disabled environments.
  *
  * Applied to: bulma-css, ninjatheme-style.
- * The theme CSS is the last paint-critical file, so we preload it as well
- * to ensure the browser discovers it at the earliest opportunity.
+ * fonts.css stays synchronous to prevent FOUT.
  */
+function ninjatheme_async_stylesheets( $tag, $handle ) {
+	if ( is_admin() ) {
+		return $tag;
+	}
+	$async_handles = array( 'bulma-css', 'ninjatheme-style' );
+	if ( ! in_array( $handle, $async_handles, true ) ) {
+		return $tag;
+	}
+	// Replace rel='stylesheet' with the preload/swap trick
+	$async_tag = str_replace(
+		"rel='stylesheet'",
+		"rel='preload' as='style' onload=\"this.onload=null;this.rel='stylesheet'\"",
+		$tag
+	);
+	// <noscript> ensures the file loads for users with JS disabled
+	$noscript_tag = str_replace(
+		"rel='preload' as='style' onload=\"this.onload=null;this.rel='stylesheet'\"",
+		"rel='stylesheet'",
+		$async_tag
+	);
+	return $async_tag . '<noscript>' . $noscript_tag . '</noscript>' . "\n";
+}
+add_filter( 'style_loader_tag', 'ninjatheme_async_stylesheets', 10, 2 );
+
+/**
+ * 3. HubSpot defer — transforms a raw HubSpot embed block (src script +
+ * inline hbspt.forms.create call) into a single non-blocking dynamic loader.
+ * Apply via: ninjatheme_defer_hubspot_embed( $raw_form_html ).
+ */
+function ninjatheme_defer_hubspot_embed( $html ) {
+	if ( empty( $html ) ) {
+		return $html;
+	}
+	// Extract the hbspt.forms.create({...}) argument object
+	if ( ! preg_match( '/hbspt\.forms\.create\(\s*(\{[\s\S]*?\})\s*\)/i', $html, $m ) ) {
+		return $html; // not a recognisable pattern — return unchanged
+	}
+	$args_json = trim( $m[1] );
+	// Replace the raw embed with a single async loader
+	return '<div class="hs-form-placeholder" aria-hidden="true" style="min-height:280px"></div>'
+		. '<script>'
+		. '(function(){'
+		. 'var args=' . $args_json . ';'
+		. 'var ph=document.currentScript.previousElementSibling;'
+		. 'args.target=ph;'
+		. 'function load(){'
+		.   'if(window.hbspt){hbspt.forms.create(args);return;}'
+		.   'var s=document.createElement("script");'
+		.   's.charset="utf-8";s.src="//js.hsforms.net/forms/embed/v2.js";'
+		.   's.onload=function(){hbspt.forms.create(args);};'
+		.   'document.head.appendChild(s);'
+		. '}'
+		. 'if(document.readyState==="loading"){'
+		.   'document.addEventListener("DOMContentLoaded",load);'
+		. '}else{load();}'
+		. '})();'
+		. '</script>' . "\n";
+}
+
 /**
  * LCP Request Discovery — emite <link rel="preload"> para la imagen hero
  * en <head>, antes de que el contenido se renderice.

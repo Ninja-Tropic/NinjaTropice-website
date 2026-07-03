@@ -31,9 +31,13 @@
 		tag      : 'tags',
 	};
 
-	var currentPage = 1;
-	var isLoading   = false;
-	var hasMore     = !! bfData.hasMore;
+	var currentPage     = 1;
+	var isLoading       = false;
+	var hasMore         = !! bfData.hasMore;
+	var searchQuery     = '';
+	var searchTimer     = null;
+	var searchInput     = document.getElementById( 'bf-search' );
+	var stickySearchInput = null;
 
 	// ── Cascading pill availability ───────────────────────────────────────────────
 
@@ -88,6 +92,10 @@
 		params.set( 'per_page', String( bfData.perPage ) );
 		params.set( 'orderby',  bfData.orderby );
 		params.set( 'order',    bfData.order );
+
+		if ( searchQuery ) {
+			params.set( 'search', searchQuery );
+		}
 
 		Object.keys( state ).forEach( function ( axis ) {
 			var param = axisParams[ axis ];
@@ -191,7 +199,7 @@
 		}
 
 		if ( emptyMsg ) {
-			emptyMsg.hidden = grid.children.length > 0;
+			emptyMsg.hidden = total > 0;
 		}
 
 		if ( countEl ) {
@@ -290,6 +298,9 @@
 			state[ axis ].clear();
 			syncPillState( axis );
 		} );
+		searchQuery = '';
+		if ( searchInput ) searchInput.value = '';
+		if ( stickySearchInput ) stickySearchInput.value = '';
 		renderChips();
 		fetchPosts( 1, true );
 	}
@@ -367,6 +378,19 @@
 
 		if ( stickyClear ) {
 			stickyClear.addEventListener( 'click', clearAll );
+		}
+
+		stickySearchInput = stickyBar ? stickyBar.querySelector( '.pf__sticky-search input' ) : null;
+
+		if ( stickySearchInput ) {
+			stickySearchInput.addEventListener( 'input', function () {
+				if ( searchInput ) searchInput.value = stickySearchInput.value;
+				clearTimeout( searchTimer );
+				searchTimer = setTimeout( function () {
+					searchQuery = stickySearchInput.value.trim();
+					fetchPosts( 1, true );
+				}, 350 );
+			} );
 		}
 
 		initStickyDropdowns();
@@ -569,6 +593,19 @@
 			}
 		} catch ( e ) { /* ignore */ }
 		return false;
+	}
+
+	// ── Search input ──────────────────────────────────────────────────────────────
+
+	if ( searchInput ) {
+		searchInput.addEventListener( 'input', function () {
+			if ( stickySearchInput ) stickySearchInput.value = searchInput.value;
+			clearTimeout( searchTimer );
+			searchTimer = setTimeout( function () {
+				searchQuery = searchInput.value.trim();
+				fetchPosts( 1, true );
+			}, 350 );
+		} );
 	}
 
 	// ── Init ──────────────────────────────────────────────────────────────────────
