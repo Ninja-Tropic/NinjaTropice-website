@@ -516,14 +516,6 @@ i, em {
   .clean-menu > li.menu-item-has-children, .clean-menu > li.has-mega-menu, .clean-menu > li.has-mega-menu-simple {
     position: relative;
   }
-  .clean-menu > li.menu-item-has-children::after, .clean-menu > li.has-mega-menu::after, .clean-menu > li.has-mega-menu-simple::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: -20px;
-    right: -20px;
-    height: 60px;
-  }
   .clean-menu > li.menu-item-has-children > a::after, .clean-menu > li.has-mega-menu > a::after {
     content: "";
     display: none;
@@ -643,14 +635,16 @@ i, em {
     display: flex;
     flex-direction: column;
   }
-  .clean-menu .menu-item-has-children:hover > .sub-menu {
+  .clean-menu .menu-item-has-children:hover > .sub-menu,
+  .clean-menu .menu-item-has-children.menu-open > .sub-menu {
     display: grid;
     opacity: 1;
     transform: translateX(-50%) translateY(0);
     pointer-events: auto;
     z-index: 1000;
   }
-  .clean-menu .has-mega-menu:hover > .sub-menu {
+  .clean-menu .has-mega-menu:hover > .sub-menu,
+  .clean-menu .has-mega-menu.menu-open > .sub-menu {
     display: grid;
     transform: translateX(-50%) translateY(0);
     opacity: 1;
@@ -833,7 +827,7 @@ i, em {
     height: 0 !important;
     overflow: hidden !important;
   }
-  .clean-menu li.has-mega-menu-simple.menu-item-has-children:hover > .sub-menu {
+  .clean-menu li.has-mega-menu-simple.menu-item-has-children:hover > .sub-menu, .clean-menu li.has-mega-menu-simple.menu-item-has-children.menu-open > .sub-menu {
     display: grid !important;
     opacity: 1 !important;
     pointer-events: auto !important;

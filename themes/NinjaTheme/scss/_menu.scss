@@ -96,22 +96,10 @@
                 }
             }
 
-            // Extend hover zone below the nav item to bridge the gap to the fixed dropdown.
-            // When the mouse crosses from the li into this invisible area, li:hover stays
-            // true, keeping the submenu visible during the diagonal cursor movement.
             &.menu-item-has-children,
             &.has-mega-menu,
             &.has-mega-menu-simple {
                 position: relative;
-
-                &::after {
-                    content: '';
-                    position: absolute;
-                    top: 100%;
-                    left: -20px;
-                    right: -20px;
-                    height: 60px;
-                }
             }
 
             // Desktop indicator for items with children
@@ -259,7 +247,8 @@
             }
         }
 
-        .menu-item-has-children:hover > .sub-menu {
+        .menu-item-has-children:hover > .sub-menu,
+        .menu-item-has-children.menu-open > .sub-menu {
             display: grid;
             opacity: 1;
             transform: translateX(-50%) translateY(0);
@@ -268,7 +257,8 @@
         }
 
         // Mega menu hover - centered transform
-        .has-mega-menu:hover > .sub-menu {
+        .has-mega-menu:hover > .sub-menu,
+        .has-mega-menu.menu-open > .sub-menu {
             display: grid;
             transform: translateX(-50%) translateY(0);
             opacity: 1;
@@ -490,7 +480,8 @@
                 }
             }
 
-            &:hover > .sub-menu {
+            &:hover > .sub-menu,
+            &.menu-open > .sub-menu {
                 display: grid !important;
                 opacity: 1 !important;
                 pointer-events: auto !important;
