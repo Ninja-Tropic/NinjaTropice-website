@@ -195,6 +195,7 @@ strong {
   padding: 2rem;
   border-radius: 1rem;
   height: 400px;
+  -webkit-box-shadow: 0px 3px 19px 5px rgba(0, 0, 0, 0.2) !important;
   box-shadow: 0px 3px 19px 5px rgba(0, 0, 0, 0.2) !important;
 }
 .card:last-child {
@@ -253,10 +254,8 @@ i, em {
   pointer-events: none;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
   transition: opacity 0.3s ease;
 }
 .ninja-box > * {
@@ -852,8 +851,7 @@ i, em {
   .clean-menu .mega-menu-icon svg {
     width: 100%;
     height: 100%;
-    -o-object-fit: contain;
-       object-fit: contain;
+    object-fit: contain;
   }
 }
 
@@ -1175,8 +1173,7 @@ body.mobile-menu-open {
     max-height: 400px;
     width: auto;
     margin: 0 auto;
-    -o-object-fit: contain;
-       object-fit: contain;
+    object-fit: contain;
   }
 }
 .site-main {
@@ -1689,8 +1686,7 @@ body.mobile-menu-open {
 .social-icons .social-icon-image {
   width: 32px;
   height: 32px;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   display: block;
 }
 
@@ -1807,8 +1803,7 @@ body.mobile-menu-open {
   width: auto;
   height: auto;
   display: block;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   transition: transform 0.5s ease;
 }
 .card__image::after {
@@ -2050,8 +2045,7 @@ body.mobile-menu-open {
   height: auto;
   max-width: 120px;
   max-height: 120px;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   display: block;
 }
 
@@ -2267,8 +2261,7 @@ body.mobile-menu-open {
   width: 100%;
   height: auto;
   display: block;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   max-width: 120px;
 }
 .awards__item-content {
@@ -2517,8 +2510,7 @@ body.mobile-menu-open {
 .main-hero__img {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .main-hero__image--has-video {
   cursor: pointer;
@@ -2640,8 +2632,7 @@ body.mobile-menu-open {
 .main-hero__avatar img {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .main-hero__avatar--more {
   background: #111827;
@@ -2748,8 +2739,7 @@ body.has-main-hero-modal {
   inset: 0;
   background-image: linear-gradient(rgba(37, 25, 14, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(37, 25, 14, 0.035) 1px, transparent 1px);
   background-size: 110px 110px;
-  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2), transparent 86%);
-          mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2), transparent 86%);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2), transparent 86%);
   pointer-events: none;
 }
 .page-heading__aurora {
@@ -2942,8 +2932,7 @@ body.has-main-hero-modal {
   width: 100%;
   height: auto;
   min-height: auto;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border-radius: 1.3rem;
   aspect-ratio: revert-layer;
   box-shadow: 0 16px 42px rgba(0, 0, 0, 0.08);
@@ -3211,9 +3200,7 @@ h2.wp-block-heading {
 .hubspot-form__form .hs-button,
 .hubspot-form__form input[type=submit],
 .hubspot-form__form button {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  appearance: none;
   border: none;
   background: linear-gradient(120deg, #ff7a2a, #ff5b17);
   color: #ffffff;
@@ -3405,10 +3392,8 @@ textarea[name=tell_us_more_about_your_big_elearning_video_goals],
   display: block;
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  -o-object-position: center center;
-     object-position: center center;
+  object-fit: cover;
+  object-position: center center;
 }
 .grid-items__item-tag {
   margin: 0;
@@ -3507,8 +3492,7 @@ textarea[name=tell_us_more_about_your_big_elearning_video_goals],
   height: auto;
   max-width: 42px;
   max-height: 42px;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 .icon-card__content {
   flex: 1;
@@ -3618,8 +3602,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   inset: 0;
   background-image: linear-gradient(rgba(32, 24, 18, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(32, 24, 18, 0.035) 1px, transparent 1px);
   background-size: 110px 110px;
-  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.22), transparent 85%);
-          mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.22), transparent 85%);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.22), transparent 85%);
   pointer-events: none;
 }
 .values-showcase__aurora {
@@ -3784,8 +3767,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   height: auto;
   max-width: 3.4rem;
   max-height: 3.4rem;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 .values-showcase__media--fallback {
   margin-bottom: 1rem;
@@ -3948,8 +3930,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   max-width: 120px;
   max-height: 120px;
   height: auto;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 .related-solutions__content {
   display: flex;
@@ -4113,7 +4094,6 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   display: flex;
   align-items: center;
   gap: 4rem;
-  width: -moz-max-content;
   width: max-content;
   animation: scroll 35s linear infinite;
   will-change: transform;
@@ -4170,8 +4150,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   max-width: 240px;
   width: auto;
   height: auto;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   display: block;
   filter: brightness(0) invert(1);
   transition: filter 0.3s ease;
@@ -4279,8 +4258,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
 .carousel-post__image {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   display: block;
   transition: transform 0.3s ease;
 }
@@ -4965,8 +4943,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   left: 0;
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border-radius: 16px;
   transform: scale(1.02);
   transition: transform 0.5s ease;
@@ -5208,8 +5185,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
 .project-single__thumb-img {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   display: block;
 }
 .project-single__eyebrow {
@@ -5386,8 +5362,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
 .project-single__related-image {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   display: block;
   transition: transform 0.35s ease;
 }
@@ -5433,8 +5408,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   inset: 0;
   background-image: linear-gradient(rgba(37, 25, 14, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(37, 25, 14, 0.03) 1px, transparent 1px);
   background-size: 110px 110px;
-  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2), transparent 90%);
-          mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2), transparent 90%);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2), transparent 90%);
   pointer-events: none;
 }
 .project-archive__header-inner {
@@ -5511,8 +5485,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
 .project-archive__image {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   display: block;
   transition: transform 0.35s ease;
 }
@@ -5644,8 +5617,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   display: block;
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .cs-hero__overlay {
   position: absolute;
@@ -5668,7 +5640,9 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   font-size: clamp(2rem, 5vw, 3.375rem);
   line-height: 1.08;
   letter-spacing: -0.04em;
-  margin: 0.75rem 0 0;
+  color: #fff !important;
+  text-align: left !important;
+  margin: 10px 0 0 0 !important;
 }
 .cs-hero--has-image .cs-hero__title {
   color: #fff;
@@ -5721,19 +5695,15 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
 }
 
 .post-content--2col {
-  -moz-columns: 2;
-       columns: 2;
-  -moz-column-gap: clamp(2rem, 5vw, 4rem);
-       column-gap: clamp(2rem, 5vw, 4rem);
+  columns: 2;
+  column-gap: clamp(2rem, 5vw, 4rem);
 }
 .post-content--2col h2, .post-content--2col h3, .post-content--2col h4, .post-content--2col figure, .post-content--2col li {
-  -moz-column-break-inside: avoid;
-       break-inside: avoid;
+  break-inside: avoid;
 }
 @media (max-width: 640px) {
   .post-content--2col {
-    -moz-columns: 1;
-         columns: 1;
+    columns: 1;
   }
 }
 
@@ -5811,8 +5781,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   max-height: 160px;
   width: auto;
   height: auto;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 @media (max-width: 768px) {
   .cs-client-intro__inner {
@@ -5847,8 +5816,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   width: 100%;
   height: auto;
   border-radius: 12px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 @media (max-width: 768px) {
   .cs-section__split {
@@ -5890,8 +5858,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   width: 100%;
   height: auto;
   max-height: 560px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   margin: 0;
 }
 
@@ -5947,8 +5914,9 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   font-size: clamp(1.75rem, 3.5vw, 2.5rem);
   font-weight: 900;
   line-height: 1.1;
-  color: #fff;
-  margin: 0;
+  color: #fff !important;
+  margin: 10px 0 0 0 !important;
+  text-align: left !important;
 }
 .cs-cta__description {
   color: rgba(255, 255, 255, 0.88);
@@ -5991,8 +5959,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   inset: 0;
   background-image: linear-gradient(rgba(37, 25, 14, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(37, 25, 14, 0.03) 1px, transparent 1px);
   background-size: 110px 110px;
-  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2), transparent 90%);
-          mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2), transparent 90%);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2), transparent 90%);
   pointer-events: none;
 }
 .cs-archive__hero-inner {
@@ -6016,8 +5983,8 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   margin-bottom: 1.25rem;
 }
 .cs-archive__title {
-  margin: 0 0 0.75rem;
-  color: #1f1812;
+  margin: 10px 0 0.75rem;
+  color: #fff !important;
   letter-spacing: -0.04em;
 }
 .cs-archive__description {
@@ -6040,8 +6007,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   display: block;
   width: 100%;
   height: auto;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 @media (max-width: 768px) {
   .cs-archive__hero-inner {
@@ -6106,8 +6072,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   inset: 0;
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   display: block;
   transition: transform 0.35s ease;
 }
@@ -6317,9 +6282,7 @@ body.single-case-studies {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #aaa;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 
 .pf__axis-track {
@@ -6382,7 +6345,6 @@ body.single-case-studies {
 .pf__pills {
   display: flex;
   gap: 0.4rem;
-  width: -moz-max-content;
   width: max-content;
   padding: 0.2rem 2.5rem 0.2rem 0;
 }
@@ -6695,9 +6657,7 @@ body.single-case-studies {
   font-weight: 500;
   color: #444;
   transition: background 0.13s ease;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  user-select: none;
 }
 .pf__sd-item:hover {
   background: rgba(0, 0, 0, 0.04);
@@ -6803,12 +6763,7 @@ body.single-case-studies {
   background: #fff;
   outline: none;
   transition: border-color 0.18s ease, box-shadow 0.18s ease;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-}
-.pf__search-input::-moz-placeholder {
-  color: #aaa;
+  appearance: none;
 }
 .pf__search-input::placeholder {
   color: #aaa;
@@ -6845,9 +6800,6 @@ body.single-case-studies {
   color: inherit;
   width: 100%;
   min-width: 0;
-}
-.pf__sticky-search input::-moz-placeholder {
-  color: #aaa;
 }
 .pf__sticky-search input::placeholder {
   color: #aaa;
@@ -6936,8 +6888,7 @@ body.single-case-studies {
 .blog-archive__image {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   display: block;
   transition: transform 0.35s ease;
 }
@@ -7123,8 +7074,7 @@ body.single-case-studies {
 .nt-vg__thumb {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   display: block;
 }
 
@@ -7137,8 +7087,7 @@ body.single-case-studies {
 .nt-vg__placeholder img {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   display: block;
   transition: transform 0.3s ease;
 }
@@ -7277,7 +7226,6 @@ body.single-case-studies {
   font-family: inherit;
   color: #FF641B;
   cursor: pointer;
-  width: -moz-fit-content;
   width: fit-content;
   transition: opacity 0.15s;
 }
@@ -7756,8 +7704,7 @@ body.single-post .post-cta__logo {
   max-width: 260px;
   width: auto;
   height: auto;
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   filter: brightness(0) invert(1);
 }
 body.single-post .post-cta__site-name {

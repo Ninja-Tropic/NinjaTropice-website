@@ -72,7 +72,9 @@ $cs-section-padding: clamp(3.5rem, 7vw, 6rem);
         font-size: clamp(2rem, 5vw, 3.375rem);
         line-height: 1.08;
         letter-spacing: -0.04em;
-        margin: 0.75rem 0 0;
+        color: #fff!important;
+        text-align: left!important;
+        margin: 10px 0 0 0!important;
 
         // White on image, dark on lavender fallback
         .cs-hero--has-image & {
@@ -394,8 +396,9 @@ $cs-grid-size: 70px 70px;
         font-size: clamp(1.75rem, 3.5vw, 2.5rem);
         font-weight: 900;
         line-height: 1.1;
-        color: #fff;
-        margin: 0;
+        color: #fff!important;
+        margin: 10px 0 0 0!important;
+        text-align: left!important;
     }
 
     &__description {
@@ -482,8 +485,8 @@ $cs-grid-size: 70px 70px;
     }
 
     &__title {
-        margin: 0 0 0.75rem;
-        color: #1f1812;
+        margin: 10px 0 0.75rem;
+        color: #fff!important;
         letter-spacing: -0.04em;
     }
 
