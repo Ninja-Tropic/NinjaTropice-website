@@ -32,7 +32,7 @@ if( !$f ) {
         <div class="hubspot-form__cta">
             <div class="hubspot-form__content">
                 <?php if( !empty($f['title']) ): ?>
-                    <h2 class="hubspot-form__title"><?php echo esc_html($f['title']); ?></h2>
+                    <h2 class="hubspot-form__title"><?php echo wp_kses_post( do_shortcode( $f['title'] ) ); ?></h2>
                 <?php endif; ?>
 
                 <?php if( !empty($f['description']) ): ?>

@@ -424,6 +424,20 @@
     }
 }
 
+@media (max-width: 1000px) {
+    .ada-playground {
+        &__preview-header {
+            flex-wrap: wrap;
+        }
+
+        &__preview-threshold {
+            white-space: normal;
+            text-align: left;
+            flex-shrink: 0;
+        }
+    }
+}
+
 @media (max-width: 767px) {
     .ada-playground {
         padding: 3.5rem 0;

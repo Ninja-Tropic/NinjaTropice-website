@@ -18,7 +18,12 @@
 	box-shadow:
 		0 2px 12px rgba(0, 0, 0, 0.04),
 		0 1px 4px rgba(0, 0, 0, 0.03);
-	overflow: hidden;
+
+	// overflow:hidden was removed so .pf__sd-panel dropdowns are not clipped.
+	// Border-radius is preserved by rounding the first and last axis rows.
+	> .pf__axis:first-child { border-radius: 16px 16px 0 0; }
+	> .pf__axis:last-child  { border-radius: 0 0 16px 16px; }
+	> .pf__axis:only-child  { border-radius: 16px; }
 }
 
 // ── Single axis row ───────────────────────────────────────────────────────────

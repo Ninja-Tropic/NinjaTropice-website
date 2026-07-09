@@ -63,8 +63,8 @@
 
 // Headings inside ninja-box layouts
 .ninja-box {
-    padding-top: 2.5rem !important;
-    padding-bottom: 2.5rem !important;
+    padding-top: 3.5rem !important;
+    padding-bottom: 3.5rem !important;
 
     h2.wp-block-heading,
     h3.wp-block-heading {
@@ -81,6 +81,16 @@
     h2.wp-block-heading:first-child {
         font-size: clamp(1.5rem, 3vw, 2rem) !important;
     }
+
+}
+
+// Uniform 16:9 thumbnails in ninja-box CARD grids (wp-block-group.ninja-box).
+// Excludes column.ninja-box benefit cards that use small rounded thumbnails.
+.wp-block-group.ninja-box .wp-block-image img:not([style*="aspect-ratio"]) {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    width: 100%;
+    border-radius: 8px;
 }
 
 // Associations page — service-item icon+text rows and FAQ headings
