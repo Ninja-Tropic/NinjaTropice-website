@@ -61,6 +61,55 @@
     }
 }
 
+// Headings inside ninja-box layouts
+.ninja-box {
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
+
+    h2.wp-block-heading,
+    h3.wp-block-heading {
+        font-size: clamp(1.25rem, 2.5vw, 1.625rem) !important;
+        line-height: 1.3 !important;
+        margin-bottom: 1rem !important;
+        color: inherit;
+
+        strong, b {
+            color: inherit;
+        }
+    }
+
+    h2.wp-block-heading:first-child {
+        font-size: clamp(1.5rem, 3vw, 2rem) !important;
+    }
+}
+
+// Associations page — service-item icon+text rows and FAQ headings
+// These h3/h2 headings sit outside .ninja-box and inherit the full 2.125rem desktop size
+.page-id-474 {
+    .wp-block-columns.are-vertically-aligned-center.container {
+        h3.wp-block-heading {
+            font-size: clamp(1.125rem, 2vw, 1.375rem) !important;
+            line-height: 1.3 !important;
+            margin-bottom: 0.75rem !important;
+        }
+    }
+
+    // FAQ column: h2 title + h3 questions
+    .wp-block-columns.container:not(.are-vertically-aligned-center) .wp-block-column {
+        h2.wp-block-heading {
+            font-size: clamp(1.375rem, 2.5vw, 1.75rem) !important;
+            line-height: 1.25 !important;
+            margin-bottom: 1rem !important;
+        }
+
+        h3.wp-block-heading {
+            font-size: clamp(1.0625rem, 1.8vw, 1.25rem) !important;
+            line-height: 1.35 !important;
+            margin-bottom: 0.5rem !important;
+        }
+    }
+}
+
 // Full Width Template Styles
 .site-main--fullwidth {
     width: 100%;

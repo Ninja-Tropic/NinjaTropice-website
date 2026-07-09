@@ -1946,13 +1946,13 @@ function ninjatheme_defer_hubspot_embed( $html ) {
 		return $html; // not a recognisable pattern — return unchanged
 	}
 	$args_json = trim( $m[1] );
-	// Replace the raw embed with a single async loader
-	return '<div class="hs-form-placeholder" aria-hidden="true" style="min-height:280px"></div>'
+	// Unique ID so HubSpot gets a CSS selector string (target must be a string, not a DOM element)
+	$uid = 'hsf-' . wp_unique_id();
+	return '<div id="' . esc_attr( $uid ) . '" class="hs-form-placeholder" style="min-height:280px"></div>'
 		. '<script>'
 		. '(function(){'
 		. 'var args=' . $args_json . ';'
-		. 'var ph=document.currentScript.previousElementSibling;'
-		. 'args.target=ph;'
+		. 'args.target="#' . esc_js( $uid ) . '";'
 		. 'function load(){'
 		.   'if(window.hbspt){hbspt.forms.create(args);return;}'
 		.   'var s=document.createElement("script");'

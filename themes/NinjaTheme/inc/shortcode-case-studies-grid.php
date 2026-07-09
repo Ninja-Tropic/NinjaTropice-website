@@ -102,6 +102,7 @@ function ninjatheme_case_studies_load_more_ajax() {
 		? strtoupper( $_POST['order'] )
 		: 'DESC';
 	$f_category = array_values( array_filter( array_map( 'sanitize_text_field', (array) ( $_POST['category'] ?? array() ) ) ) );
+	$f_search   = sanitize_text_field( $_POST['search'] ?? '' );
 
 	$query_args = array(
 		'post_type'      => 'case-studies',
@@ -111,6 +112,10 @@ function ninjatheme_case_studies_load_more_ajax() {
 		'order'          => $order,
 		'post_status'    => 'publish',
 	);
+
+	if ( $f_search !== '' ) {
+		$query_args['s'] = $f_search;
+	}
 
 	if ( ! empty( $f_category ) ) {
 		$query_args['tax_query'] = array(
@@ -230,6 +235,15 @@ function ninjatheme_case_studies_grid_shortcode( $atts ) {
 	ob_start();
 	?>
 	<div class="cs-archive__body" id="case-studies-filter-wrap">
+
+		<div class="pf__search-wrap">
+			<label for="csf-search" class="screen-reader-text"><?php esc_html_e( 'Search case studies' ); ?></label>
+			<svg class="pf__search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+				<circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.75"/>
+				<path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+			</svg>
+			<input id="csf-search" class="pf__search-input" type="search" placeholder="<?php esc_attr_e( 'Search case studies…' ); ?>" autocomplete="off">
+		</div>
 
 		<div class="cs-archive__grid" id="csf-grid">
 			<?php echo $initial_html; ?>

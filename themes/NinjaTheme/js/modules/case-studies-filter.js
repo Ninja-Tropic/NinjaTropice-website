@@ -10,8 +10,30 @@
 	var loadMoreWrap = document.getElementById( 'csf-load-more-wrap' );
 	var loadMoreBtn  = document.getElementById( 'csf-load-more' );
 
-	var currentPage = 1;
-	var isLoading   = false;
+	var currentPage  = 1;
+	var isLoading    = false;
+	var searchQuery  = '';
+	var searchTimer  = null;
+
+	var searchInput = document.getElementById( 'csf-search' );
+	if ( searchInput ) {
+		searchInput.addEventListener( 'input', function () {
+			clearTimeout( searchTimer );
+			searchTimer = setTimeout( function () {
+				searchQuery = searchInput.value.trim();
+				currentPage = 1;
+				fetchPosts( 1, true );
+			}, 350 );
+		} );
+		searchInput.addEventListener( 'keydown', function ( e ) {
+			if ( e.key === 'Escape' ) {
+				searchInput.value = '';
+				searchQuery = '';
+				currentPage = 1;
+				fetchPosts( 1, true );
+			}
+		} );
+	}
 
 	// ── AJAX fetch ────────────────────────────────────────────────────────────────
 
@@ -27,6 +49,7 @@
 		params.set( 'per_page', String( csfData.perPage ) );
 		params.set( 'orderby',  csfData.orderby );
 		params.set( 'order',    csfData.order );
+		if ( searchQuery ) { params.set( 'search', searchQuery ); }
 
 		if ( csfData.defaultCategory && csfData.defaultCategory.length ) {
 			csfData.defaultCategory.forEach( function ( cat ) {

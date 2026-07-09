@@ -553,10 +553,27 @@ function ninjatheme_projects_grid_shortcode( $atts ) {
 				</div>
 				<?php endforeach; ?>
 
+				<div class="pf__sticky-search">
+					<svg class="pf__search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+						<circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.75"/>
+						<path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+					</svg>
+					<input type="search" placeholder="<?php esc_attr_e( 'Search…' ); ?>" autocomplete="off">
+				</div>
+
 				<button class="pf__sticky-clear" id="pf-sticky-clear" type="button" hidden>
 					<?php esc_html_e( 'Clear all' ); ?>
 				</button>
 			</div>
+		</div>
+
+		<div class="pf__search-wrap">
+			<label for="pf-search" class="screen-reader-text"><?php esc_html_e( 'Search projects' ); ?></label>
+			<svg class="pf__search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+				<circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.75"/>
+				<path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+			</svg>
+			<input id="pf-search" class="pf__search-input" type="search" placeholder="<?php esc_attr_e( 'Search projects…' ); ?>" autocomplete="off">
 		</div>
 
 		<?php if ( ! empty( $axes ) ) : ?>

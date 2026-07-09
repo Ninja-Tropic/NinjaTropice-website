@@ -160,5 +160,6 @@
     .wp-block-button__link,
     .wp-element-button {
         @include button-base;
+        color: $color-bg !important;
     }
 }
