@@ -87,6 +87,35 @@
             videoTarget.innerHTML = '';
         };
 
+        // Custom unmute toggle for the inline Vimeo hero embed (postMessage API)
+        document.querySelectorAll('[data-hero-unmute]').forEach((btn) => {
+            const wrap = btn.closest('.main-hero__video');
+            const iframe = wrap ? wrap.querySelector('iframe') : null;
+            if (!iframe) {
+                btn.hidden = true;
+                return;
+            }
+            let muted = true;
+            const send = (method, value) => {
+                if (iframe.contentWindow) {
+                    iframe.contentWindow.postMessage(JSON.stringify({ method: method, value: value }), '*');
+                }
+            };
+            btn.addEventListener('click', () => {
+                muted = !muted;
+                send('setMuted', muted);
+                if (!muted) {
+                    send('setVolume', 1);
+                }
+                const label = btn.querySelector('span');
+                if (label) {
+                    label.textContent = muted ? 'Unmute' : 'Mute';
+                }
+                btn.setAttribute('aria-label', muted ? 'Unmute video' : 'Mute video');
+                btn.classList.toggle('is-unmuted', !muted);
+            });
+        });
+
         heroSections.forEach((section) => {
             const modal = section.querySelector('.main-hero__modal');
             if (!modal) {

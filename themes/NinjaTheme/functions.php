@@ -541,7 +541,9 @@ function ninjatheme_oembed_add_autoplay( $embed_html ) {
 		function ( $m ) {
 			$src = $m[3];
 			$sep = strpos( $src, '?' ) !== false ? '&' : '?';
-			$src = $src . $sep . 'autoplay=1';
+			// muted=1 explícito: el autoplay con sonido está bloqueado por los
+			// navegadores y Vimeo mostraría su propio CTA "Unmute" localizado.
+			$src = $src . $sep . 'autoplay=1&muted=1';
 			return '<iframe' . $m[1] . ' src=' . $m[2] . $src . $m[2] . $m[4] . '>';
 		},
 		$embed_html,

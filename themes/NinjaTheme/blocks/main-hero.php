@@ -109,6 +109,14 @@ $embed_escaped = $has_video ? esc_attr( base64_encode( $modal_embed ) ) : '';
                 <?php if ( $has_video ): ?>
                     <div class="main-hero__video">
                         <?php echo $modal_embed; ?>
+                        <?php if ( strpos( $modal_embed, 'player.vimeo.com' ) !== false ): ?>
+                        <button type="button" class="main-hero__unmute" data-hero-unmute aria-label="Unmute video">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.05A4.5 4.5 0 0 0 16.5 12z"/>
+                            </svg>
+                            <span>Unmute</span>
+                        </button>
+                        <?php endif; ?>
                     </div>
                 <?php elseif ( $has_image ): ?>
                     <div class="main-hero__image">

@@ -307,6 +307,16 @@
 
 	// ── Pill click handler ────────────────────────────────────────────────────────
 
+	// Al filtrar, el grid queda debajo del fold y el cambio no se ve:
+	// llevar los resultados a la vista para dar feedback inmediato.
+	function scrollGridIntoView() {
+		if ( ! grid ) return;
+		var rect = grid.getBoundingClientRect();
+		if ( rect.top > window.innerHeight * 0.6 || rect.top < 0 ) {
+			grid.scrollIntoView( { behavior: 'smooth', block: 'start' } );
+		}
+	}
+
 	allPills.forEach( function ( pill ) {
 		pill.addEventListener( 'click', function () {
 			var axis  = pill.dataset.axis;
@@ -325,6 +335,7 @@
 			syncPillState( axis );
 			renderChips();
 			fetchPosts( 1, true );
+			scrollGridIntoView();
 		} );
 	} );
 

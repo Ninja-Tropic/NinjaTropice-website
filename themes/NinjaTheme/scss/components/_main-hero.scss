@@ -263,6 +263,37 @@ $hero-play-yellow: #facc15;
         object-fit: cover;
     }
 
+    // English unmute pill over the inline Vimeo hero embed
+    &__unmute {
+        position: absolute;
+        left: 1rem;
+        bottom: 3.5rem;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.5rem 0.9rem;
+        border: 0;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.72);
+        color: #fff;
+        font-size: 0.8125rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        cursor: pointer;
+        backdrop-filter: blur(6px);
+        transition: background-color 0.2s ease, transform 0.2s ease;
+
+        &:hover {
+            background: rgba(0, 0, 0, 0.88);
+            transform: translateY(-1px);
+        }
+
+        &.is-unmuted {
+            background: rgba(255, 100, 27, 0.92);
+        }
+    }
+
     &__image--has-video {
         cursor: pointer;
 

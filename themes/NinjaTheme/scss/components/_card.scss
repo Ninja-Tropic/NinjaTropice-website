@@ -272,7 +272,9 @@
         grid-auto-columns: clamp(240px, 26vw, 340px);
         gap: 3rem;
         overflow-x: auto;
-        scroll-snap-type: x mandatory;
+        // proximity (no mandatory): el snap obligatorio impedía reposar en el
+        // final del scroll y la última card quedaba siempre cortada
+        scroll-snap-type: x proximity;
         scroll-behavior: smooth;
         padding-top: 4rem;
         scroll-padding-left: clamp(
@@ -302,6 +304,10 @@
 
     .card__item {
         scroll-snap-align: start;
+
+        &:last-child {
+            scroll-snap-align: end;
+        }
         border-radius: 28px;
         background: #ffffff;
         border: 1px solid rgba(17, 17, 17, 0.04);
