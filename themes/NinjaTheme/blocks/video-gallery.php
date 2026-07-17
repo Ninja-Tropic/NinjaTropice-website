@@ -167,8 +167,8 @@ $allowed_video = array_merge( wp_kses_allowed_html( 'post' ), $allowed_iframe );
 							<div class="nt-vg__card-desc-wrap">
 								<div class="nt-vg__card-desc"><?php echo wp_kses_post( $s_desc ); ?></div>
 								<button class="nt-vg__toggle" type="button" aria-expanded="false">
-									<span class="nt-vg__toggle-more">Ver más <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></span>
-									<span class="nt-vg__toggle-less" hidden>Ver menos <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg></span>
+									<span class="nt-vg__toggle-more">See more <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></span>
+									<span class="nt-vg__toggle-less" hidden>See less <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg></span>
 								</button>
 							</div>
 						<?php endif; ?>
@@ -225,7 +225,7 @@ $allowed_video = array_merge( wp_kses_allowed_html( 'post' ), $allowed_iframe );
 			});
 		});
 
-		// Ver más / Ver menos toggle.
+		// See more / See less toggle.
 		block.querySelectorAll('.nt-vg__toggle').forEach(function (btn) {
 			btn.addEventListener('click', function () {
 				var wrap = btn.closest('.nt-vg__card-desc-wrap');
