@@ -1299,7 +1299,7 @@ function ninjatheme_register_acf_assets() {
 						'class' => '',
 						'id' => '',
 					),
-					'default_value' => 'Use the repeater below to add each value card. Cards can include an illustration, a short label, and a richer description when needed.',
+					'default_value' => '',
 					'rows' => 3,
 					'new_lines' => 'br',
 				),
