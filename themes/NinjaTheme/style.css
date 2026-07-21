@@ -457,6 +457,15 @@ i, em {
     align-items: center;
     justify-content: flex-end;
     position: static;
+    /* Desktop sub-menus */
+    /* ====================================================================== */
+    /*                          MEGA MENU STYLES                              */
+    /* ====================================================================== */
+    /* ====================================================================== */
+    /*                    SIMPLE MEGA MENU (2-LEVEL ONLY)                     */
+    /* ====================================================================== */
+    /* Use this class for mega menus without 3rd level items.
+       2nd level items are displayed in 3 columns with simple styling */
   }
   .clean-menu > li {
     list-style: none !important;
@@ -561,9 +570,6 @@ i, em {
   .site-header.scrolled .clean-menu > li.current_page_ancestor > a {
     color: #FF641B;
   }
-  .clean-menu {
-    /* Desktop sub-menus */
-  }
   .clean-menu .sub-menu {
     position: fixed;
     top: 108px;
@@ -585,6 +591,11 @@ i, em {
     grid-template-columns: repeat(3, 1fr);
     gap: 40px;
     margin-top: 0;
+    min-width: 800px;
+    max-width: calc(100vw - 80px);
+    text-align: left;
+    list-style: none !important;
+    margin-left: 0;
   }
   .clean-menu .sub-menu::before {
     content: "";
@@ -593,13 +604,6 @@ i, em {
     left: 0;
     right: 0;
     height: 20px;
-  }
-  .clean-menu .sub-menu {
-    min-width: 800px;
-    max-width: calc(100vw - 80px);
-    text-align: left;
-    list-style: none !important;
-    margin-left: 0;
   }
   .clean-menu .sub-menu li {
     border-bottom: none;
@@ -657,11 +661,6 @@ i, em {
     -webkit-backdrop-filter: blur(50px) saturate(200%);
     border: 1px solid rgba(0, 0, 0, 0.08);
     top: 80px;
-  }
-  .clean-menu {
-    /* ====================================================================== */
-    /*                          MEGA MENU STYLES                              */
-    /* ====================================================================== */
   }
   .clean-menu .has-mega-menu > .sub-menu {
     display: none;
@@ -748,13 +747,6 @@ i, em {
     opacity: 1;
     display: flex;
     flex-direction: column;
-  }
-  .clean-menu {
-    /* ====================================================================== */
-    /*                    SIMPLE MEGA MENU (2-LEVEL ONLY)                     */
-    /* ====================================================================== */
-    /* Use this class for mega menus without 3rd level items.
-       2nd level items are displayed in 3 columns with simple styling */
   }
   .clean-menu li.has-mega-menu-simple.menu-item-has-children > .sub-menu {
     display: none !important;
@@ -968,6 +960,7 @@ body.mobile-menu-open {
   list-style: none !important;
   margin: 0;
   padding: 0 1.5rem;
+  /* Sub-menus - Slide-in Panels */
 }
 .mobile-menu-list > li {
   list-style: none !important;
@@ -1028,9 +1021,6 @@ body.mobile-menu-open {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(255, 104, 27, 0.4);
   color: #ffffff !important;
-}
-.mobile-menu-list {
-  /* Sub-menus - Slide-in Panels */
 }
 .mobile-menu-list .sub-menu {
   position: fixed;
@@ -2016,11 +2006,6 @@ body.mobile-menu-open {
 }
 .card--carousel .card__item {
   scroll-snap-align: start;
-}
-.card--carousel .card__item:last-child {
-  scroll-snap-align: end;
-}
-.card--carousel .card__item {
   border-radius: 28px;
   background: #ffffff;
   border: 1px solid rgba(17, 17, 17, 0.04);
@@ -2030,6 +2015,9 @@ body.mobile-menu-open {
   display: flex;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   position: relative;
+}
+.card--carousel .card__item:last-child {
+  scroll-snap-align: end;
 }
 .card--carousel .card__item:hover {
   transform: translateY(-6px);
@@ -2493,7 +2481,7 @@ body.mobile-menu-open {
   box-shadow: 0 4px 14px 0 rgba(255, 100, 27, 0.39);
 }
 .main-hero__btn:hover {
-  background-color: rgb(241.2, 77.2263157895, 0);
+  background-color: #f14d00;
   transform: translateY(-2px);
   box-shadow: 0 6px 20px 0 rgba(255, 100, 27, 0.5);
   color: #fff;
@@ -4915,6 +4903,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   box-shadow: 0 4px 15px rgba(255, 100, 27, 0.25), 0 2px 8px rgba(255, 100, 27, 0.15);
   position: relative;
   overflow: hidden;
+  color: #fff !important;
 }
 .wp-block-button .wp-block-button__link::before,
 .wp-block-button .wp-element-button::before {
@@ -4944,10 +4933,6 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
 .wp-block-button .wp-element-button:focus {
   outline: 2px solid rgba(255, 100, 27, 0.5);
   outline-offset: 2px;
-}
-.wp-block-button .wp-block-button__link,
-.wp-block-button .wp-element-button {
-  color: #fff !important;
 }
 
 .video-block {
@@ -5228,7 +5213,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   transition: transform 0.2s ease;
 }
 .project-single__back-link:hover {
-  color: rgb(231, 73.9605263158, 0);
+  color: #e74a00;
   gap: 0.75rem;
 }
 .project-single__back-link:hover svg {
@@ -5642,7 +5627,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   display: inline-block;
   padding: 0.2rem 0.75rem;
   background: rgba(255, 100, 27, 0.08);
-  color: rgb(255, 82.6644736842, 1.5);
+  color: #ff5302;
   border-radius: 999px;
   font-size: 0.78rem;
   font-weight: 600;
@@ -6240,7 +6225,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   display: inline-block;
   padding: 0.2rem 0.75rem;
   background: rgba(255, 100, 27, 0.08);
-  color: rgb(255, 82.6644736842, 1.5);
+  color: #ff5302;
   border-radius: 999px;
   font-size: 0.78rem;
   font-weight: 600;
@@ -6542,7 +6527,7 @@ body.single-case-studies {
   gap: 0.35rem;
   padding: 0.3rem 0.5rem 0.3rem 0.875rem;
   background: rgba(255, 100, 27, 0.09);
-  color: rgb(231, 73.9605263158, 0);
+  color: #e74a00;
   border-radius: 999px;
   font-size: 0.8rem;
   font-weight: 600;
@@ -7086,7 +7071,7 @@ body.single-case-studies {
   display: inline-block;
   padding: 0.2rem 0.75rem;
   background: rgba(255, 100, 27, 0.08);
-  color: rgb(255, 82.6644736842, 1.5);
+  color: #ff5302;
   border-radius: 999px;
   font-size: 0.78rem;
   font-weight: 600;
@@ -7883,13 +7868,14 @@ body.single-post .post-cta__btn {
 body.single-post .post-cta__btn:hover {
   background: rgba(255, 255, 255, 0.88);
 }
-body.single-post .post-nav {
+
+.post-nav {
   background: transparent;
   padding: 2rem 20px;
   position: relative;
   z-index: 1;
 }
-body.single-post .post-nav__inner {
+.post-nav__inner {
   max-width: 1370px;
   margin: 0 auto;
   display: flex;
@@ -7897,7 +7883,7 @@ body.single-post .post-nav__inner {
   align-items: center;
   gap: 2rem;
 }
-body.single-post .post-nav__item {
+.post-nav__item {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -7905,32 +7891,32 @@ body.single-post .post-nav__item {
   color: #2c2c2c;
   max-width: 45%;
 }
-body.single-post .post-nav__item:hover {
+.post-nav__item:hover {
   color: #ff641b;
 }
-body.single-post .post-nav__item--next {
+.post-nav__item--next {
   margin-left: auto;
   text-align: right;
 }
-body.single-post .post-nav__item--prev:hover .post-nav__arrow {
+.post-nav__item--prev:hover .post-nav__arrow {
   transform: translateX(-6px);
 }
-body.single-post .post-nav__item--next:hover .post-nav__arrow {
+.post-nav__item--next:hover .post-nav__arrow {
   transform: translateX(6px);
 }
-body.single-post .post-nav__arrow {
+.post-nav__arrow {
   font-size: 28px;
   color: #ff641b;
   flex-shrink: 0;
   display: inline-block;
   transition: transform 0.2s ease;
 }
-body.single-post .post-nav__text {
+.post-nav__text {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
 }
-body.single-post .post-nav__label {
+.post-nav__label {
   font-family: "Be Vietnam Pro", Helvetica, Arial, Lucida, sans-serif;
   font-size: 13px;
   font-weight: 600;
@@ -7938,26 +7924,26 @@ body.single-post .post-nav__label {
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
-body.single-post .post-nav__title {
+.post-nav__title {
   font-family: "Be Vietnam Pro", Helvetica, Arial, Lucida, sans-serif;
   font-size: 16px;
   font-weight: 700;
   color: #2c2c2c;
   line-height: 22px;
 }
-.post-nav__item:hover body.single-post .post-nav__title {
+.post-nav__item:hover .post-nav__title {
   color: #ff641b;
 }
 @media (max-width: 767px) {
-  body.single-post .post-nav__inner {
+  .post-nav__inner {
     flex-direction: column;
     align-items: flex-start;
     gap: 1.5rem;
   }
-  body.single-post .post-nav__item {
+  .post-nav__item {
     max-width: 100%;
   }
-  body.single-post .post-nav__item--next {
+  .post-nav__item--next {
     margin-left: 0;
     text-align: left;
   }

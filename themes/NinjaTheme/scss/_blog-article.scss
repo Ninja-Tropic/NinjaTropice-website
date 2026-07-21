@@ -469,7 +469,9 @@ body.single-post {
     }
 }
 
-// ── Post prev/next navigation ─────────────────────────────────────────────────
+} // end body.single-post
+
+// ── Post prev/next navigation (shared: blog posts + case studies) ─────────────
 
 .post-nav {
     background: transparent;
@@ -545,5 +547,3 @@ body.single-post {
         &__item--next { margin-left: 0; text-align: left; }
     }
 }
-
-} // end body.single-post
