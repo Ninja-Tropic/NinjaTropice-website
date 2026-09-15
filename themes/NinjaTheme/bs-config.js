@@ -1,9 +1,11 @@
+const compression = require("compression");
 const wpPublicUrl = process.env.WP_PUBLIC_URL || "http://localhost:8080";
 const wpPublicHost = new URL(wpPublicUrl).host;
 const bsUrl = "http://localhost:3001";
 const wpUrlRegex = () => new RegExp(wpPublicUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g");
 
 module.exports = {
+  middleware: [compression()],
   proxy: {
     target: process.env.WP_URL || wpPublicUrl,
     proxyReq: [

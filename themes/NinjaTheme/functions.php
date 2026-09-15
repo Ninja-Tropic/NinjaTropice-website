@@ -188,7 +188,7 @@ function ninjatheme_scripts() {
 		if ( file_exists( $full_path ) ) {
 			$module_handles[] = $handle;
 			wp_enqueue_script( $handle, get_stylesheet_directory_uri() . $path, array(), filemtime( $full_path ), true );
-			wp_script_add_data( $handle, 'defer', true );
+			wp_script_add_data( $handle, 'strategy', 'defer' );
 		}
 	}
 
@@ -213,7 +213,7 @@ function ninjatheme_scripts() {
 		if ( $block_used && file_exists( $full_path ) ) {
 			$module_handles[] = $handle;
 			wp_enqueue_script( $handle, get_stylesheet_directory_uri() . $config['path'], array(), filemtime( $full_path ), true );
-			wp_script_add_data( $handle, 'defer', true );
+			wp_script_add_data( $handle, 'strategy', 'defer' );
 		}
 	}
 
@@ -226,7 +226,7 @@ function ninjatheme_scripts() {
 			$script_version,
 			true
 		);
-		wp_script_add_data( 'ninjatheme-script', 'defer', true );
+		wp_script_add_data( 'ninjatheme-script', 'strategy', 'defer' );
 	}
 
 	// Enqueue comment reply script on single posts
@@ -1752,22 +1752,36 @@ add_filter('manage_edit-post_sortable_columns', 'sortable_last_modified_column')
  * Reduces DNS + TCP + TLS handshake time for CDN and third-party scripts.
  */
 function ninjatheme_resource_hints( $hints, $relation_type ) {
-	// Note: Bulma is now self-hosted — no CDN preconnect needed for it.
-	// Note: Google Fonts are now self-hosted — no googleapis preconnect needed.
+	if ( is_admin() ) {
+		return $hints;
+	}
+
+	$content = is_singular() ? (string) get_post_field( 'post_content', get_queried_object_id() ) : '';
+	$uses_hubspot = strpos( $content, 'hbspt.forms.create' ) !== false
+		|| has_block( 'acf/hubspot-form', $content );
+	$uses_youtube = stripos( $content, 'youtube' ) !== false || stripos( $content, 'youtu.be' ) !== false;
+	$uses_vimeo   = stripos( $content, 'vimeo' ) !== false;
+
 	if ( 'preconnect' === $relation_type ) {
-		// HubSpot (used by hubspot-form block)
-		$hints[] = array( 'href' => 'https://js.hsforms.net' );
-		$hints[] = array( 'href' => 'https://forms.hsforms.com' );
-		// YouTube / Vimeo embeds
-		$hints[] = array( 'href' => 'https://www.youtube-nocookie.com' );
-		$hints[] = array( 'href' => 'https://player.vimeo.com' );
-		// YouTube thumbnail images (used in project cards)
-		$hints[] = array( 'href' => 'https://img.youtube.com' );
+		// Keep the connection budget small: only origins used by this page.
+		if ( $uses_hubspot ) {
+			$hints[] = array( 'href' => 'https://js.hsforms.net' );
+		}
+		if ( $uses_vimeo ) {
+			$hints[] = array( 'href' => 'https://player.vimeo.com' );
+		}
+		if ( $uses_youtube ) {
+			$hints[] = array( 'href' => 'https://img.youtube.com' );
+		}
 	}
 
 	if ( 'dns-prefetch' === $relation_type ) {
-		$hints[] = array( 'href' => '//js.hsforms.net' );
-		$hints[] = array( 'href' => '//img.youtube.com' );
+		if ( $uses_hubspot ) {
+			$hints[] = array( 'href' => '//js.hsforms.net' );
+		}
+		if ( $uses_youtube ) {
+			$hints[] = array( 'href' => '//img.youtube.com' );
+		}
 	}
 
 	return $hints;
@@ -1901,36 +1915,14 @@ function ninjatheme_inline_critical_css() {
 add_action( 'wp_head', 'ninjatheme_inline_critical_css', 1 );
 
 /**
- * Async CSS loading — converts render-blocking stylesheets to non-blocking.
+ * Keep the complete stylesheets render-blocking.
  *
- * Uses the media="print" trick: the browser fetches the file immediately
- * (not render-blocking) and the onload handler switches it to media="all".
- * A <noscript> fallback covers JS-disabled environments.
- *
- * Applied to: bulma-css, ninjatheme-style.
- * fonts.css stays synchronous to prevent FOUT.
+ * The critical CSS makes the first paint fast, but swapping the complete
+ * stylesheets after paint causes a large layout shift on content-heavy pages.
+ * A stable first render scores materially better and avoids a visible flash.
  */
 function ninjatheme_async_stylesheets( $tag, $handle ) {
-	if ( is_admin() ) {
-		return $tag;
-	}
-	$async_handles = array( 'bulma-css', 'ninjatheme-style' );
-	if ( ! in_array( $handle, $async_handles, true ) ) {
-		return $tag;
-	}
-	// Replace rel='stylesheet' with the preload/swap trick
-	$async_tag = str_replace(
-		"rel='stylesheet'",
-		"rel='preload' as='style' onload=\"this.onload=null;this.rel='stylesheet'\"",
-		$tag
-	);
-	// <noscript> ensures the file loads for users with JS disabled
-	$noscript_tag = str_replace(
-		"rel='preload' as='style' onload=\"this.onload=null;this.rel='stylesheet'\"",
-		"rel='stylesheet'",
-		$async_tag
-	);
-	return $async_tag . '<noscript>' . $noscript_tag . '</noscript>' . "\n";
+	return $tag;
 }
 add_filter( 'style_loader_tag', 'ninjatheme_async_stylesheets', 10, 2 );
 
@@ -1962,9 +1954,12 @@ function ninjatheme_defer_hubspot_embed( $html ) {
 		.   's.onload=function(){hbspt.forms.create(args);};'
 		.   'document.head.appendChild(s);'
 		. '}'
-		. 'if(document.readyState==="loading"){'
-		.   'document.addEventListener("DOMContentLoaded",load);'
-		. '}else{load();}'
+		. 'var loaded=false;function once(){if(loaded)return;loaded=true;load();}'
+		. '["pointerdown","keydown","touchstart"].forEach(function(e){window.addEventListener(e,once,{once:true,passive:true});});'
+		. 'var target=document.getElementById("' . esc_js( $uid ) . '");'
+		. 'if("IntersectionObserver" in window&&target){'
+		.   'new IntersectionObserver(function(entries,observer){if(entries[0].isIntersecting){observer.disconnect();once();}},{rootMargin:"300px"}).observe(target);'
+		. '}else{window.addEventListener("load",once,{once:true});}'
 		. '})();'
 		. '</script>' . "\n";
 }

@@ -531,6 +531,12 @@ $hero-play-yellow: #facc15;
             // Reset shape for mobile if space is tight, or keep it
             max-width: 100%;
         }
+
+		// Lighthouse counts the continuously moving, blurred mesh as layout
+		// instability on small screens. The static gradient preserves the look.
+		&__blob {
+			animation: none;
+		}
     }
 }
 

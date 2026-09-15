@@ -68,7 +68,8 @@ module.exports = (ctx) => {
         },
         'cssnano': {
           preset: ['default', {
-            discardComments: { removeAll: true },
+            // Preserve /*! ... */ comments, including the WordPress theme header.
+            discardComments: { removeAll: false },
             normalizeWhitespace: true,
             minifyFontValues: true,
             minifySelectors: true,

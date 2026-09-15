@@ -105,7 +105,7 @@ $embed_escaped = $has_video ? esc_attr( base64_encode( $modal_embed ) ) : '';
 
         <?php if ( $has_video || $has_image ): ?>
             <div class="main-hero__media">
-                <span class="main-hero__blob" aria-hidden="true"></span>
+                <span class="main-hero__blob" aria-hidden="true" style="animation:none"></span>
                 <?php if ( $has_video ): ?>
                     <div class="main-hero__video">
                         <?php echo $modal_embed; ?>
