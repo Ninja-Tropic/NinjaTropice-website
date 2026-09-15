@@ -1,0 +1,281 @@
+@use '../variables' as *;
+
+// =============================================================================
+// 404 page — hero + latest posts + category browser
+// Cards reuse .blog-archive__* from the [blog_grid] shortcode.
+// =============================================================================
+
+.error-404-page {
+	background: #ffffff;
+}
+
+.error-404__container {
+	position: relative;
+	z-index: 1;
+	max-width: $container-max-width;
+	margin: 0 auto;
+	padding: 0 24px;
+}
+
+// ── Hero ──────────────────────────────────────────────────────────────────────
+.error-404__hero {
+	position: relative;
+	overflow: hidden;
+	padding: clamp(4rem, 8vw, 7rem) 0 clamp(3rem, 5vw, 4.5rem);
+	text-align: center;
+	background:
+		radial-gradient(46rem 28rem at 6% 6%, rgba(255, 104, 27, 0.12), transparent 72%),
+		radial-gradient(34rem 24rem at 92% 12%, rgba(255, 209, 174, 0.22), transparent 70%),
+		linear-gradient(180deg, #fffdfa 0%, #fff8f3 42%, #ffffff 100%);
+
+	&::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background-image:
+			linear-gradient(rgba(37, 25, 14, 0.035) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(37, 25, 14, 0.035) 1px, transparent 1px);
+		background-size: 110px 110px;
+		mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.2), transparent 86%);
+		pointer-events: none;
+	}
+}
+
+.error-404__aurora {
+	position: absolute;
+	border-radius: 999px;
+	filter: blur(34px);
+	opacity: 0.75;
+	pointer-events: none;
+
+	&--one {
+		width: clamp(12rem, 24vw, 18rem);
+		height: clamp(12rem, 24vw, 18rem);
+		top: 2.5rem;
+		left: -2rem;
+		background: radial-gradient(circle, rgba(255, 104, 27, 0.24) 0%, rgba(255, 104, 27, 0) 72%);
+	}
+
+	&--two {
+		width: clamp(15rem, 26vw, 22rem);
+		height: clamp(15rem, 26vw, 22rem);
+		right: -3rem;
+		bottom: 0;
+		background: radial-gradient(circle, rgba(255, 222, 197, 0.92) 0%, rgba(255, 222, 197, 0) 68%);
+	}
+}
+
+.error-404__code {
+	margin: 0 0 0.5rem;
+	font-family: $font-family-be-vietnam;
+	font-size: clamp(5rem, 16vw, 10rem);
+	font-weight: 800;
+	line-height: 0.9;
+	letter-spacing: -0.05em;
+	background: linear-gradient(156deg, #ff641b 0%, rgba(255, 100, 27, 0.55) 100%);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
+.error-404__title {
+	margin: 0 auto 1rem;
+	max-width: 22ch;
+	color: $color-text;
+	font-size: clamp(1.75rem, 4vw, 2.75rem);
+	font-weight: 700;
+	line-height: 1.15;
+	letter-spacing: -0.02em;
+}
+
+.error-404__text {
+	margin: 0 auto;
+	max-width: 52ch;
+	color: $color-text-light;
+	font-size: 1.0625rem;
+	line-height: 1.65;
+}
+
+.error-404__actions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 1rem;
+	margin-top: 2rem;
+}
+
+// ── Search form ───────────────────────────────────────────────────────────────
+.error-404__search {
+	margin: 2rem auto 0;
+	max-width: 30rem;
+
+	form {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.35rem 0.35rem 0.35rem 1.1rem;
+		background: #ffffff;
+		border: 1px solid rgba(0, 0, 0, 0.09);
+		border-radius: 999px;
+		box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+	}
+
+	label {
+		flex: 1;
+		min-width: 0;
+		margin: 0;
+	}
+
+	input[type='search'] {
+		width: 100%;
+		border: none;
+		background: transparent;
+		font-size: 0.95rem;
+		color: $color-text;
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	input[type='submit'],
+	button[type='submit'] {
+		flex-shrink: 0;
+		padding: 0.65rem 1.5rem;
+		background: linear-gradient(156deg, #ff641b 0%, rgba(255, 100, 27, 0.9) 100%);
+		color: #ffffff;
+		border: none;
+		border-radius: 999px;
+		font-weight: 700;
+		font-size: 0.875rem;
+		cursor: pointer;
+		transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+		&:hover {
+			transform: translateY(-1px);
+			box-shadow: 0 6px 18px rgba(255, 100, 27, 0.3);
+		}
+	}
+}
+
+// ── Sections ──────────────────────────────────────────────────────────────────
+.error-404__section {
+	padding: clamp(2.5rem, 5vw, 4rem) 0;
+
+	&--categories {
+		padding-bottom: clamp(4rem, 7vw, 6rem);
+	}
+}
+
+.error-404__section-head {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	margin-bottom: 1.75rem;
+}
+
+.error-404__section-title {
+	margin: 0;
+	color: $color-text;
+	font-size: clamp(1.25rem, 2.5vw, 1.625rem);
+	font-weight: 700;
+	letter-spacing: -0.02em;
+}
+
+.error-404__section-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	color: $ninja-main-color;
+	font-size: 0.9375rem;
+	font-weight: 600;
+	text-decoration: none;
+	transition: gap 0.2s ease;
+
+	svg {
+		transition: transform 0.2s ease;
+	}
+
+	&:hover {
+		gap: 0.6rem;
+
+		svg {
+			transform: translateX(2px);
+		}
+	}
+}
+
+// ── Latest posts — 4 across, overrides the shared 3-column grid ───────────────
+.error-404__posts.blog-archive__grid {
+	grid-template-columns: repeat(4, 1fr);
+	gap: 1.5rem;
+
+	@media (max-width: 1100px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	@media (max-width: $breakpoint-mobile) {
+		grid-template-columns: 1fr;
+		gap: 1.25rem;
+	}
+}
+
+// ── Categories ────────────────────────────────────────────────────────────────
+.error-404__categories {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	li {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		&::before {
+			content: none;
+		}
+	}
+}
+
+.error-404__category {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.55rem;
+	padding: 0.6rem 1.1rem;
+	background: #ffffff;
+	border: 1px solid rgba(0, 0, 0, 0.08);
+	border-radius: 999px;
+	color: $color-text;
+	font-size: 0.9375rem;
+	font-weight: 600;
+	text-decoration: none;
+	transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+
+	&:hover,
+	&:focus-visible {
+		background: rgba(255, 100, 27, 0.07);
+		border-color: rgba(255, 100, 27, 0.3);
+		color: $ninja-main-color;
+		transform: translateY(-2px);
+	}
+}
+
+.error-404__category-count {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 1.5rem;
+	height: 1.5rem;
+	padding: 0 0.4rem;
+	background: rgba(255, 100, 27, 0.1);
+	border-radius: 999px;
+	color: $ninja-main-color;
+	font-size: 0.75rem;
+	font-weight: 700;
+	line-height: 1;
+}
