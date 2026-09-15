@@ -18,15 +18,6 @@ $nt_404_posts = new WP_Query( array(
 	'no_found_rows'       => true,
 ) );
 
-// Blog categories that actually have posts.
-$nt_404_categories = get_categories( array(
-	'orderby'    => 'count',
-	'order'      => 'DESC',
-	'hide_empty' => true,
-	'exclude'    => array( get_option( 'default_category' ) ),
-	'number'     => 12,
-) );
-
 $nt_404_blog_url = get_option( 'page_for_posts' ) ? get_permalink( get_option( 'page_for_posts' ) ) : home_url( '/blog/' );
 ?>
 
@@ -96,27 +87,6 @@ $nt_404_blog_url = get_option( 'page_for_posts' ) ? get_permalink( get_option( '
 				wp_reset_postdata();
 				?>
 			</div>
-		</div>
-	</section>
-	<?php endif; ?>
-
-	<?php if ( ! empty( $nt_404_categories ) && ! is_wp_error( $nt_404_categories ) ) : ?>
-	<section class="error-404__section error-404__section--categories">
-		<div class="error-404__container">
-			<header class="error-404__section-head">
-				<h2 class="error-404__section-title"><?php esc_html_e( 'Browse by category' ); ?></h2>
-			</header>
-
-			<ul class="error-404__categories">
-				<?php foreach ( $nt_404_categories as $nt_404_cat ) : ?>
-				<li>
-					<a class="error-404__category" href="<?php echo esc_url( get_category_link( $nt_404_cat ) ); ?>">
-						<span class="error-404__category-name"><?php echo esc_html( $nt_404_cat->name ); ?></span>
-						<span class="error-404__category-count"><?php echo esc_html( $nt_404_cat->count ); ?></span>
-					</a>
-				</li>
-				<?php endforeach; ?>
-			</ul>
 		</div>
 	</section>
 	<?php endif; ?>
