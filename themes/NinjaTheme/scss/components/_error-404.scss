@@ -126,6 +126,20 @@
 		margin: 0;
 	}
 
+	// Core's search form ships a visible "Search for:" label; the theme has no
+	// global sr-only utility, so hide it here.
+	.screen-reader-text {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		padding: 0;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
 	input[type='search'] {
 		width: 100%;
 		border: none;
