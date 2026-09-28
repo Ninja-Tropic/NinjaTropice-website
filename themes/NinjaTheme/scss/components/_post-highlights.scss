@@ -1,0 +1,148 @@
+@use '../variables' as *;
+
+.post-highlights {
+    padding: clamp(4rem, 7vw, 6.5rem) 0;
+
+    &__container {
+        position: relative;
+    }
+
+    &__list {
+        display: grid;
+        gap: clamp(2rem, 3vw, 3rem);
+    }
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    &__media {
+        display: block;
+        overflow: hidden;
+        border-radius: 12px;
+    }
+
+    &__image {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    &__title {
+        margin: 0;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        color: $color-text;
+
+        a {
+            color: inherit;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &__excerpt {
+        color: $color-text-light;
+
+        p {
+            margin: 0 0 0.5rem;
+            line-height: 1.75;
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &__actions {
+        margin-top: auto;
+        padding-top: 0.25rem;
+    }
+
+    &__link {
+        display: inline-block;
+    }
+}
+
+// 1 post: image left, content right.
+.post-highlights--single {
+    .post-highlights__list {
+        grid-template-columns: 1fr;
+    }
+
+    .post-highlights__item {
+        flex-direction: row;
+        align-items: center;
+        gap: clamp(2rem, 4vw, 3.5rem);
+    }
+
+    .post-highlights__media {
+        flex: 0 0 50%;
+        max-width: 50%;
+        aspect-ratio: 4 / 3;
+    }
+
+    .post-highlights__content {
+        flex: 1;
+    }
+}
+
+// 2 or 3 posts: image top, content bottom, in a grid.
+.post-highlights--grid {
+    .post-highlights__media {
+        aspect-ratio: 16 / 10;
+    }
+}
+
+.post-highlights--grid-2 {
+    .post-highlights__list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.post-highlights--grid-3 {
+    .post-highlights__list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: $breakpoint-mobile) {
+    .post-highlights {
+        padding: 3.5rem 0;
+
+        &__list {
+            gap: 2rem;
+        }
+    }
+
+    .post-highlights--single {
+        .post-highlights__item {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .post-highlights__media {
+            flex: none;
+            max-width: 100%;
+        }
+    }
+
+    .post-highlights--grid-2,
+    .post-highlights--grid-3 {
+        .post-highlights__list {
+            grid-template-columns: 1fr;
+        }
+    }
+}

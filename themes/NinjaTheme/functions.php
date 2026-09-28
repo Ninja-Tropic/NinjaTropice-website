@@ -700,6 +700,53 @@ function ninjatheme_enqueue_tabs_block_assets() {
 	}
 }
 
+/**
+ * Enqueue the admin-only script that filters the Post Highlights block's
+ * "Post" dropdown by the post type chosen in the same repeater row.
+ *
+ * @return void
+ */
+function ninjatheme_enqueue_post_highlights_assets() {
+	if ( ! is_admin() ) {
+		return;
+	}
+
+	$script_path = get_stylesheet_directory() . '/js/modules/post-highlights-admin.js';
+	if ( file_exists( $script_path ) ) {
+		wp_enqueue_script(
+			'ninjatheme-post-highlights-admin',
+			get_stylesheet_directory_uri() . '/js/modules/post-highlights-admin.js',
+			array( 'jquery', 'acf-input' ),
+			filemtime( $script_path ),
+			true
+		);
+	}
+}
+
+/**
+ * Restrict the Post Highlights block's "Post" field query to the post type
+ * selected in the same repeater row (sent by post-highlights-admin.js).
+ *
+ * @param array $args
+ * @param array $field
+ * @param int   $post_id
+ * @return array
+ */
+function ninjatheme_filter_post_highlights_post_object_query( $args, $field, $post_id ) {
+	$allowed = array( 'post', 'page', 'project', 'case-studies' );
+
+	if ( ! empty( $_POST['post_type_filter'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Missing -- read-only query filter, no state change.
+		$requested = sanitize_key( wp_unslash( $_POST['post_type_filter'] ) ); //phpcs:ignore WordPress.Security.NonceVerification.Missing
+
+		if ( in_array( $requested, $allowed, true ) ) {
+			$args['post_type'] = $requested;
+		}
+	}
+
+	return $args;
+}
+add_filter( 'acf/fields/post_object/query/key=field_ninjatheme_post_highlights_post', 'ninjatheme_filter_post_highlights_post_object_query', 10, 3 );
+
 function ninjatheme_register_acf_assets() {
 	if ( function_exists( 'acf_add_options_page' ) ) {
 		acf_add_options_page(array(
@@ -990,6 +1037,22 @@ function ninjatheme_register_acf_assets() {
 		),
 	));
 
+	// Register Post Highlights block
+	acf_register_block_type(array(
+		'name'              => 'post-highlights',
+		'title'             => __('Post Highlights'),
+		'description'       => __('Selecciona hasta 3 posts y muestralos como tarjetas: imagen, titulo, descripcion y boton.'),
+		'render_template'   => 'blocks/post-highlights.php',
+		'category'          => 'layout',
+		'icon'              => 'id',
+		'keywords'          => array('post', 'highlights', 'cards', 'featured'),
+		'enqueue_assets'    => 'ninjatheme_enqueue_post_highlights_assets',
+		'supports'          => array(
+			'align' => false,
+			'anchor' => true,
+		),
+	));
+
 	// Register Tab Panel helper block for InnerBlocks mode
 	acf_register_block_type(array(
 		'name'              => 'tab-panel',
@@ -1006,6 +1069,104 @@ function ninjatheme_register_acf_assets() {
 			'jsx' => true,
 		),
 	));
+
+	if (
+		function_exists( 'acf_add_local_field_group' ) &&
+		! ninjatheme_has_external_block_field_group( 'acf/post-highlights', 'group_ninjatheme_post_highlights' )
+	) {
+		acf_add_local_field_group(array(
+			'key' => 'group_ninjatheme_post_highlights',
+			'title' => 'Block: Post Highlights',
+			'fields' => array(
+				array(
+					'key' => 'field_ninjatheme_post_highlights_posts',
+					'label' => 'Posts',
+					'name' => 'posts',
+					'aria-label' => '',
+					'type' => 'repeater',
+					'instructions' => 'Agrega entre 1 y 3 posts. Con 1 post: imagen a la izquierda. Con 2 o 3: imagen arriba en grid.',
+					'required' => 1,
+					'conditional_logic' => 0,
+					'wrapper' => array(
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'min' => 1,
+					'max' => 3,
+					'layout' => 'block',
+					'button_label' => 'Agregar post',
+					'sub_fields' => array(
+						array(
+							'key' => 'field_ninjatheme_post_highlights_post_type',
+							'label' => 'Tipo de post',
+							'name' => 'post_type',
+							'aria-label' => '',
+							'type' => 'select',
+							'instructions' => '',
+							'required' => 1,
+							'conditional_logic' => 0,
+							'wrapper' => array(
+								'width' => '',
+								'class' => '',
+								'id' => '',
+							),
+							'choices' => array(
+								'post' => 'Post',
+								'page' => 'Page',
+								'project' => 'Project',
+								'case-studies' => 'Case Study',
+							),
+							'default_value' => 'post',
+							'return_format' => 'value',
+							'multiple' => 0,
+							'allow_null' => 0,
+							'ui' => 0,
+							'ajax' => 0,
+						),
+						array(
+							'key' => 'field_ninjatheme_post_highlights_post',
+							'label' => 'Post',
+							'name' => 'post',
+							'aria-label' => '',
+							'type' => 'post_object',
+							'instructions' => 'Busca dentro del tipo seleccionado arriba.',
+							'required' => 1,
+							'conditional_logic' => 0,
+							'wrapper' => array(
+								'width' => '',
+								'class' => '',
+								'id' => '',
+							),
+							'post_type' => array( 'post', 'page', 'project', 'case-studies' ),
+							'taxonomy' => array(),
+							'allow_null' => 0,
+							'multiple' => 0,
+							'return_format' => 'object',
+							'ui' => 1,
+						),
+					),
+				),
+			),
+			'location' => array(
+				array(
+					array(
+						'param' => 'block',
+						'operator' => '==',
+						'value' => 'acf/post-highlights',
+					),
+				),
+			),
+			'menu_order' => 0,
+			'position' => 'normal',
+			'style' => 'default',
+			'label_placement' => 'top',
+			'instruction_placement' => 'label',
+			'hide_on_screen' => '',
+			'active' => true,
+			'description' => '',
+		));
+	}
 
 	if (
 		function_exists( 'acf_add_local_field_group' ) &&
