@@ -1830,7 +1830,7 @@ function ninjatheme_register_case_studies_cpt() {
 		'show_in_rest' => true,
 		'menu_position'=> 21,
 		'menu_icon'    => 'dashicons-media-document',
-		'supports'     => array( 'title', 'thumbnail', 'excerpt', 'revisions' ),
+		'supports'     => array( 'title', 'editor', 'thumbnail', 'excerpt', 'revisions' ),
 		'rewrite'      => array( 'slug' => 'case-studies' ),
 		'taxonomies'   => array( 'category' ),
 	);

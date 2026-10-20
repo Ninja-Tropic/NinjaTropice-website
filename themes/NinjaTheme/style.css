@@ -5,7 +5,7 @@ Theme URI: https://example.com/ninjatheme
 Author: Your Name
 Author URI: https://example.com
 Description: A modern and clean WordPress standalone theme with a focus on performance and user experience.
-Version: 1.2.1
+Version: 1.2.2
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: ninjatheme
@@ -6743,98 +6743,96 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
 }
 
 .cs-hero {
-  position: relative;
-  min-height: 480px;
-  display: flex;
-  align-items: flex-end;
-  overflow: hidden;
-  background: linear-gradient(160deg, #fff8f2 0%, #fff2e5 55%, #fff8f2 100%);
+  --bg-glow-height: 820px;
 }
-.cs-hero__bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
+.cs-hero::before {
+  top: 0;
+  transform: translateX(-50%);
 }
-.cs-hero__bg img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-.cs-hero__overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.35) 45%, rgba(0, 0, 0, 0.05) 100%);
-}
-.cs-hero:not(.cs-hero--has-image) .cs-hero__overlay {
-  display: none;
-}
-.cs-hero__content {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  padding: clamp(3rem, 6vw, 5rem) 0 clamp(2.5rem, 5vw, 4rem);
+.cs-hero {
+  padding: clamp(7.5rem, 11vw, 9.5rem) 0 clamp(2rem, 4vw, 3rem);
 }
 .cs-hero__title {
   font-family: "Space Grotesk", sans-serif;
-  font-weight: 900;
-  font-size: clamp(2rem, 5vw, 3.375rem);
-  line-height: 1.08;
+  font-weight: 600;
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  line-height: 1.12;
   letter-spacing: -0.04em;
-  color: #fff !important;
+  color: #1a1a1f !important;
   text-align: left !important;
-  margin: 10px 0 0 0 !important;
+  max-width: 22ch;
+  margin: clamp(1.5rem, 3vw, 2.5rem) 0 0 !important;
 }
-.cs-hero--has-image .cs-hero__title {
-  color: #fff;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
-}
-.cs-hero:not(.cs-hero--has-image) .cs-hero__title {
-  color: #1d2327;
+.cs-hero__media {
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  padding: 1rem;
+  border-radius: 32px;
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.7), 0 20px 50px rgba(74, 35, 142, 0.08);
 }
 @media (max-width: 768px) {
-  .cs-hero {
-    min-height: 320px;
+  .cs-hero__media {
+    padding: 0.5rem;
+    border-radius: 20px;
+  }
+}
+.cs-hero__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+}
+@media (max-width: 768px) {
+  .cs-hero__img {
+    border-radius: 14px;
   }
 }
 
-.cs-client-badge {
-  display: inline-flex;
+.cs-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
-  border-radius: 50px;
-  padding: 0.35rem 1rem;
-  background: #fff;
-  border: 1.5px solid rgba(255, 129, 64, 0.25);
-}
-.cs-hero--has-image .cs-client-badge {
-  background: rgba(255, 255, 255, 0.18);
-  border-color: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(8px);
-}
-.cs-client-badge__label {
-  font-size: 13px;
+  font-size: 0.875rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
 }
-.cs-hero--has-image .cs-client-badge__label {
-  color: rgba(255, 255, 255, 0.75);
+.cs-breadcrumb__link {
+  color: #1a1a1f;
+  text-decoration: none;
 }
-.cs-hero:not(.cs-hero--has-image) .cs-client-badge__label {
-  color: #666;
+.cs-breadcrumb__link:hover {
+  color: #bd4303;
 }
-.cs-client-badge__name {
-  font-size: 14px;
-  font-weight: 700;
+.cs-breadcrumb__sep {
+  color: #1a1a1f;
 }
-.cs-hero--has-image .cs-client-badge__name {
-  color: #fff;
+.cs-breadcrumb__current {
+  color: #bd4303;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 40ch;
 }
-.cs-hero:not(.cs-hero--has-image) .cs-client-badge__name {
-  color: #FF8140;
+
+.cs-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem 2rem;
+  margin: clamp(1.5rem, 3vw, 2.5rem) 0 0;
+}
+.cs-meta__item {
+  margin: 0;
+}
+.cs-meta dt {
+  font-size: 0.875rem;
+  color: #5c5c68;
+  margin: 0 0 0.25rem;
+}
+.cs-meta dd {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1f;
+  margin: 0;
 }
 
 .post-content--2col {
@@ -6856,245 +6854,247 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
 
 .cs-body {
   position: relative;
-  background: transparent;
-}
-.cs-body::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: linear-gradient(rgba(37, 25, 14, 0.038) 1px, transparent 1px), linear-gradient(90deg, rgba(37, 25, 14, 0.038) 1px, transparent 1px);
-  background-size: 70px 70px;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 20%, transparent 50%);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 20%, transparent 50%);
+  padding: clamp(1.5rem, 3vw, 2.5rem) 0 clamp(3.5rem, 7vw, 6rem);
 }
 
-.cs-back-bar {
-  padding: 1rem 0;
-  position: relative;
-  z-index: 1;
-}
-
-.cs-back-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #FF8140;
-  text-decoration: none;
-  transition: color 0.2s ease, gap 0.2s ease;
-}
-.cs-back-link svg {
-  flex-shrink: 0;
-  transition: transform 0.2s ease;
-}
-.cs-back-link:hover {
-  color: #FF8140;
-  gap: 0.6rem;
-}
-.cs-back-link:hover svg {
-  transform: translateX(-3px);
-}
-
-.cs-client-intro,
-.cs-section {
-  position: relative;
-  z-index: 1;
-}
-
-.cs-client-intro {
-  padding: clamp(3.5rem, 7vw, 6rem) 0;
-  border-bottom: 1px solid #eee;
-}
-.cs-client-intro__inner {
-  display: flex;
-  align-items: center;
-  gap: clamp(2rem, 5vw, 5rem);
-}
-.cs-client-intro__text {
-  flex: 1;
-  min-width: 0;
-}
-.cs-client-intro__logo {
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.cs-client-intro__logo-img {
-  display: block;
-  max-width: 220px;
-  max-height: 160px;
-  width: auto;
-  height: auto;
-  -o-object-fit: contain;
-     object-fit: contain;
-}
-@media (max-width: 768px) {
-  .cs-client-intro__inner {
-    flex-direction: column;
-  }
-  .cs-client-intro__logo {
-    width: 100%;
-  }
-  .cs-client-intro__logo-img {
-    max-width: 160px;
-  }
-}
-
-.cs-section__split {
-  display: flex;
-  align-items: center;
-  gap: clamp(2rem, 5vw, 4rem);
-}
-.cs-section__split--rtl {
-  flex-direction: row-reverse;
-}
-.cs-section__split-text {
-  flex: 1;
-  min-width: 0;
-}
-.cs-section__split-media {
-  flex: 0 0 45%;
-  max-width: 45%;
-}
-.cs-section__split-img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-@media (max-width: 768px) {
-  .cs-section__split {
-    flex-direction: column !important;
-  }
-  .cs-section__split-media {
-    flex: none;
-    max-width: 100%;
-    width: 100%;
-  }
-}
-
-.cs-section {
-  padding: clamp(3.5rem, 7vw, 6rem) 0;
-  background: transparent;
-}
-.cs-section--alt {
-  background: rgba(203, 169, 255, 0.06);
-}
-
-.cs-section__heading {
-  font-size: clamp(1.6rem, 3vw, 2.25rem);
-  font-weight: 800;
-  line-height: 1.12;
-  letter-spacing: -0.03em;
-  color: #1f1812;
-  margin: 0 0 1.75rem;
-  padding-left: 1rem;
-  border-left: 4px solid #FF8140;
-}
-
-.cs-full-image {
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
-}
-.cs-full-image__img {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: 560px;
-  -o-object-fit: cover;
-     object-fit: cover;
-  margin: 0;
-}
-
-.cs-stats {
-  padding: clamp(3.5rem, 7vw, 6rem) 0;
-  background: linear-gradient(135deg, rgba(255, 129, 64, 0.06) 0%, rgba(255, 129, 64, 0.02) 60%, #fff 100%);
-}
-.cs-stats__grid {
+.cs-layout {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: clamp(1.5rem, 3vw, 2.5rem);
+  grid-template-columns: minmax(0, 1fr) 368px;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: start;
 }
-.cs-stats__item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 0.4rem;
-  padding: 1.5rem 1rem;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-}
-.cs-stats__value {
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 900;
-  line-height: 1;
-  color: #FF8140;
-  letter-spacing: -0.02em;
-}
-.cs-stats__label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #666;
-  line-height: 1.4;
-  max-width: 12rem;
+@media (max-width: 1024px) {
+  .cs-layout {
+    grid-template-columns: 1fr;
+  }
 }
 
-.cs-cta {
-  padding: clamp(3.5rem, 7vw, 6rem) 0;
-  background: #FF8140;
-}
-.cs-cta__inner {
+.cs-main {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 1.25rem;
-  max-width: 720px;
-  margin-inline: auto;
+  gap: clamp(2.5rem, 4vw, 3.5rem);
+  min-width: 0;
 }
-.cs-cta__title {
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-  font-weight: 900;
-  line-height: 1.1;
-  color: #fff !important;
-  margin: 10px 0 0 0 !important;
-  text-align: left !important;
-}
-.cs-cta__description {
-  color: rgba(255, 255, 255, 0.88);
+.cs-main .post-content {
+  color: #5c5c68;
   font-size: 1.0625rem;
   line-height: 1.7;
 }
-.cs-cta__description p {
+.cs-main .post-content p {
+  margin: 0 0 1.25rem;
+}
+.cs-main .post-content > :last-child {
+  margin-bottom: 0;
+}
+
+.cs-summary {
+  background: #f5f0ff;
+  border-radius: 16px;
+  padding: clamp(1.25rem, 3vw, 1.5rem);
+}
+.cs-summary__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+.cs-summary__title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #4a238e;
   margin: 0;
 }
-.cs-cta__description a {
-  color: #fff;
-  text-decoration: underline;
+.cs-summary__logo-img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 140px;
+  max-height: 48px;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
-.cs-cta__btn {
-  display: inline-block;
-  font-weight: 700;
+.cs-summary .post-content {
+  color: #4a238e;
   font-size: 1rem;
-  color: #FF8140;
-  background: #fff;
-  border-radius: 50px;
-  padding: 0.875rem 2.25rem;
-  text-decoration: none;
-  transition: background 0.3s, transform 0.3s;
-  margin-top: 0.5rem;
+  line-height: 1.6;
 }
-.cs-cta__btn:hover {
-  background: rgba(255, 255, 255, 0.88);
+
+.cs-section__heading {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: #1a1a1f;
+  text-align: left;
+  margin: 0 0 1.25rem;
+}
+
+.cs-figure {
+  margin: 1.75rem 0 0;
+}
+.cs-figure__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+}
+
+.cs-results ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.cs-results li {
+  background: #fafafb;
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+.cs-results li strong {
+  display: block;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1a1a1f;
+  margin-bottom: 0.5rem;
+}
+.cs-results.post-content--2col {
+  -moz-columns: 1;
+       columns: 1;
+}
+
+.cs-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+@media (min-width: 1025px) {
+  .cs-sidebar {
+    position: sticky;
+    top: 7rem;
+  }
+}
+
+.cs-related__title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #1a1a1f;
+  text-align: left;
+  margin: 0 0 1.5rem;
+}
+.cs-related__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.cs-related__link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+}
+.cs-related__media {
+  display: block;
+  aspect-ratio: 16/9;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #f5f0ff;
+}
+.cs-related__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: transform 0.35s ease;
+}
+.cs-related__link:hover .cs-related__img {
+  transform: scale(1.04);
+}
+.cs-related__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.cs-related__tag {
+  background: #f5f0ff;
+  color: #4a238e;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.cs-related__date {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #5c5c68;
+}
+.cs-related__name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #1a1a1f;
+  transition: color 0.2s ease;
+}
+.cs-related__link:hover .cs-related__name {
+  color: #bd4303;
+}
+
+.cs-cta-card {
+  border-radius: 16px;
+  padding: 1.5rem;
+  color: #fff;
+  background: linear-gradient(135deg, #7c3aed 0%, #632ebe 100%);
+}
+.cs-cta-card__title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: #fff !important;
+  text-align: left !important;
+  margin: 0 0 0.75rem !important;
+}
+.cs-cta-card__text {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0 0 1.25rem;
+  color: rgba(255, 255, 255, 0.92);
+}
+.cs-cta-card__btn {
+  display: block;
+  text-align: center;
+  padding: 0.875rem 1.5rem;
+  border-radius: 16px;
+  background: #FF8140;
+  color: #0d0d11;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.3s, filter 0.3s;
+}
+.cs-cta-card__btn:hover {
   transform: translateY(-2px);
+  filter: brightness(1.05);
+  color: #0d0d11;
 }
 
 .cs-archive__hero {
@@ -7342,20 +7342,12 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   padding-bottom: 2rem;
 }
 
-body.single-case-studies {
-  background: radial-gradient(46rem 28rem at 6% 6%, rgba(255, 104, 27, 0.1), transparent 72%), radial-gradient(34rem 24rem at 92% 12%, rgba(255, 209, 174, 0.18), transparent 70%), linear-gradient(180deg, #fffdfa 0%, #fff8f3 50%, #ffffff 100%);
-}
-
 #main.site-main {
   background: transparent;
 }
 
-.cs-projects {
-  padding: clamp(3.5rem, 7vw, 6rem) 0;
-  background: transparent;
-}
 .cs-projects__intro {
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.75rem;
 }
 .cs-projects__video {
   position: relative;
@@ -7363,9 +7355,9 @@ body.single-case-studies {
   height: 0;
   border-radius: 16px;
   overflow: hidden;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   background: #0d0d0d;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(255, 100, 27, 0.12), 0 0 40px rgba(255, 100, 27, 0.07);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.14);
 }
 .cs-projects__video iframe {
   position: absolute;
@@ -7376,16 +7368,14 @@ body.single-case-studies {
 }
 .cs-projects__actions {
   display: flex;
-  justify-content: center;
-  position: relative;
-  z-index: 1;
+  justify-content: flex-start;
 }
 .cs-projects__link {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   border: 2px solid #FF8140;
-  color: #FF8140;
+  color: #bd4303;
   font-weight: 700;
   font-size: 0.9375rem;
   padding: 0.625rem 1.375rem;

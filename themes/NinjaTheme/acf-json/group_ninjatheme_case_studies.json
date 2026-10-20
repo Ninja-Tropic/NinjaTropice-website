@@ -7,7 +7,7 @@
             "label": "Client Name",
             "name": "client_name",
             "type": "text",
-            "instructions": "Shown in the hero badge.",
+            "instructions": "Shown in the hero meta row and the About card.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": { "width": "50", "class": "", "id": "" },
@@ -26,6 +26,30 @@
             "return_format": "array",
             "library": "all",
             "preview_size": "thumbnail"
+        },
+        {
+            "key": "field_ninjatheme_cs_client_industry",
+            "label": "Industry",
+            "name": "client_industry",
+            "type": "text",
+            "instructions": "Optional. Shown in the hero meta row; hidden when empty.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "50", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "e.g. Medicine"
+        },
+        {
+            "key": "field_ninjatheme_cs_client_location",
+            "label": "Location",
+            "name": "client_location",
+            "type": "text",
+            "instructions": "Optional. Shown in the hero meta row; hidden when empty.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "50", "class": "", "id": "" },
+            "default_value": "",
+            "placeholder": "e.g. Mason City, United States"
         },
         {
             "key": "field_ninjatheme_cs_client_intro",
@@ -255,5 +279,5 @@
     "active": true,
     "description": "Structured fields for Case Study pages.",
     "show_in_rest": 0,
-    "modified": 1748304000
+    "modified": 1760918400
 }

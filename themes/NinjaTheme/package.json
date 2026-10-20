@@ -1,6 +1,6 @@
 {
   "name": "ninjatheme",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "NinjaTheme WordPress standalone theme with SCSS support",
   "scripts": {
     "build": "sass scss/style.scss style.css && postcss style.css -r",
