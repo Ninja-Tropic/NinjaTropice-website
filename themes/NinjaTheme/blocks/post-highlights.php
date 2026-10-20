@@ -56,7 +56,7 @@ if ( empty( $posts ) ) {
 				}
 
 				$post_title   = get_the_title( $post_id );
-				$post_excerpt = get_the_excerpt( $post_id );
+				$post_excerpt = wp_trim_words( wp_strip_all_tags( get_the_excerpt( $post_id ) ), 20, '…' );
 				$post_link    = get_permalink( $post_id );
 			?>
 				<article class="post-highlights__item">
@@ -83,7 +83,7 @@ if ( empty( $posts ) ) {
 
 						<?php if ( ! empty( $post_excerpt ) ) : ?>
 							<div class="post-highlights__excerpt">
-								<?php echo wp_kses_post( $post_excerpt ); ?>
+								<?php echo esc_html( $post_excerpt ); ?>
 							</div>
 						<?php endif; ?>
 

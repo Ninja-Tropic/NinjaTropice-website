@@ -1,0 +1,141 @@
+@use '../variables' as *;
+
+.principles-grid {
+    padding: 80px 0;
+
+    &__header {
+        margin-bottom: 48px;
+    }
+
+    &__tag {
+        display: inline-block;
+        margin-bottom: 24px;
+        padding: 6px 12px;
+        border-radius: 6px;
+        background: #f1edff;
+        color: #3b1f8f;
+        font-size: 0.875rem;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        line-height: 1.2;
+        text-transform: uppercase;
+    }
+
+    &__title {
+        margin: 0;
+        color: #171821;
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 20px;
+    }
+
+    &__card {
+        --pg-bg: #fafafa;
+        --pg-icon-bg: #f1f1f4;
+        --pg-icon-color: #3a3a44;
+        --pg-title: #171821;
+        --pg-text: #62616e;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 80px;
+        grid-column: span 2;
+        min-height: 414px;
+        padding: 39px;
+        border-radius: 40px;
+        background: var(--pg-bg);
+
+        // 7-card cycle: [4,2] [2,4] [2,2,2]
+        &--slot-1,
+        &--slot-4 {
+            grid-column: span 4;
+        }
+
+        &--purple {
+            --pg-bg: #f4effd;
+            --pg-icon-bg: #fff;
+            --pg-icon-color: #7c3aed;
+            --pg-title: #4a1fa3;
+            --pg-text: #4a1fa3;
+        }
+
+        &--orange {
+            --pg-bg: #fcf2ed;
+            --pg-icon-bg: #fff;
+            --pg-icon-color: #e0662b;
+            --pg-title: #b74b19;
+            --pg-text: #b74b19;
+        }
+    }
+
+    &__icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 68px;
+        height: 68px;
+        border-radius: 50%;
+        background: var(--pg-icon-bg);
+        color: var(--pg-icon-color);
+    }
+
+    &__icon-svg {
+        display: block;
+        width: 28px;
+        height: 28px;
+    }
+
+    &__icon-img {
+        display: block;
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+    }
+
+    &__card-title {
+        margin: 0 0 12px;
+        color: var(--pg-title);
+        font-size: 1.75rem;
+        line-height: 1.25;
+    }
+
+    &__card-description {
+        color: var(--pg-text);
+
+        p {
+            margin: 0;
+        }
+    }
+
+    @media (max-width: 1024px) {
+        &__grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        &__card,
+        &__card--slot-1,
+        &__card--slot-4 {
+            grid-column: span 1;
+            min-height: 320px;
+            gap: 48px;
+        }
+    }
+
+    @media (max-width: 640px) {
+        padding: 56px 0;
+
+        &__grid {
+            grid-template-columns: 1fr;
+        }
+
+        &__card {
+            min-height: 0;
+            padding: 28px;
+            border-radius: 28px;
+        }
+    }
+}

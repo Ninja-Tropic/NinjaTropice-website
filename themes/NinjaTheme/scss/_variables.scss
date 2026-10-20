@@ -5,12 +5,13 @@ $color-text-light: #666;
 $color-bg: #fff;
 $color-bg-dark: #333;
 $color-border: #eee;
-$ninja-main-color: #FF641B;
-
+//$ninja-main-color: #FF641B;   
+$ninja-main-color: #FF8140;
+$card-bg-color: #FAFAFB;
 // Typography
-$font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-$font-family-nunito-sans: "Nunito Sans", sans-serif;
-$font-family-be-vietnam: "Be Vietnam", sans-serif;
+$font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+$font-family-body: "Inter", sans-serif;
+$font-family-heading: "Space Grotesk", sans-serif;
 $line-height-base: 1.6;
 
 // Spacing

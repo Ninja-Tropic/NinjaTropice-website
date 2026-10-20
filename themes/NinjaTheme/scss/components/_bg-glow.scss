@@ -1,0 +1,60 @@
+// Fondo degradado full-width via pseudo-elemento.
+// Uso: añadir `bg-glow` + una variante a cualquier sección:
+//   .bg-glow--purple  → solo morado
+//   .bg-glow--orange  → solo naranja
+//   .bg-glow--mix     → morado a naranja (como hero-stats)
+// Se puede ajustar con --bg-glow-height.
+
+.bg-glow {
+    --bg-glow-height: 140%;
+    --bg-glow-bg: none;
+
+    position: relative;
+    isolation: isolate;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: -1;
+        width: 100vw;
+        height: var(--bg-glow-height);
+        transform: translate(-50%, -50%);
+        background: var(--bg-glow-bg);
+        pointer-events: none;
+    }
+
+    // Todos los gradientes radiales terminan en transparent: sin cortes en los bordes.
+    &--purple {
+        --bg-glow-bg: radial-gradient(
+            ellipse 100% 50% at 50% 50%,
+            rgba(196, 177, 255, 0.55) 0%,
+            rgba(211, 199, 255, 0.3) 50%,
+            rgba(211, 199, 255, 0) 100%
+        );
+    }
+
+    &--orange {
+        --bg-glow-bg: radial-gradient(
+            ellipse 100% 50% at 50% 50%,
+            rgba(255, 190, 150, 0.6) 0%,
+            rgba(255, 221, 198, 0.32) 50%,
+            rgba(255, 221, 198, 0) 100%
+        );
+    }
+
+    &--mix {
+        --bg-glow-bg:
+            radial-gradient(
+                ellipse 70% 50% at 20% 50%,
+                rgba(196, 177, 255, 0.55) 0%,
+                rgba(211, 199, 255, 0) 100%
+            ),
+            radial-gradient(
+                ellipse 70% 50% at 80% 50%,
+                rgba(255, 190, 150, 0.55) 0%,
+                rgba(255, 221, 198, 0) 100%
+            );
+    }
+}

@@ -19,7 +19,7 @@ get_header(); ?>
         max-width: 900px;
         margin: 60px auto 48px;
         padding: 0 24px;
-        font-family: 'Nunito', sans-serif;
+        font-family: 'Space Grotesk', sans-serif;
         font-size: clamp(1.8rem, 4vw, 2.8rem);
         font-weight: 800;
         line-height: 1.2;
@@ -64,7 +64,7 @@ get_header(); ?>
     .cs-single__content h2,
     .cs-single__content h3,
     .cs-single__content h4 {
-        font-family: 'Nunito', sans-serif;
+        font-family: 'Space Grotesk', sans-serif;
         font-weight: 800;
         color: #1d2327;
         margin-top: 2em;
@@ -86,20 +86,7 @@ get_header(); ?>
     .cs-single__content .wp-block-columns { display: flex; gap: 32px; flex-wrap: wrap; margin: 2em 0; }
     .cs-single__content .wp-block-column  { flex: 1 1 280px; min-width: 0; }
 
-    /* ── Buttons ────────────────────────────────────────────────────── */
     .cs-single__content .wp-block-buttons { margin: 1.5em 0; }
-    .cs-single__content .wp-block-button__link {
-        display: inline-block;
-        background: #ff641b;
-        color: #fff;
-        padding: 12px 28px;
-        border-radius: 6px;
-        font-weight: 700;
-        font-size: 0.95rem;
-        text-decoration: none;
-        transition: background .2s;
-    }
-    .cs-single__content .wp-block-button__link:hover { background: #e5571a; color: #fff; }
 
     /* ── Accordions ─────────────────────────────────────────────────── */
     .cs-single__content details { border: 1px solid #e5e5e5; border-radius: 6px; margin-bottom: 8px; }

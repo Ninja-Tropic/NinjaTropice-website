@@ -1,0 +1,336 @@
+{
+    "key": "group_ninjatheme_hero_stats",
+    "title": "Block: Hero Stats",
+    "fields": [
+        {
+            "key": "field_6abb1e30c23f6",
+            "label": "Heading",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_hs_title",
+            "label": "Title",
+            "name": "title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Main heading, left column of row 1.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "placeholder": "#1 Microlearning, Training Video, Custom eLearning Solutions",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_hs_description",
+            "label": "Description",
+            "name": "description",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Short paragraph, right column of row 1.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": "br"
+        },
+        {
+            "key": "field_hs_button_1",
+            "label": "Button 1",
+            "name": "button_1",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Primary button (filled), e.g. \"Get a Free Consultation\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "allow_in_bindings": 1
+        },
+        {
+            "key": "field_hs_button_2",
+            "label": "Button 2",
+            "name": "button_2",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Secondary button (outline), e.g. \"Contact us\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "allow_in_bindings": 1
+        },
+        {
+            "key": "field_6abb1f27455ec",
+            "label": "Banner Image",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_hs_image",
+            "label": "Image",
+            "name": "image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Full-width image, row 2.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpg,jpeg,png,webp,svg",
+            "preview_size": "large"
+        },
+        {
+            "key": "field_6abb1f3f455ed",
+            "label": "Stats",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_hs_stats",
+            "label": "Stats",
+            "name": "stats",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Counters shown in the left column of row 3.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "101",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 3,
+            "collapsed": "field_hs_stat_value",
+            "button_label": "Add Stat",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_hs_stat_value",
+                    "label": "Number",
+                    "name": "value",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "100",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 1,
+                    "placeholder": 450,
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_hs_stats"
+                },
+                {
+                    "key": "field_hs_stat_label",
+                    "label": "Title",
+                    "name": "label",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "100",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 1,
+                    "placeholder": "Projects delivered",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_hs_stats"
+                }
+            ]
+        },
+        {
+            "key": "field_6abb1f4f455ee",
+            "label": "Carousel",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_hs_logos",
+            "label": "Logos",
+            "name": "logos",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Logo carousel shown in the right column of row 3 (5 visible at a time).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "field_hs_logo_image",
+            "button_label": "Add Logo",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_hs_logo_image",
+                    "label": "Image",
+                    "name": "image",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "100",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "jpg,jpeg,png,webp,svg",
+                    "allow_in_bindings": 1,
+                    "preview_size": "medium",
+                    "parent_repeater": "field_hs_logos"
+                },
+                {
+                    "key": "field_hs_logo_link",
+                    "label": "Link",
+                    "name": "link",
+                    "aria-label": "",
+                    "type": "link",
+                    "instructions": "Optional. If empty, the logo is not clickable.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "100",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "allow_in_bindings": 1,
+                    "parent_repeater": "field_hs_logos"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/hero-stats"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "modified": 1790648452
+}

@@ -1,0 +1,210 @@
+{
+    "key": "group_ninjatheme_principles_grid",
+    "title": "Block: Principles Grid",
+    "fields": [
+        {
+            "key": "field_pg_tag",
+            "label": "Tag",
+            "name": "tag",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Small label above the title.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "placeholder": "Accent",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pg_title",
+            "label": "Title",
+            "name": "title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Main heading.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "placeholder": "The principles that shape how we work.",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pg_items",
+            "label": "Cards",
+            "name": "items",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "The layout is automatic and repeats every 7 cards: 2 + 2 + 3 per row (wide, narrow / narrow, wide / three equal).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "field_pg_item_title",
+            "button_label": "Add card",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_pg_item_lucide",
+                    "label": "Icon (Lucide)",
+                    "name": "lucide_icon",
+                    "aria-label": "",
+                    "type": "lucide_icon",
+                    "instructions": "Pick an icon from the Lucide library. It takes the card's color.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "100",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "allow_null": 1,
+                    "parent_repeater": "field_pg_items"
+                },
+                {
+                    "key": "field_pg_item_icon",
+                    "label": "Custom icon (fallback)",
+                    "name": "icon",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "Optional. Only used when no Lucide icon is selected.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "100",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "svg,png,jpg,jpeg,webp",
+                    "preview_size": "thumbnail",
+                    "allow_in_bindings": 1,
+                    "parent_repeater": "field_pg_items"
+                },
+                {
+                    "key": "field_pg_item_color",
+                    "label": "Color",
+                    "name": "color",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "100",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "gray": "Gray",
+                        "purple": "Purple",
+                        "orange": "Orange"
+                    },
+                    "default_value": "gray",
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "allow_in_bindings": 1,
+                    "parent_repeater": "field_pg_items"
+                },
+                {
+                    "key": "field_pg_item_title",
+                    "label": "Title",
+                    "name": "title",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "100",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 1,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_pg_items"
+                },
+                {
+                    "key": "field_pg_item_description",
+                    "label": "Description",
+                    "name": "description",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "100",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 1,
+                    "rows": 3,
+                    "placeholder": "",
+                    "new_lines": "br",
+                    "parent_repeater": "field_pg_items"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/principles-grid"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "modified": 1791858597
+}

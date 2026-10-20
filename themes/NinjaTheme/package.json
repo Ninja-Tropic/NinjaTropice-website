@@ -1,13 +1,13 @@
 {
   "name": "ninjatheme",
-  "version": "1.0.0",
+  "version": "1.2.1",
   "description": "NinjaTheme WordPress standalone theme with SCSS support",
   "scripts": {
     "build": "sass scss/style.scss style.css && postcss style.css -r",
     "sass:watch": "sass --watch scss/style.scss:style.css",
     "postcss:watch": "chokidar 'style.css' -c 'postcss style.css -r' --initial",
     "build:watch": "sass scss/style.scss style.css && concurrently --kill-others \"npm run sass:watch\" \"npm run postcss:watch\"",
-    "build:prod": "NODE_ENV=production sass scss/style.scss:style.css scss/critical.scss:critical.css --style=compressed --no-source-map && NODE_ENV=production postcss style.css assets/css/bulma.min.css critical.css -r",
+    "build:prod": "NODE_ENV=production sass scss/style.scss:style.css --style=compressed --no-source-map && NODE_ENV=production postcss style.css assets/css/bulma.min.css -r",
     "dev": "npm run build && concurrently --kill-others \"npm run build:watch\" \"browser-sync start --config bs-config.js\"",
     "sync": "browser-sync start --config bs-config.js"
   },

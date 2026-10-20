@@ -12,7 +12,7 @@ if( !empty($block['anchor']) ) {
 }
 
 // Create class attribute allowing for custom "className" and "align" values.
-$className = 'hubspot-form';
+$className = 'hubspot-form bg-glow bg-glow--orange';
 if( !empty($block['className']) ) {
     $className .= ' ' . $block['className'];
 }
@@ -31,6 +31,10 @@ if( !$f ) {
     <div class="hubspot-form__container container">
         <div class="hubspot-form__cta">
             <div class="hubspot-form__content">
+                <?php if( !empty($f['eyebrow']) ): ?>
+                    <span class="hubspot-form__eyebrow"><?php echo esc_html($f['eyebrow']); ?></span>
+                <?php endif; ?>
+
                 <?php if( !empty($f['title']) ): ?>
                     <h2 class="hubspot-form__title"><?php echo wp_kses_post( do_shortcode( $f['title'] ) ); ?></h2>
                 <?php endif; ?>

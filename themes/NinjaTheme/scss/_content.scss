@@ -14,7 +14,7 @@
 .site-main {
     //padding: $spacing-md 0;
     min-height: 60vh;
-    margin-top: 6rem;
+    padding-top: 6rem;
 
     @media (max-width: 997px) { margin-top: 5.5rem; }
     @media (max-width: 767px) { margin-top: 5rem; }
@@ -23,7 +23,7 @@
 
 // Post Styles
 .post {
-    margin-bottom: $spacing-lg;
+    
     padding-bottom: $spacing-md;
     border-bottom: 1px solid $color-border;
 

@@ -1,0 +1,35 @@
+// Marco translúcido tipo "glass" alrededor de una imagen/video (como hero-stats__media).
+// Uso: <div class="media-frame"><img ...></div>
+// Variables: --media-frame-padding, --media-frame-radius.
+
+.media-frame {
+    --media-frame-padding: 18px;
+    --media-frame-radius: 36px;
+
+    position: relative;
+    overflow: hidden;
+    padding: var(--media-frame-padding);
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    border-radius: var(--media-frame-radius);
+    background: rgba(255, 255, 255, 0.48);
+    box-shadow:
+        0 1.5rem 4rem rgba(68, 48, 33, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    > img,
+    > video,
+    > iframe,
+    > picture img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: calc(var(--media-frame-radius) - var(--media-frame-padding));
+    }
+
+    @media (max-width: 820px) {
+        --media-frame-padding: 0.6rem;
+        --media-frame-radius: 1.35rem;
+    }
+}

@@ -2,8 +2,8 @@
 
 .carousel {
     width: 100%;
-    background: linear-gradient(156deg,#ff641b 0%,#a36dee 100%)!important;
-    padding: 4rem 0;
+    background: transparent;
+    padding: 2rem 0;
     position: relative;
     overflow: hidden;
     
@@ -14,32 +14,24 @@
     }
     
     &__header {
-        margin-bottom: 3rem;
-        text-align: center;
-        
-        @media (min-width: 768px) {
-            margin-bottom: 4rem;
-        }
+        margin-bottom: 1.5rem;
+        text-align: left;
     }
-    
+
     &__title {
         margin: 0;
-        color: #ffffff!important;
-        
-        @media (min-width: 768px) {
-        }
+        font-size: 0.875rem;
+        font-weight: 600;
+        line-height: 1.4;
+        color: #6b6b76;
     }
-    
+
     &__wrapper {
         position: relative;
         width: 100%;
         display: flex;
         flex-direction: column;
-        gap: 3rem;
-        
-        @media (min-width: 768px) {
-            gap: 4rem;
-        }
+        gap: 0;
     }
     
     &__row {
@@ -48,17 +40,13 @@
         overflow: hidden;
         display: flex;
         align-items: center;
-        min-height: 100px;
-
-        @media (min-width: 768px) {
-            min-height: 120px;
-        }
+        min-height: 112px;
     }
     
     &__track {
         display: flex;
         align-items: center;
-        gap: 4rem;
+        gap: 4.5rem;
         width: max-content;
         animation: scroll 35s linear infinite;
         will-change: transform;
@@ -81,14 +69,10 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 80px;
+        height: 96px;
         width: auto;
-        opacity: 0.8;
+        opacity: 0.6;
         transition: opacity 0.3s ease;
-
-        @media (min-width: 768px) {
-            height: 100px;
-        }
 
         &:hover {
             opacity: 1;
@@ -119,20 +103,16 @@
 
         img {
             max-height: 100%;
-            max-width: 240px;
+            max-width: 320px;
             width: auto;
             height: auto;
             object-fit: contain;
             display: block;
-            // Convert logos to white using CSS filters
-            filter: brightness(0) invert(1);
+            // Neutral gray logos
+            filter: grayscale(1);
             transition: filter 0.3s ease;
         }
 
-        // Ensure logos stay white on hover
-        .carousel__item-link:hover & img {
-            filter: brightness(0) invert(1);
-        }
     }
 }
 
@@ -152,19 +132,19 @@
 // Responsive adjustments
 @media (max-width: 767px) {
     .carousel {
-        padding: 3rem 0;
-        
+        padding: 1.5rem 0;
+
         &__track {
-            gap: 2.5rem;
+            gap: 3rem;
             animation-duration: 25s;
         }
         
         &__item {
-            height: 60px;
+            height: 80px;
         }
 
         &__item-image img {
-            max-width: 180px;
+            max-width: 240px;
         }
     }
 }

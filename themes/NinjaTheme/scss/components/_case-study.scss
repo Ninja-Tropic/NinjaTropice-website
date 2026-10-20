@@ -67,7 +67,7 @@ $cs-section-padding: clamp(3.5rem, 7vw, 6rem);
     }
 
     &__title {
-        font-family: 'Nunito', sans-serif;
+        font-family: $font-family-heading;
         font-weight: 900;
         font-size: clamp(2rem, 5vw, 3.375rem);
         line-height: 1.08;

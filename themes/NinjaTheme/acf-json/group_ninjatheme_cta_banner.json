@@ -1,0 +1,73 @@
+{
+    "key": "group_ninjatheme_cta_banner",
+    "title": "Block: CTA Banner",
+    "fields": [
+        {
+            "key": "field_cb_title",
+            "label": "Title",
+            "name": "title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Main heading.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": { "width": "100", "class": "", "id": "" },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "placeholder": "Explore our knowledge library on eLearning",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_cb_description",
+            "label": "Description",
+            "name": "description",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Short text under the title.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "100", "class": "", "id": "" },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": "br"
+        },
+        {
+            "key": "field_cb_button",
+            "label": "Button",
+            "name": "button",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Button on the right.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": { "width": "100", "class": "", "id": "" },
+            "return_format": "array",
+            "allow_in_bindings": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/cta-banner"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "modified": 1790900200
+}

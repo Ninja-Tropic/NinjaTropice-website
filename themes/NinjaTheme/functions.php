@@ -14,6 +14,11 @@ if ( file_exists( get_stylesheet_directory() . '/inc/performance.php' ) ) {
 	require_once get_stylesheet_directory() . '/inc/performance.php';
 }
 
+// Lucide icons: ninja_lucide() + "Lucide Icon" ACF field type
+if ( file_exists( get_stylesheet_directory() . '/inc/lucide.php' ) ) {
+	require_once get_stylesheet_directory() . '/inc/lucide.php';
+}
+
 // [projects_grid] shortcode with stacked-axis filter UI
 if ( file_exists( get_stylesheet_directory() . '/inc/shortcode-projects-grid.php' ) ) {
 	require_once get_stylesheet_directory() . '/inc/shortcode-projects-grid.php';
@@ -95,10 +100,10 @@ add_action( 'after_setup_theme', 'ninjatheme_content_width', 0 );
 
 
 /**
- * Enqueue self-hosted fonts (Be Vietnam Pro + Nunito, latin subset).
- * On the frontend the @font-face rules are inlined in <head> alongside
- * critical.css (zero HTTP request). The enqueue only runs for editor/admin
- * where inline injection is not available.
+ * Enqueue self-hosted fonts (Space Grotesk + Inter, latin subset).
+ * On the frontend the @font-face rules are inlined in <head> (zero HTTP
+ * request). The enqueue only runs for editor/admin where inline injection is
+ * not available.
  */
 function ninjatheme_fonts() {
 	$fonts_css = get_stylesheet_directory() . '/fonts/fonts.css';
@@ -115,13 +120,13 @@ add_action( 'admin_enqueue_scripts', 'ninjatheme_fonts' );
 /**
  * Preload critical font files so the browser fetches them immediately,
  * before it parses fonts.css. Reduces FOUT and improves LCP/CLS scores.
- * Only the two most-used weights are preloaded to avoid bandwidth waste.
+ * Only the two variable font files are preloaded.
  */
 function ninjatheme_preload_fonts() {
 	$fonts_uri = get_stylesheet_directory_uri() . '/fonts/';
 	$preloads  = array(
-		'be-vietnam-pro-400.woff2', // body text
-		'be-vietnam-pro-700.woff2', // headings / bold
+		'inter-variable.woff2',        // body text
+		'space-grotesk-variable.woff2', // headings
 	);
 	foreach ( $preloads as $file ) {
 		printf(
@@ -177,6 +182,18 @@ function ninjatheme_scripts() {
 		'ninjatheme-hubspot-form'   => array(
 			'path'   => '/js/modules/hubspot-form.js',
 			'blocks' => array( 'acf/hubspot-form' ),
+		),
+		'ninjatheme-hero-stats'     => array(
+			'path'   => '/js/modules/hero-stats.js',
+			'blocks' => array( 'acf/hero-stats' ),
+		),
+		'ninjatheme-services-tabs'  => array(
+			'path'   => '/js/modules/services-tabs.js',
+			'blocks' => array( 'acf/services-tabs' ),
+		),
+		'ninjatheme-faq-accordion'  => array(
+			'path'   => '/js/modules/faq-accordion.js',
+			'blocks' => array( 'acf/faq-accordion' ),
 		),
 	);
 
@@ -266,28 +283,34 @@ function ninjatheme_hubspot_textarea_resize_guard() {
 		'use strict';
 
 		var fieldName = 'tell_us_more_about_your_big_elearning_video_goals';
-		var minHeight = 140;
+		var minHeight = 88;
 		var textareaCss = 'textarea[name="' + fieldName + '"], .' + fieldName + ' textarea, .hs_' + fieldName + ' textarea { min-height: ' + minHeight + 'px !important; resize: vertical !important; overflow: auto !important; }';
 		var formCss = [
 			'html, body { background: transparent !important; }',
-			'body { margin: 0 !important; color: #2a3240 !important; font-family: "Be Vietnam Pro", Arial, sans-serif !important; }',
-			'h1 { margin: 0 0 28px !important; color: #2b2f36 !important; font-size: 42px !important; line-height: 1.15 !important; font-weight: 800 !important; text-align: center !important; letter-spacing: 0 !important; }',
+			'body { margin: 0 !important; color: #151515 !important; font-family: "Inter", Arial, sans-serif !important; }',
+			'h1 { margin: 0 0 28px !important; color: #151515 !important; font-size: 42px !important; line-height: 1.15 !important; font-weight: 700 !important; text-align: center !important; letter-spacing: 0 !important; }',
 			'.hs-form { display: block !important; margin: 0 !important; }',
-			'.hs-form fieldset { display: flex !important; gap: 24px !important; max-width: none !important; margin: 0 0 22px !important; padding: 0 !important; border: 0 !important; }',
+			'.hs-form fieldset { display: flex !important; gap: 20px !important; max-width: none !important; margin: 0 0 20px !important; padding: 0 !important; border: 0 !important; }',
 			'.hs-form .form-columns-1 .hs-form-field { width: 100% !important; }',
 			'.hs-form .form-columns-2 .hs-form-field { flex: 1 1 0 !important; float: none !important; width: auto !important; }',
 			'.hs-form .hs-form-field { display: block !important; margin: 0 !important; padding: 0 !important; height: auto !important; overflow: visible !important; }',
-			'.hs-form label { display: block !important; margin: 0 0 8px !important; color: #2a3240 !important; font-size: 18px !important; font-weight: 700 !important; line-height: 1.35 !important; }',
-			'.hs-form .hs-form-required { color: #ff681b !important; margin-left: 3px !important; }',
+			'.hs-form label { display: block !important; margin: 0 0 8px !important; color: #151515 !important; font-size: 12px !important; font-weight: 600 !important; line-height: 1.3 !important; }',
+			'.hs-form .hs-form-required { color: #c0143c !important; margin-left: 2px !important; }',
+			'.hs-form .hs-dependent-field { flex: 1 1 100% !important; width: 100% !important; max-width: 100% !important; }',
+			'.hs-form, .hs-form fieldset, .hs-form .hs-form-field, .hs-form .input { width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; }',
 			'.hs-form .input { margin: 0 !important; padding: 0 !important; height: auto !important; overflow: visible !important; background: transparent !important; border: 0 !important; }',
 			'.hs-form .form-columns-2 .input { margin-right: 0 !important; }',
-			'.hs-form .hs-input, .hs-form input[type="text"], .hs-form input[type="email"], .hs-form input[type="tel"], .hs-form input[type="url"], .hs-form input[type="number"], .hs-form select, .hs-form textarea { display: block !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; padding: 14px 18px !important; border: 1px solid rgba(16, 24, 40, 0.22) !important; border-radius: 14px !important; background: #ffffff !important; color: #1f2328 !important; box-shadow: none !important; font-size: 16px !important; line-height: 1.4 !important; }',
-			'.hs-form textarea { min-height: 140px !important; resize: vertical !important; overflow: auto !important; }',
-			'.hs-form .hs-input:focus, .hs-form input:focus, .hs-form textarea:focus, .hs-form select:focus { outline: none !important; border-color: rgba(255, 104, 27, 0.75) !important; box-shadow: 0 0 0 4px rgba(255, 104, 27, 0.14) !important; }',
-			'.hs-form .hs-error-msgs, .hs-form .hs-error-msg { margin: 6px 0 0 !important; color: #d84c5f !important; font-size: 14px !important; line-height: 1.35 !important; }',
-			'.hs-form .hs_submit { margin-top: 26px !important; clear: both !important; }',
+			'.hs-form .hs-input, .hs-form input[type="text"], .hs-form input[type="email"], .hs-form input[type="tel"], .hs-form input[type="url"], .hs-form input[type="number"], .hs-form select, .hs-form textarea { display: block !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; padding: 9px 12px !important; border: 1px solid transparent !important; border-radius: 10px !important; background: #f8f8f8 !important; color: #151515 !important; box-shadow: none !important; font-size: 13px !important; line-height: 1.4 !important; }',
+			'.hs-form input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]) { height: 36px !important; }',
+			'.hs-form ::placeholder { color: #a0a0ab !important; }',
+			'.hs-form textarea, .hs-form textarea.hs-input { width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; }',
+			'.hs-form textarea { min-height: 88px !important; resize: vertical !important; overflow: auto !important; }',
+			'.hs-form .hs-input:focus, .hs-form input:focus, .hs-form textarea:focus, .hs-form select:focus { outline: none !important; border-color: rgba(255, 104, 27, 0.6) !important; box-shadow: 0 0 0 3px rgba(255, 104, 27, 0.15) !important; }',
+			'.hs-form .hs-error-msgs, .hs-form .hs-error-msg { margin: 6px 0 0 !important; color: #d84c5f !important; font-size: 12px !important; line-height: 1.35 !important; }',
+			'.hs-form .hs_submit { margin-top: 20px !important; clear: both !important; }',
 			'.hs-form .actions { margin: 0 !important; padding: 0 !important; }',
-			'.hs-form .hs-button, .hs-form input[type="submit"], .hs-form button { appearance: none !important; border: 0 !important; border-radius: 999px !important; background: #ff681b !important; color: #ffffff !important; cursor: pointer !important; font-weight: 800 !important; font-size: 16px !important; line-height: 1 !important; padding: 18px 34px !important; box-shadow: 0 14px 28px rgba(255, 104, 27, 0.25) !important; text-transform: uppercase !important; }',
+			'.hs-form .hs-button, .hs-form input[type="submit"], .hs-form button { appearance: none !important; width: 100% !important; border: 0 !important; border-radius: 12px !important; background: #ff7342 !important; color: #151515 !important; cursor: pointer !important; font-weight: 600 !important; font-size: 14px !important; line-height: 1 !important; padding: 13px 24px !important; box-shadow: none !important; text-transform: none !important; }',
+			'.hs-form .hs-button:hover, .hs-form input[type="submit"]:hover { background: #ff6128 !important; }',
 			'@media (max-width: 640px) { h1 { font-size: 30px !important; } .hs-form fieldset { display: block !important; margin-bottom: 0 !important; } .hs-form .form-columns-2 .hs-form-field { width: 100% !important; margin-bottom: 20px !important; } .hs-form .form-columns-1 .hs-form-field { margin-bottom: 20px !important; } }'
 		].join('\n');
 		var hubspotCss = formCss + '\n' + textareaCss;
@@ -1053,6 +1076,96 @@ function ninjatheme_register_acf_assets() {
 		),
 	));
 
+	// Register Hero Stats block
+	acf_register_block_type(array(
+		'name'              => 'hero-stats',
+		'title'             => __('Hero Stats'),
+		'description'       => __('Hero con titulo, descripcion, 2 botones, imagen full-width, contadores y carrusel de logos.'),
+		'render_template'   => 'blocks/hero-stats.php',
+		'category'          => 'layout',
+		'icon'              => 'chart-bar',
+		'keywords'          => array('hero', 'stats', 'counters', 'logos', 'carousel'),
+		'supports'          => array(
+			'align' => false,
+			'anchor' => true,
+		),
+	));
+
+	// Register Services Tabs block
+	acf_register_block_type(array(
+		'name'              => 'services-tabs',
+		'title'             => __('Services Tabs'),
+		'description'       => __('Tag, titulo y descripcion con una lista de servicios a la izquierda que cambia la tarjeta (imagen, descripcion y boton) a la derecha.'),
+		'render_template'   => 'blocks/services-tabs.php',
+		'category'          => 'layout',
+		'icon'              => 'index-card',
+		'keywords'          => array('services', 'tabs', 'servicios', 'list'),
+		'supports'          => array(
+			'align' => false,
+			'anchor' => true,
+		),
+	));
+
+	// Register Blog Showcase block
+	acf_register_block_type(array(
+		'name'              => 'blog-showcase',
+		'title'             => __('Blog Showcase'),
+		'description'       => __('Tag, titulo y descripcion con un post destacado grande (el mas reciente o uno elegido) y 3 posts mas a la derecha.'),
+		'render_template'   => 'blocks/blog-showcase.php',
+		'category'          => 'layout',
+		'icon'              => 'columns',
+		'keywords'          => array('blog', 'posts', 'featured', 'showcase', 'recent'),
+		'supports'          => array(
+			'align' => false,
+			'anchor' => true,
+		),
+	));
+
+	// Register CTA Banner block
+	acf_register_block_type(array(
+		'name'              => 'cta-banner',
+		'title'             => __('CTA Banner'),
+		'description'       => __('Banner morado con titulo y descripcion a la izquierda y un boton a la derecha.'),
+		'render_template'   => 'blocks/cta-banner.php',
+		'category'          => 'layout',
+		'icon'              => 'megaphone',
+		'keywords'          => array('cta', 'banner', 'call to action', 'button'),
+		'supports'          => array(
+			'align' => false,
+			'anchor' => true,
+		),
+	));
+
+	// Register Principles Grid block
+	acf_register_block_type(array(
+		'name'              => 'principles-grid',
+		'title'             => __('Principles Grid'),
+		'description'       => __('Tag y titulo con una grilla de tarjetas (icono, titulo, descripcion) en color morado, naranja o gris.'),
+		'render_template'   => 'blocks/principles-grid.php',
+		'category'          => 'layout',
+		'icon'              => 'grid-view',
+		'keywords'          => array('principles', 'values', 'grid', 'cards', 'bento'),
+		'supports'          => array(
+			'align' => false,
+			'anchor' => true,
+		),
+	));
+
+	// Register FAQ Accordion block
+	acf_register_block_type(array(
+		'name'              => 'faq-accordion',
+		'title'             => __('FAQ Accordion'),
+		'description'       => __('Tag, titulo y descripcion con un acordeon de preguntas frecuentes seleccionadas del post type FAQs.'),
+		'render_template'   => 'blocks/faq-accordion.php',
+		'category'          => 'layout',
+		'icon'              => 'editor-help',
+		'keywords'          => array('faq', 'faqs', 'questions', 'preguntas', 'accordion'),
+		'supports'          => array(
+			'align' => false,
+			'anchor' => true,
+		),
+	));
+
 	// Register Tab Panel helper block for InnerBlocks mode
 	acf_register_block_type(array(
 		'name'              => 'tab-panel',
@@ -1769,6 +1882,47 @@ function ninjatheme_register_related_solutions_cpt() {
 add_action( 'init', 'ninjatheme_register_related_solutions_cpt' );
 
 /**
+ * Register FAQs custom post type
+ *
+ * Title = question, editor = answer. Selected per page through the FAQ Accordion block.
+ */
+function ninjatheme_register_faqs_cpt() {
+	$labels = array(
+		'name'               => _x( 'FAQs', 'Post Type General Name' ),
+		'singular_name'      => _x( 'FAQ', 'Post Type Singular Name' ),
+		'menu_name'          => __( 'FAQs' ),
+		'name_admin_bar'     => __( 'FAQ' ),
+		'add_new'            => __( 'Add New' ),
+		'add_new_item'       => __( 'Add New FAQ' ),
+		'new_item'           => __( 'New FAQ' ),
+		'edit_item'          => __( 'Edit FAQ' ),
+		'view_item'          => __( 'View FAQ' ),
+		'all_items'          => __( 'All FAQs' ),
+		'search_items'       => __( 'Search FAQs' ),
+		'not_found'          => __( 'No FAQs found.' ),
+		'not_found_in_trash' => __( 'No FAQs found in Trash.' ),
+	);
+
+	$args = array(
+		'label'               => __( 'FAQs' ),
+		'labels'              => $labels,
+		'public'              => false,
+		'show_ui'             => true,
+		'show_in_menu'        => true,
+		'show_in_rest'        => true,
+		'menu_position'       => 23,
+		'menu_icon'           => 'dashicons-editor-help',
+		'supports'            => array( 'title', 'editor', 'revisions' ),
+		'has_archive'         => false,
+		'rewrite'             => false,
+		'exclude_from_search' => true,
+	);
+
+	register_post_type( 'faq', $args );
+}
+add_action( 'init', 'ninjatheme_register_faqs_cpt' );
+
+/**
  * Add performance optimizations
  */
 function ninjatheme_performance_optimizations() {
@@ -1805,6 +1959,14 @@ add_action( 'init', 'ninjatheme_performance_optimizations' );
  * Auto-display icons in mega menu based on menu item titles
  */
 function ninjatheme_add_menu_icons( $item_output, $item, $depth, $args ) {
+	// Desktop category descriptions are managed in Appearance > Menus.
+	if ( isset( $args->theme_location ) && 'primary' === $args->theme_location ) {
+		if ( 1 === $depth && ! empty( $item->description ) ) {
+			$item_output .= '<span class="menu-item-description">' . esc_html( $item->description ) . '</span>';
+		}
+		return $item_output;
+	}
+
 	// Only add icons to first-level items (categories) in mega menu
 	if ( $depth === 1 ) {
 		// Icon mapping: menu title => attachment ID
@@ -2046,34 +2208,26 @@ add_filter( 'image_editor_output_format', function( $formats ) {
 } );
 
 /**
- * 2. Critical CSS — inline fonts.css + critical.css directly in <head>.
- * Merging both into one <style> block eliminates every render-blocking CSS
- * request: @font-face rules are available instantly, and above-the-fold
- * layout/styles render without waiting for external files.
- * Run `npm run build:prod` to regenerate critical.css after SCSS changes.
+ * 2. Font CSS — inline fonts.css directly in <head>.
+ * Component and layout styles live in their SCSS partials and compile into
+ * style.css, keeping a single source of truth for visual styles.
  */
-function ninjatheme_inline_critical_css() {
+function ninjatheme_inline_font_css() {
 	if ( is_admin() ) {
 		return;
 	}
-	$dir      = get_stylesheet_directory();
-	$fonts    = $dir . '/fonts/fonts.css';
-	$critical = $dir . '/critical.css';
+	$fonts = get_stylesheet_directory() . '/fonts/fonts.css';
 
 	$css = '';
 	if ( file_exists( $fonts ) ) {
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		$css .= file_get_contents( $fonts );
 	}
-	if ( file_exists( $critical ) ) {
-		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-		$css .= file_get_contents( $critical );
-	}
 	if ( $css ) {
-		echo '<style id="ninjatheme-critical">' . $css . '</style>' . "\n";
+		echo '<style id="ninjatheme-fonts">' . $css . '</style>' . "\n";
 	}
 }
-add_action( 'wp_head', 'ninjatheme_inline_critical_css', 1 );
+add_action( 'wp_head', 'ninjatheme_inline_font_css', 1 );
 
 /**
  * Keep the complete stylesheets render-blocking.

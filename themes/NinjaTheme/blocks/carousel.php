@@ -41,42 +41,16 @@ $duplicated_items = !empty($carousel_items)
     <?php if( !empty($f['title']) ): ?>
         <div class="carousel__header">
             <div class="carousel__container container">
-                <h2 class="carousel__title"><?php echo esc_html($f['title']); ?></h2>
+                <div class="carousel__title"><?php echo wp_kses_post($f['title']); ?></div>
             </div>
         </div>
     <?php endif; ?>
     
     <?php if( !empty($carousel_items) ): ?>
         <div class="carousel__wrapper">
-            <!-- First Row -->
-            <div class="carousel__row carousel__row--1">
+            <!-- Single infinite row -->
+            <div class="carousel__row">
                 <div class="carousel__track" data-direction="left">
-                    <?php foreach( $duplicated_items as $item ): ?>
-                        <div class="carousel__item">
-                            <?php if( !empty($item['link']) ): ?>
-                                <a href="<?php echo esc_url($item['link']['url']); ?>" 
-                                   class="carousel__item-link"
-                                   <?php if( !empty($item['link']['target']) ): ?>target="<?php echo esc_attr($item['link']['target']); ?>"<?php endif; ?>
-                                   aria-label="<?php echo esc_attr(!empty($item['image']['alt']) ? $item['image']['alt'] : 'Logo'); ?>">
-                            <?php endif; ?>
-                            
-                            <?php if( !empty($item['image']) ): ?>
-                                <div class="carousel__item-image">
-                                    <?php echo ninjatheme_get_responsive_image( $item['image'], 'medium', array( 'class' => 'carousel__img' ) ); ?>
-                                </div>
-                            <?php endif; ?>
-                            
-                            <?php if( !empty($item['link']) ): ?>
-                                </a>
-                            <?php endif; ?>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-            
-            <!-- Second Row -->
-            <div class="carousel__row carousel__row--2">
-                <div class="carousel__track" data-direction="right">
                     <?php foreach( $duplicated_items as $item ): ?>
                         <div class="carousel__item">
                             <?php if( !empty($item['link']) ): ?>

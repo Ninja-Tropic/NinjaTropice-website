@@ -1,0 +1,160 @@
+{
+    "key": "group_ninjatheme_faq_accordion",
+    "title": "Block: FAQ Accordion",
+    "fields": [
+        {
+            "key": "field_faq_tag",
+            "label": "Tag",
+            "name": "tag",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Small label above the title.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "placeholder": "Accent",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_faq_title",
+            "label": "Title",
+            "name": "title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Main heading.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "placeholder": "Frequently Asked Questions",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_faq_description",
+            "label": "Description",
+            "name": "description",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Short text under the title.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "rows": 2,
+            "placeholder": "",
+            "new_lines": "br"
+        },
+        {
+            "key": "field_faq_items",
+            "label": "FAQs",
+            "name": "faqs",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "Choose the FAQs to show on this page. They are displayed in the order selected (drag to reorder).",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "faq"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": [],
+            "return_format": "id",
+            "multiple": 1,
+            "allow_null": 0,
+            "allow_in_bindings": 0,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_faq_open_first",
+            "label": "Open first FAQ",
+            "name": "open_first",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Show the first answer expanded on load.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "allow_in_bindings": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
+        },
+        {
+            "key": "field_faq_schema",
+            "label": "Output FAQ schema",
+            "name": "output_schema",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Adds FAQPage structured data (JSON-LD) for search engines.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "allow_in_bindings": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/faq-accordion"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "modified": 1790990100
+}

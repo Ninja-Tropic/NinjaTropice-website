@@ -12,14 +12,13 @@ body {
 }
 
 // Mobile (default up to 768px)
-h1, h3, h5, h6 {
-    font-family: $font-family-nunito-sans;
+h1, h2, h3, h4, h5, h6 {
+    font-family: $font-family-heading;
     font-weight: 700;
 }
 
-h2, h4 {
-    font-family: $font-family-be-vietnam;
-    font-weight: 700;
+body, p {
+    font-family: $font-family-body;
 }
 
 // Mobile typographic scale (~1.25 Major Third)

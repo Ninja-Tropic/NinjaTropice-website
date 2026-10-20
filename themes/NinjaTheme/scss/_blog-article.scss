@@ -2,11 +2,11 @@
 
 // ─── Blog Article Typography ──────────────────────────────────────────────────
 // Matches NinjaTropic.com styles exactly.
-// Font: 'Be Vietnam Pro' (loaded via Google Fonts in functions.php)
+// Fonts: 'Space Grotesk' (headings) + 'Inter' (body), self-hosted via fonts/fonts.css
 // These styles apply automatically to any content pasted in the Gutenberg editor.
 
-$nt-font:        'Be Vietnam Pro', Helvetica, Arial, Lucida, sans-serif;
-$nt-title-font:  'Nunito', Helvetica, Arial, Lucida, sans-serif;
+$nt-font:        'Inter', Helvetica, Arial, sans-serif;
+$nt-title-font:  'Space Grotesk', Helvetica, Arial, sans-serif;
 $nt-black:  #000000;
 $nt-dark:   #2c2c2c;
 $nt-muted:  #666666;
