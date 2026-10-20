@@ -1,0 +1,243 @@
+@use '../variables' as *;
+
+// Helpers de cards del diseño Figma (sidebar de case study).
+// 1) .post-card  — imagen + badge/fecha + título (enlace completo).
+// 2) .cta-card   — banner violeta con título, texto y botón. Horizontal por defecto, --vertical en columna.
+// Variables: --cta-card-from, --cta-card-to (degradado del cta-card).
+
+.post-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    color: inherit;
+    text-decoration: none;
+    border-radius: 24px;
+
+    &__image {
+        position: relative;
+        aspect-ratio: 368 / 207;
+        overflow: hidden;
+        border-radius: 16px;
+        background: #f4f4f6;
+
+        img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    &__meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    &__badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        background: #f5f0ff;
+        color: #4a238e;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 18px;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    &__date {
+        color: #5c5c68;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 21px;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    &__title {
+        margin: 0;
+        color: #1a1a1f;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 27px;
+        transition: color $transition-base;
+    }
+
+    &:hover,
+    &:focus-visible {
+        color: inherit;
+
+        .post-card__image img {
+            transform: scale(1.04);
+        }
+
+        .post-card__title {
+            color: $ninja-main-color;
+        }
+    }
+}
+
+.cta-card {
+    --cta-card-from: #7c3aed;
+    --cta-card-to: #632ebe;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px;
+    border-radius: 16px;
+    background: linear-gradient(to right, var(--cta-card-from), var(--cta-card-to));
+    color: #fff;
+
+    &__content {
+        flex: 1 1 0;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    &__title {
+        margin: 0;
+        color: inherit;
+        font-family: $font-family-heading;
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 33px;
+    }
+
+    &__text {
+        margin: 0;
+        color: inherit;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 21px;
+    }
+
+    &__button {
+        flex: 0 0 auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px 24px;
+        border-radius: 16px;
+        background: $ninja-main-color;
+        color: #1a1a1f;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+        text-decoration: none;
+        white-space: nowrap;
+        box-shadow: 0 8px 16px rgba(233, 104, 39, 0.08);
+        transition: background-color $transition-base, transform $transition-base;
+
+        &:hover,
+        &:focus-visible {
+            background: #ff9460;
+            color: #1a1a1f;
+            transform: translateY(-2px);
+        }
+    }
+
+    &--vertical {
+        flex-direction: column;
+        align-items: stretch;
+
+        .cta-card__content {
+            flex: 0 0 auto;
+        }
+    }
+
+    @media (max-width: $breakpoint-mobile) {
+        flex-direction: column;
+        align-items: stretch;
+
+        .cta-card__content {
+            flex: 0 0 auto;
+        }
+
+        &__button {
+            width: 100%;
+        }
+    }
+}
+
+// Cards de texto para bloques de Gutenberg (Columna/Grupo). Solo se añade la clase
+// al bloque contenedor; el contenido son Headings y Paragraphs normales.
+
+// Card morada con bloques título + texto (The challenge / Solution / Result).
+// Uso: Columna con clase "summary-card" → Heading + Paragraph repetidos.
+.summary-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 24px;
+    border-radius: 16px;
+    background: #f5f0ff;
+    color: #4a238e;
+
+    > * {
+        margin: 0;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: inherit;
+        font-family: $font-family-heading;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 1.375;
+        letter-spacing: -1px;
+    }
+
+    p {
+        color: inherit;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+    }
+
+    // Separación extra entre cada grupo título + texto (8px + 16px = 24px).
+    > * + h1, > * + h2, > * + h3, > * + h4, > * + h5, > * + h6 {
+        margin-top: 16px;
+    }
+}
+
+// Card naranja de cita: primer párrafo = cita, último párrafo = autor.
+// Uso: Columna con clase "quote-card" → Paragraph (cita) + Paragraph (autor).
+.quote-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 32px;
+    border-radius: 16px;
+    background: #fff3ed;
+    color: #bd4303;
+
+    > * {
+        margin: 0;
+        color: inherit;
+    }
+
+    p {
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 27px;
+    }
+
+    // Autor (último párrafo cuando hay más de uno)
+    p:last-child:not(:first-child) {
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 21px;
+    }
+}
