@@ -42,9 +42,9 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        gap: 80px;
+        gap: 40px;
         grid-column: span 2;
-        min-height: 414px;
+        min-height: auto;
         padding: 39px;
         border-radius: 40px;
         background: var(--pg-bg);
@@ -120,8 +120,8 @@
         &__card--slot-1,
         &__card--slot-4 {
             grid-column: span 1;
-            min-height: 320px;
-            gap: 48px;
+            min-height: auto;
+            gap: 40px;
         }
     }
 
