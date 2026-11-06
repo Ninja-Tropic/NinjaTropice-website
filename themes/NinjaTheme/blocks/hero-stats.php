@@ -3,7 +3,7 @@
  * Block Name: Hero Stats
  *
  * Fields: title (text), description (textarea), button_1 (link), button_2 (link),
- * image (image, full-width), stats (repeater: value, label), logos (repeater: image, link).
+ * media_type (image|video), image (image, full-width), video_url (YouTube/Vimeo), stats (repeater: value, label), logos (repeater: image, link).
  *
  * @package NinjaTheme
  */
@@ -29,11 +29,28 @@ if( !$f ) {
     $f = array();
 }
 
+$large_description = !empty($f['large_description']);
+if( $large_description ) {
+    $className .= ' hero-stats--large-description';
+}
+
 $title = !empty($f['title']) ? $f['title'] : '';
 $description = !empty($f['description']) ? $f['description'] : '';
 $button_1 = !empty($f['button_1']) ? $f['button_1'] : null;
 $button_2 = !empty($f['button_2']) ? $f['button_2'] : null;
 $image = !empty($f['image']) ? $f['image'] : null;
+$media_type = !empty($f['media_type']) ? $f['media_type'] : 'image';
+$video_url = !empty($f['video_url']) ? $f['video_url'] : '';
+
+// Build a privacy-friendly embed URL for YouTube / Vimeo links.
+$video_embed = '';
+if( $media_type === 'video' && $video_url ) {
+    if( preg_match('~(?:youtube\.com/(?:watch\?(?:.*&)?v=|embed/|shorts/|live/)|youtu\.be/)([\w-]{11})~i', $video_url, $m) ) {
+        $video_embed = 'https://www.youtube-nocookie.com/embed/' . $m[1] . '?rel=0';
+    } elseif( preg_match('~vimeo\.com/(?:video/|channels/[\w-]+/|groups/[\w-]+/videos/)?(\d+)(?:/([a-f0-9]+))?~i', $video_url, $m) ) {
+        $video_embed = 'https://player.vimeo.com/video/' . $m[1] . (!empty($m[2]) ? '?h=' . $m[2] : '');
+    }
+}
 $stats = !empty($f['stats']) ? $f['stats'] : array();
 $logos = !empty($f['logos']) ? $f['logos'] : array();
 ?>
@@ -77,7 +94,16 @@ $logos = !empty($f['logos']) ? $f['logos'] : array();
             </div>
         </div>
 
-        <?php if( !empty($image) ): ?>
+        <?php if( $video_embed ): ?>
+            <div class="hero-stats__media hero-stats__media--video">
+                <iframe class="hero-stats__video"
+                        src="<?php echo esc_url($video_embed); ?>"
+                        title="<?php echo esc_attr($title ?: 'Video'); ?>"
+                        loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        allowfullscreen></iframe>
+            </div>
+        <?php elseif( $media_type !== 'video' && !empty($image) ): ?>
             <div class="hero-stats__media">
                 <?php echo ninjatheme_get_responsive_image( $image, 'large', array( 'class' => 'hero-stats__img', 'loading' => 'eager', 'fetchpriority' => 'high' ) ); ?>
             </div>
