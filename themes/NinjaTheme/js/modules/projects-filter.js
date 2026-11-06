@@ -11,6 +11,10 @@
 	var loadMoreWrap = document.getElementById( 'pf-load-more-wrap' );
 	var loadMoreBtn  = document.getElementById( 'pf-load-more' );
 	var allPills     = Array.from( wrap.querySelectorAll( '.pf__pill' ) );
+	// Options of the main-bar dropdowns, shaped like pills so query-param matching can treat both alike.
+	var allItems     = Array.from( wrap.querySelectorAll( '.pf__sd--field .pf__sd-item' ) ).map( function ( item ) {
+		return { dataset: { axis: item.closest( '.pf__sd' ).dataset.axis, value: item.dataset.value } };
+	} );
 
 	// Active filter state — camelCase keys match the browser dataset API.
 	var state = {
@@ -174,7 +178,7 @@
 				}
 
 				currentPage = page;
-				updateMeta( d.has_more, d.total );
+				updateMeta( d.has_more, d.total, replace ? batchCount : grid.children.length );
 				isLoading = false;
 				setLoadingState( false );
 
@@ -237,7 +241,7 @@
 
 	// ── Meta bar ──────────────────────────────────────────────────────────────────
 
-	function updateMeta( hasMore, total ) {
+	function updateMeta( hasMore, total, shown ) {
 		// Load More button.
 		if ( loadMoreWrap ) {
 			loadMoreWrap.hidden = ! hasMore;
@@ -250,17 +254,9 @@
 
 		// Count line.
 		if ( countEl ) {
-			var showing = grid.children.length;
-			if ( total === 0 ) {
-				countEl.textContent = '';
-			} else if ( hasMore ) {
-				countEl.textContent = 'Showing ' + showing + ' of ' + total + ' projects';
-			} else {
-				var activeFilters = Object.values( state ).some( function ( s ) { return s.size > 0; } );
-				countEl.textContent = activeFilters
-					? total + ' project' + ( total !== 1 ? 's' : '' ) + ' match your filters'
-					: '';
-			}
+			countEl.textContent = total === 0
+				? ''
+				: 'Showing ' + Math.min( shown, total ) + ' of ' + total;
 		}
 	}
 
@@ -314,6 +310,11 @@
 		} );
 
 		if ( hasActive ) {
+			var activeLabel = document.createElement( 'span' );
+			activeLabel.className   = 'pf__active-label';
+			activeLabel.textContent = 'Active Filters';
+			chipsWrap.insertBefore( activeLabel, chipsWrap.firstChild );
+
 			var clearBtn = document.createElement( 'button' );
 			clearBtn.type      = 'button';
 			clearBtn.className = 'pf__clear-all';
@@ -392,7 +393,7 @@
 		var axesPanel   = document.getElementById( 'pf-axes-panel' );
 		var stickyClear = document.getElementById( 'pf-sticky-clear' );
 
-		if ( ! stickyBar || ! axesPanel ) return;
+		if ( ! stickyBar ) return;
 
 		function updateStickyTop() {
 			var header = document.querySelector( '.site-header' );
@@ -409,7 +410,7 @@
 		updateStickyTop();
 		window.addEventListener( 'resize', updateStickyTop, { passive: true } );
 
-		if ( typeof IntersectionObserver !== 'undefined' ) {
+		if ( axesPanel && typeof IntersectionObserver !== 'undefined' ) {
 			var observer = new IntersectionObserver(
 				function ( entries ) {
 					var isHidden = ! entries[ 0 ].isIntersecting;
@@ -425,16 +426,13 @@
 			stickyClear.addEventListener( 'click', clearAll );
 		}
 
-		initStickyDropdowns();
 	}
 
 	// ── Sticky dropdown logic ─────────────────────────────────────────────────────
 
 	function initStickyDropdowns() {
-		var stickyBar = document.getElementById( 'pf-sticky-bar' );
-		if ( ! stickyBar ) return;
-
-		var dropdowns = Array.from( stickyBar.querySelectorAll( '.pf__sd' ) );
+		var dropdowns = Array.from( wrap.querySelectorAll( '.pf__sd' ) );
+		if ( ! dropdowns.length ) return;
 
 		dropdowns.forEach( function ( sd ) {
 			var axis    = sd.dataset.axis;
@@ -496,7 +494,15 @@
 		var activeVals = state[ axis ];
 		var n = activeVals.size;
 
-		if ( count ) {
+		var label = sd.querySelector( '.pf__sd-label[data-placeholder]' );
+		if ( label ) {
+			// Field variant: show first selection and "+N" for the rest.
+			label.textContent = n > 0 ? Array.from( activeVals )[ 0 ] : label.dataset.placeholder;
+			if ( count ) {
+				count.hidden      = n < 2;
+				count.textContent = n > 1 ? '+' + ( n - 1 ) : '';
+			}
+		} else if ( count ) {
 			count.hidden      = n === 0;
 			count.textContent = n > 0 ? String( n ) : '';
 		}
@@ -518,15 +524,12 @@
 	}
 
 	function syncAllStickyDropdowns() {
-		var stickyBar   = document.getElementById( 'pf-sticky-bar' );
 		var stickyClear = document.getElementById( 'pf-sticky-clear' );
-
-		if ( ! stickyBar ) return;
 
 		var hasActive = Object.values( state ).some( function ( s ) { return s.size > 0; } );
 		if ( stickyClear ) stickyClear.hidden = ! hasActive;
 
-		Array.from( stickyBar.querySelectorAll( '.pf__sd' ) ).forEach( function ( sd ) {
+		Array.from( wrap.querySelectorAll( '.pf__sd' ) ).forEach( function ( sd ) {
 			var axis = sd.dataset.axis;
 			if ( axis && state[ axis ] ) syncStickyDropdown( sd, axis );
 		} );
@@ -652,7 +655,7 @@
 			if ( ! axis || ! state[ axis ] ) return;
 
 			var normalized = rawVal.toLowerCase();
-			var match = allPills.find( function ( p ) {
+			var match = allPills.concat( allItems ).find( function ( p ) {
 				return p.dataset.axis === axis &&
 					p.dataset.value !== '' &&
 					p.dataset.value.toLowerCase() === normalized;
@@ -677,6 +680,7 @@
 
 	initArrows();
 	initStickyBar();
+	initStickyDropdowns();
 
 	if ( ! restoreFromQueryParams() ) {
 		if ( pfData.defaultCategory && pfData.defaultCategory.length ) {
@@ -685,10 +689,10 @@
 			} );
 			Object.keys( state ).forEach( function ( axis ) { syncPillState( axis ); } );
 			renderChips();
-			updateMeta( pfData.hasMore, pfData.total );
+			updateMeta( pfData.hasMore, pfData.total, grid.children.length );
 			updatePillAvailability();
 		} else if ( ! restoreFilterState() ) {
-			updateMeta( pfData.hasMore, pfData.total );
+			updateMeta( pfData.hasMore, pfData.total, grid.children.length );
 			updatePillAvailability();
 		}
 	}

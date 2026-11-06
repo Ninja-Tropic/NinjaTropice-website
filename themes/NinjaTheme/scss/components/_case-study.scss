@@ -43,7 +43,7 @@ $cs-surface: #fafafb;
         letter-spacing: -0.04em;
         color: $cs-text !important;
         text-align: left !important;
-        max-width: 22ch;
+        max-width: 100%;
         margin: clamp(1.5rem, 3vw, 2.5rem) 0 0 !important;
     }
 

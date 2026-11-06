@@ -79,7 +79,7 @@
 				}
 
 				currentPage = page;
-				updateMeta( d.has_more, d.total );
+				updateMeta( d.has_more, d.total, replace ? countCards( d.html ) : grid.children.length );
 				isLoading = false;
 				setLoadingState( false );
 			} )
@@ -134,24 +134,25 @@
 
 	// ── Meta bar ──────────────────────────────────────────────────────────────────
 
-	function updateMeta( hasMore, total ) {
+	function countCards( html ) {
+		var tmp = document.createElement( 'div' );
+		tmp.innerHTML = html;
+		return tmp.children.length;
+	}
+
+	function updateMeta( hasMore, total, shown ) {
 		if ( loadMoreWrap ) {
 			loadMoreWrap.hidden = ! hasMore;
 		}
 
 		if ( emptyMsg ) {
-			emptyMsg.hidden = grid.children.length > 0;
+			emptyMsg.hidden = total > 0;
 		}
 
 		if ( countEl ) {
-			var showing = grid.children.length;
-			if ( total === 0 ) {
-				countEl.textContent = '';
-			} else if ( hasMore ) {
-				countEl.textContent = 'Showing ' + showing + ' of ' + total + ' case studies';
-			} else {
-				countEl.textContent = '';
-			}
+			countEl.textContent = total === 0
+				? ''
+				: 'Showing ' + Math.min( shown, total ) + ' of ' + total;
 		}
 	}
 
@@ -171,6 +172,6 @@
 
 	// ── Init ──────────────────────────────────────────────────────────────────────
 
-	updateMeta( csfData.hasMore, csfData.total );
+	updateMeta( csfData.hasMore, csfData.total, grid.children.length );
 
 } )();

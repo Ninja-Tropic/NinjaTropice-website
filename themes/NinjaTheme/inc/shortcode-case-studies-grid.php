@@ -36,7 +36,6 @@ function ninjatheme_render_case_study_card( $post_id ) {
 	$title       = get_the_title( $post_id );
 	$permalink   = get_permalink( $post_id );
 	$client_name = get_field( 'client_name', $post_id );
-	$excerpt     = get_the_excerpt( $post_id );
 
 	$thumbnail = has_post_thumbnail( $post_id )
 		? get_the_post_thumbnail(
@@ -64,24 +63,15 @@ function ninjatheme_render_case_study_card( $post_id ) {
 			</div>
 
 			<div class="cs-archive__body-inner">
-				<h2 class="cs-archive__item-title"><?php echo esc_html( $title ); ?></h2>
-
-				<?php if ( $client_name ) : ?>
-				<div class="cs-archive__tags">
-					<span class="cs-archive__tag"><?php echo esc_html( $client_name ); ?></span>
+				<div class="cs-archive__meta">
+					<?php if ( $client_name ) : ?>
+					<span class="cs-archive__badge"><?php echo esc_html( $client_name ); ?></span>
+					<?php endif; ?>
+					<time class="cs-archive__date" datetime="<?php echo esc_attr( get_the_date( 'c', $post_id ) ); ?>">
+						<?php echo esc_html( sprintf( '%s ago', human_time_diff( get_post_time( 'U', true, $post_id ) ) ) ); ?>
+					</time>
 				</div>
-				<?php endif; ?>
-
-				<?php if ( $excerpt ) : ?>
-				<p class="cs-archive__excerpt"><?php echo esc_html( $excerpt ); ?></p>
-				<?php endif; ?>
-
-				<span class="cs-archive__cta">
-					Read case study
-					<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-						<path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-					</svg>
-				</span>
+				<h2 class="cs-archive__item-title"><?php echo esc_html( $title ); ?></h2>
 			</div>
 
 		</a>
@@ -165,6 +155,8 @@ function ninjatheme_case_studies_grid_shortcode( $atts ) {
 			'orderby'  => 'date',
 			'order'    => 'DESC',
 			'category' => '',
+			'title'    => '',
+			'subtitle' => '',
 		),
 		$atts,
 		'case_studies_grid'
@@ -234,8 +226,20 @@ function ninjatheme_case_studies_grid_shortcode( $atts ) {
 
 	ob_start();
 	?>
-	<div class="cs-archive__body" id="case-studies-filter-wrap">
+	<div class="cs-archive__body pf" id="case-studies-filter-wrap">
 
+		<?php if ( $atts['title'] || $atts['subtitle'] ) : ?>
+		<header class="pf__header">
+			<?php if ( $atts['title'] ) : ?>
+			<h2 class="pf__title"><?php echo esc_html( $atts['title'] ); ?></h2>
+			<?php endif; ?>
+			<?php if ( $atts['subtitle'] ) : ?>
+			<p class="pf__subtitle"><?php echo esc_html( $atts['subtitle'] ); ?></p>
+			<?php endif; ?>
+		</header>
+		<?php endif; ?>
+
+		<div class="pf__filterbar">
 		<div class="pf__search-wrap">
 			<label for="csf-search" class="screen-reader-text"><?php esc_html_e( 'Search case studies' ); ?></label>
 			<svg class="pf__search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -244,8 +248,13 @@ function ninjatheme_case_studies_grid_shortcode( $atts ) {
 			</svg>
 			<input id="csf-search" class="pf__search-input" type="search" placeholder="<?php esc_attr_e( 'Search case studies…' ); ?>" autocomplete="off">
 		</div>
+		</div>
 
-		<div class="cs-archive__grid" id="csf-grid">
+		<div class="pf__meta-bar">
+			<p class="pf__count" id="csf-count" aria-live="polite"></p>
+		</div>
+
+		<div class="cs-archive__grid pf__grid" id="csf-grid">
 			<?php echo $initial_html; ?>
 		</div>
 

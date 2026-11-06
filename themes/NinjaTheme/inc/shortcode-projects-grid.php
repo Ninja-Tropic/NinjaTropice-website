@@ -247,28 +247,15 @@ function ninjatheme_render_project_card( $post_id ) {
 			</div>
 
 			<div class="project-archive__body-inner">
-				<h2 class="project-archive__item-title"><?php echo esc_html( $title ); ?></h2>
-
-				<?php if ( $industry || $anim_style || $art_style ) : ?>
-				<div class="project-archive__tags">
+				<div class="project-archive__meta">
 					<?php if ( $industry ) : ?>
-					<span class="project-archive__tag"><?php echo esc_html( $industry ); ?></span>
+					<span class="project-archive__badge"><?php echo esc_html( $industry ); ?></span>
 					<?php endif; ?>
-					<?php if ( $anim_style ) : ?>
-					<span class="project-archive__tag"><?php echo esc_html( $anim_style ); ?></span>
-					<?php endif; ?>
-					<?php if ( $art_style ) : ?>
-					<span class="project-archive__tag"><?php echo esc_html( $art_style ); ?></span>
-					<?php endif; ?>
+					<time class="project-archive__date" datetime="<?php echo esc_attr( get_the_date( 'c', $post_id ) ); ?>">
+						<?php echo esc_html( sprintf( '%s ago', human_time_diff( get_post_time( 'U', true, $post_id ) ) ) ); ?>
+					</time>
 				</div>
-				<?php endif; ?>
-
-				<span class="project-archive__cta">
-					Watch project
-					<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-						<path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-					</svg>
-				</span>
+				<h2 class="project-archive__item-title"><?php echo esc_html( $title ); ?></h2>
 			</div>
 		</a>
 	</article>
@@ -420,6 +407,8 @@ function ninjatheme_projects_grid_shortcode( $atts ) {
 			'order'    => 'ASC',
 			'category' => '',
 			'filter'   => 'true',
+			'title'    => '',
+			'subtitle' => '',
 		),
 		$atts,
 		'projects_grid'
@@ -496,24 +485,28 @@ function ninjatheme_projects_grid_shortcode( $atts ) {
 	$axes = array_filter( array(
 		array(
 			'label'  => 'Industry',
+			'placeholder' => 'All Industries',
 			'key'    => 'industry',       // JS dataset key: dataset.industry
 			'param'  => 'industry',       // AJAX param name
 			'values' => $filter_values['industry'],
 		),
 		array(
 			'label'  => 'Animation Style',
+			'placeholder' => 'All Animation Styles',
 			'key'    => 'animationStyle', // JS dataset key: dataset.animationStyle
 			'param'  => 'animation_style',
 			'values' => $filter_values['animation_style'],
 		),
 		array(
 			'label'  => 'Art Style',
+			'placeholder' => 'All Art Styles',
 			'key'    => 'artStyle',       // JS dataset key: dataset.artStyle
 			'param'  => 'art_style',
 			'values' => $filter_values['art_style'],
 		),
 		array(
 			'label'  => 'Training Topic',
+			'placeholder' => 'All Training Topics',
 			'key'    => 'category',       // JS dataset key: dataset.category
 			'param'  => 'category',       // AJAX param name
 			'values' => $filter_values['category'],
@@ -523,6 +516,17 @@ function ninjatheme_projects_grid_shortcode( $atts ) {
 	ob_start();
 	?>
 	<div class="pf" id="projects-filter-wrap">
+
+		<?php if ( $atts['title'] || $atts['subtitle'] ) : ?>
+		<header class="pf__header">
+			<?php if ( $atts['title'] ) : ?>
+			<h2 class="pf__title"><?php echo esc_html( $atts['title'] ); ?></h2>
+			<?php endif; ?>
+			<?php if ( $atts['subtitle'] ) : ?>
+			<p class="pf__subtitle"><?php echo esc_html( $atts['subtitle'] ); ?></p>
+			<?php endif; ?>
+		</header>
+		<?php endif; ?>
 
 		<?php if ( $show_filter ) : ?>
 		<!-- Sticky bar — appears when .pf__axes scrolls out of viewport -->
@@ -567,6 +571,7 @@ function ninjatheme_projects_grid_shortcode( $atts ) {
 			</div>
 		</div>
 
+		<div class="pf__filterbar">
 		<div class="pf__search-wrap">
 			<label for="pf-search" class="screen-reader-text"><?php esc_html_e( 'Search projects' ); ?></label>
 			<svg class="pf__search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -577,53 +582,31 @@ function ninjatheme_projects_grid_shortcode( $atts ) {
 		</div>
 
 		<?php if ( ! empty( $axes ) ) : ?>
-		<div class="pf__axes" id="pf-axes-panel" role="group" aria-label="<?php esc_attr_e( 'Filter projects' ); ?>">
+		<div class="pf__selects" id="pf-axes-panel" role="group" aria-label="<?php esc_attr_e( 'Filter projects' ); ?>">
 			<?php foreach ( $axes as $axis ) : ?>
-			<div class="pf__axis">
-				<span class="pf__axis-label"><?php echo esc_html( $axis['label'] ); ?></span>
-				<div class="pf__axis-track">
-
-					<button class="pf__arrow pf__arrow--prev" type="button" aria-label="<?php esc_attr_e( 'Scroll left' ); ?>">
-						<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-							<path d="M10 3.5L5.5 8l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-					</button>
-
-					<div class="pf__pills-wrap">
-						<div class="pf__pills" role="group" aria-label="<?php echo esc_attr( 'Filter by ' . $axis['label'] ); ?>">
-
-							<button
-								class="pf__pill pf__pill--active"
-								data-axis="<?php echo esc_attr( $axis['key'] ); ?>"
-								data-param="<?php echo esc_attr( $axis['param'] ); ?>"
-								data-value=""
-								aria-pressed="true"
-								type="button">All</button>
-
-							<?php foreach ( $axis['values'] as $val ) : ?>
-							<button
-								class="pf__pill"
-								data-axis="<?php echo esc_attr( $axis['key'] ); ?>"
-								data-param="<?php echo esc_attr( $axis['param'] ); ?>"
-								data-value="<?php echo esc_attr( $val ); ?>"
-								aria-pressed="false"
-								type="button"><?php echo esc_html( $val ); ?></button>
-							<?php endforeach; ?>
-
-						</div>
-					</div>
-
-					<button class="pf__arrow pf__arrow--next" type="button" aria-label="<?php esc_attr_e( 'Scroll right' ); ?>">
-						<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-							<path d="M6 3.5L10.5 8 6 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-					</button>
-
+			<div class="pf__sd pf__sd--field" data-axis="<?php echo esc_attr( $axis['key'] ); ?>" data-param="<?php echo esc_attr( $axis['param'] ); ?>">
+				<button class="pf__sd-trigger" type="button">
+					<span class="pf__sd-label" data-placeholder="<?php echo esc_attr( $axis['placeholder'] ); ?>"><?php echo esc_html( $axis['placeholder'] ); ?></span>
+					<span class="pf__sd-count" hidden></span>
+					<svg class="pf__sd-chevron" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+						<path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+				</button>
+				<div class="pf__sd-panel" hidden>
+					<ul class="pf__sd-list" role="listbox" aria-multiselectable="true" aria-label="<?php echo esc_attr( 'Filter by ' . $axis['label'] ); ?>">
+						<?php foreach ( $axis['values'] as $val ) : ?>
+						<li class="pf__sd-item" data-value="<?php echo esc_attr( $val ); ?>" role="option" aria-selected="false">
+							<span class="pf__sd-check" aria-hidden="true"></span>
+							<span class="pf__sd-item-label"><?php echo esc_html( $val ); ?></span>
+						</li>
+						<?php endforeach; ?>
+					</ul>
 				</div>
 			</div>
 			<?php endforeach; ?>
 		</div>
 		<?php endif; ?>
+		</div>
 		<?php endif; // $show_filter ?>
 
 		<div class="pf__meta-bar"<?php echo ! $show_filter ? ' hidden' : ''; ?>>
@@ -641,7 +624,7 @@ function ninjatheme_projects_grid_shortcode( $atts ) {
 
 		<div class="pf__load-more-wrap" id="pf-load-more-wrap"<?php echo ! $has_more ? ' hidden' : ''; ?>>
 			<button class="pf__load-more" id="pf-load-more" type="button">
-				<span class="pf__load-more-label">Load more projects</span>
+				<span class="pf__load-more-label">Load more case studies</span>
 				<svg class="pf__spinner" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
 					<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.5" stroke-dasharray="42 15" stroke-linecap="round"/>
 				</svg>

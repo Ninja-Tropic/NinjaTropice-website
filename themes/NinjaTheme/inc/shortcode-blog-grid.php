@@ -166,22 +166,15 @@ function ninjatheme_render_blog_card( $post_id ) {
 			</div>
 
 			<div class="blog-archive__body-inner">
-				<h2 class="blog-archive__item-title"><?php echo esc_html( $title ); ?></h2>
-
-				<?php if ( $tags ) : ?>
-				<div class="blog-archive__tags">
-					<?php foreach ( $tags as $tag_name ) : ?>
-					<span class="blog-archive__tag"><?php echo esc_html( $tag_name ); ?></span>
-					<?php endforeach; ?>
+				<div class="blog-archive__meta">
+					<?php if ( $tags ) : ?>
+					<span class="blog-archive__badge"><?php echo esc_html( $tags[0] ); ?></span>
+					<?php endif; ?>
+					<time class="blog-archive__date" datetime="<?php echo esc_attr( get_the_date( 'c', $post_id ) ); ?>">
+						<?php echo esc_html( sprintf( '%s ago', human_time_diff( get_post_time( 'U', true, $post_id ) ) ) ); ?>
+					</time>
 				</div>
-				<?php endif; ?>
-
-				<span class="blog-archive__cta">
-					Read article
-					<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-						<path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-					</svg>
-				</span>
+				<h2 class="blog-archive__item-title"><?php echo esc_html( $title ); ?></h2>
 			</div>
 		</a>
 	</article>
@@ -305,6 +298,8 @@ function ninjatheme_blog_grid_shortcode( $atts ) {
 			'category' => '',
 			'tag'      => '',
 			'filter'   => 'true',
+			'title'    => '',
+			'subtitle' => '',
 		),
 		$atts,
 		'blog_grid'
@@ -401,12 +396,14 @@ function ninjatheme_blog_grid_shortcode( $atts ) {
 	$axes = array_filter( array(
 		array(
 			'label'  => 'Category',
+			'placeholder' => 'All Categories',
 			'key'    => 'category',
 			'param'  => 'category',
 			'values' => $filter_values['category'],
 		),
 		array(
 			'label'  => 'Topic',
+			'placeholder' => 'All Topics',
 			'key'    => 'tag',
 			'param'  => 'tag',
 			'values' => $filter_values['tag'],
@@ -417,23 +414,16 @@ function ninjatheme_blog_grid_shortcode( $atts ) {
 	?>
 	<div class="pf pf--wrap-pills" id="blog-filter-wrap">
 
-		<!-- Search bar -->
-		<div class="pf__search-bar">
-			<div class="pf__search-wrap">
-				<svg class="pf__search-icon" width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
-					<circle cx="7.5" cy="7.5" r="5.75" stroke="currentColor" stroke-width="1.75"/>
-					<path d="M12 12L15 15" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
-				</svg>
-				<input
-					class="pf__search-input"
-					id="bf-search"
-					type="search"
-					placeholder="Search articles by title, category or topic…"
-					aria-label="Search articles"
-					autocomplete="off"
-				>
-			</div>
-		</div>
+		<?php if ( $atts['title'] || $atts['subtitle'] ) : ?>
+		<header class="pf__header">
+			<?php if ( $atts['title'] ) : ?>
+			<h2 class="pf__title"><?php echo esc_html( $atts['title'] ); ?></h2>
+			<?php endif; ?>
+			<?php if ( $atts['subtitle'] ) : ?>
+			<p class="pf__subtitle"><?php echo esc_html( $atts['subtitle'] ); ?></p>
+			<?php endif; ?>
+		</header>
+		<?php endif; ?>
 
 		<?php if ( $show_filter ) : ?>
 		<!-- Sticky bar — appears when .pf__axes scrolls out of viewport -->
@@ -479,55 +469,50 @@ function ninjatheme_blog_grid_shortcode( $atts ) {
 			</div>
 		</div>
 
-		<?php if ( ! empty( $axes ) ) : ?>
-		<div class="pf__axes" id="bf-axes-panel" role="group" aria-label="<?php esc_attr_e( 'Filter articles' ); ?>">
-			<?php foreach ( $axes as $axis ) : ?>
-			<div class="pf__axis">
-				<span class="pf__axis-label"><?php echo esc_html( $axis['label'] ); ?></span>
-				<div class="pf__axis-track">
-
-					<button class="pf__arrow pf__arrow--prev" type="button" aria-label="<?php esc_attr_e( 'Scroll left' ); ?>">
-						<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-							<path d="M10 3.5L5.5 8l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-					</button>
-
-					<div class="pf__pills-wrap">
-						<div class="pf__pills" role="group" aria-label="<?php echo esc_attr( 'Filter by ' . $axis['label'] ); ?>">
-
-							<button
-								class="pf__pill pf__pill--active"
-								data-axis="<?php echo esc_attr( $axis['key'] ); ?>"
-								data-param="<?php echo esc_attr( $axis['param'] ); ?>"
-								data-value=""
-								aria-pressed="true"
-								type="button">All</button>
-
-							<?php foreach ( $axis['values'] as $val ) : ?>
-							<button
-								class="pf__pill"
-								data-axis="<?php echo esc_attr( $axis['key'] ); ?>"
-								data-param="<?php echo esc_attr( $axis['param'] ); ?>"
-								data-value="<?php echo esc_attr( $val ); ?>"
-								aria-pressed="false"
-								type="button"><?php echo esc_html( $val ); ?></button>
-							<?php endforeach; ?>
-
-						</div>
-					</div>
-
-					<button class="pf__arrow pf__arrow--next" type="button" aria-label="<?php esc_attr_e( 'Scroll right' ); ?>">
-						<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-							<path d="M6 3.5L10.5 8 6 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-						</svg>
-					</button>
-
-				</div>
-			</div>
-			<?php endforeach; ?>
-		</div>
-		<?php endif; ?>
 		<?php endif; // $show_filter ?>
+
+		<div class="pf__filterbar">
+			<div class="pf__search-wrap">
+				<svg class="pf__search-icon" width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+					<circle cx="7.5" cy="7.5" r="5.75" stroke="currentColor" stroke-width="1.75"/>
+					<path d="M12 12L15 15" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+				</svg>
+				<input
+					class="pf__search-input"
+					id="bf-search"
+					type="search"
+					placeholder="Search articles by title, category or topic…"
+					aria-label="Search articles"
+					autocomplete="off"
+				>
+			</div>
+
+			<?php if ( $show_filter && ! empty( $axes ) ) : ?>
+			<div class="pf__selects" id="bf-axes-panel" role="group" aria-label="<?php esc_attr_e( 'Filter articles' ); ?>">
+				<?php foreach ( $axes as $axis ) : ?>
+				<div class="pf__sd pf__sd--field" data-axis="<?php echo esc_attr( $axis['key'] ); ?>" data-param="<?php echo esc_attr( $axis['param'] ); ?>">
+					<button class="pf__sd-trigger" type="button">
+						<span class="pf__sd-label" data-placeholder="<?php echo esc_attr( $axis['placeholder'] ); ?>"><?php echo esc_html( $axis['placeholder'] ); ?></span>
+						<span class="pf__sd-count" hidden></span>
+						<svg class="pf__sd-chevron" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+							<path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+					</button>
+					<div class="pf__sd-panel" hidden>
+						<ul class="pf__sd-list" role="listbox" aria-multiselectable="true" aria-label="<?php echo esc_attr( 'Filter by ' . $axis['label'] ); ?>">
+							<?php foreach ( $axis['values'] as $val ) : ?>
+							<li class="pf__sd-item" data-value="<?php echo esc_attr( $val ); ?>" role="option" aria-selected="false">
+								<span class="pf__sd-check" aria-hidden="true"></span>
+								<span class="pf__sd-item-label"><?php echo esc_html( $val ); ?></span>
+							</li>
+							<?php endforeach; ?>
+						</ul>
+					</div>
+				</div>
+				<?php endforeach; ?>
+			</div>
+			<?php endif; ?>
+		</div>
 
 		<div class="pf__meta-bar"<?php echo ! $show_filter ? ' hidden' : ''; ?>>
 			<div class="pf__active" id="bf-active-chips" aria-live="polite" hidden></div>

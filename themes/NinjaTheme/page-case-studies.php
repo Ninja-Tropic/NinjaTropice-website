@@ -83,8 +83,9 @@ wp_localize_script( 'ninjatheme-case-studies-filter', 'csfData', array(
 
 	<!-- ② GRID -->
 	<div class="cs-archive__body">
-		<div class="container" id="case-studies-filter-wrap">
+		<div class="container pf" id="case-studies-filter-wrap">
 
+			<div class="pf__filterbar">
 			<div class="pf__search-wrap">
 				<label for="csf-search" class="screen-reader-text"><?php esc_html_e( 'Search case studies' ); ?></label>
 				<svg class="pf__search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -93,8 +94,13 @@ wp_localize_script( 'ninjatheme-case-studies-filter', 'csfData', array(
 				</svg>
 				<input id="csf-search" class="pf__search-input" type="search" placeholder="<?php esc_attr_e( 'Search case studies…' ); ?>" autocomplete="off">
 			</div>
+			</div>
 
-			<div class="cs-archive__grid" id="csf-grid">
+			<div class="pf__meta-bar">
+				<p class="pf__count" id="csf-count" aria-live="polite"></p>
+			</div>
+
+			<div class="cs-archive__grid pf__grid" id="csf-grid">
 				<?php
 				if ( $cs_query->have_posts() ) {
 					while ( $cs_query->have_posts() ) {
