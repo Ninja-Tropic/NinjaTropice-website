@@ -24,6 +24,11 @@ if ( file_exists( get_stylesheet_directory() . '/inc/shortcode-projects-grid.php
 	require_once get_stylesheet_directory() . '/inc/shortcode-projects-grid.php';
 }
 
+// Content Grid block (posts / projects / case studies with AJAX filters)
+if ( file_exists( get_stylesheet_directory() . '/inc/content-grid.php' ) ) {
+	require_once get_stylesheet_directory() . '/inc/content-grid.php';
+}
+
 // [blog_grid] shortcode with category/tag filter UI
 if ( file_exists( get_stylesheet_directory() . '/inc/shortcode-blog-grid.php' ) ) {
 	require_once get_stylesheet_directory() . '/inc/shortcode-blog-grid.php';
@@ -786,6 +791,21 @@ function ninjatheme_register_acf_assets() {
 	if ( ! function_exists( 'acf_register_block_type' ) ) {
 		return;
 	}
+
+	// Register Content Grid block
+	acf_register_block_type(array(
+		'name'              => 'content-grid',
+		'title'             => __('Content Grid'),
+		'description'       => __('Filterable grid of blog posts, projects or case studies with exclusions.'),
+		'render_template'   => 'blocks/content-grid.php',
+		'category'          => 'layout',
+		'icon'              => 'grid-view',
+		'keywords'          => array('grid', 'posts', 'blog', 'case study', 'projects', 'filter'),
+		'supports'          => array(
+			'align' => false,
+			'anchor' => true,
+		),
+	));
 
 	// Register Section 2 Rows block
 	acf_register_block_type(array(
@@ -1778,7 +1798,7 @@ function ninjatheme_register_projects_cpt() {
 		'label'               => __( 'Projects' ),
 		'labels'              => $labels,
 		'public'              => true,
-		'has_archive'         => true,
+		'has_archive'         => false,
 		'show_in_rest'        => true,
 		'menu_position'       => 20,
 		'menu_icon'           => 'dashicons-portfolio',

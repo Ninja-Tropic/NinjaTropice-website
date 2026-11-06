@@ -1,0 +1,311 @@
+{
+    "key": "group_ninjatheme_content_grid",
+    "title": "Block: Content Grid",
+    "fields": [
+        {
+            "key": "field_cg_type",
+            "label": "Content type",
+            "name": "content_type",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "What the grid lists.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "case-studies": "Case study",
+                "post": "Blog post",
+                "project": "Project"
+            },
+            "default_value": "case-studies",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0
+        },
+        {
+            "key": "field_cg_per_page",
+            "label": "Items per page",
+            "name": "per_page",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 9,
+            "min": 1,
+            "max": 48,
+            "step": 1
+        },
+        {
+            "key": "field_cg_title",
+            "label": "Title",
+            "name": "title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "100",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "All our case studies"
+        },
+        {
+            "key": "field_cg_subtitle",
+            "label": "Subtitle",
+            "name": "subtitle",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_cg_orderby",
+            "label": "Order by",
+            "name": "orderby",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "date": "Date",
+                "title": "Title",
+                "menu_order": "Menu order"
+            },
+            "default_value": "date",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0
+        },
+        {
+            "key": "field_cg_order",
+            "label": "Order",
+            "name": "order",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "DESC": "Descending",
+                "ASC": "Ascending"
+            },
+            "default_value": "DESC",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0
+        },
+        {
+            "key": "field_cg_show_search",
+            "label": "Show search",
+            "name": "show_search",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 1,
+            "ui": 1,
+            "message": ""
+        },
+        {
+            "key": "field_cg_show_filters",
+            "label": "Show filters",
+            "name": "show_filters",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Select dropdowns and active-filter chips. Options depend on the content type.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 1,
+            "ui": 1,
+            "message": ""
+        },
+        {
+            "key": "field_cg_include_categories",
+            "label": "Only show categories",
+            "name": "include_categories",
+            "aria-label": "",
+            "type": "taxonomy",
+            "instructions": "Leave empty to show everything. Pick one or more to show only items in those categories (e.g. Blog \u2192 Corporate Training).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "category",
+            "field_type": "multi_select",
+            "return_format": "id",
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "allow_null": 0,
+            "multiple": 0,
+            "bidirectional": 0
+        },
+        {
+            "key": "field_cg_exclude_tab",
+            "label": "Exclusions",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_cg_exclude_posts",
+            "label": "Exclude posts",
+            "name": "exclude_posts",
+            "aria-label": "",
+            "type": "relationship",
+            "instructions": "These items never appear in the grid or in the filter options.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "post",
+                "project",
+                "case-studies"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "filters": [
+                "search",
+                "post_type"
+            ],
+            "return_format": "id",
+            "min": "",
+            "max": "",
+            "elements": "",
+            "bidirectional": 0
+        },
+        {
+            "key": "field_cg_exclude_categories",
+            "label": "Exclude categories",
+            "name": "exclude_categories",
+            "aria-label": "",
+            "type": "taxonomy",
+            "instructions": "Items in any of these categories are hidden.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "category",
+            "field_type": "multi_select",
+            "return_format": "id",
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "allow_null": 0,
+            "multiple": 0,
+            "bidirectional": 0
+        },
+        {
+            "key": "field_cg_exclude_tags",
+            "label": "Exclude tags",
+            "name": "exclude_tags",
+            "aria-label": "",
+            "type": "taxonomy",
+            "instructions": "Items with any of these tags are hidden (blog posts and projects).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "post_tag",
+            "field_type": "multi_select",
+            "return_format": "id",
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "allow_null": 0,
+            "multiple": 0,
+            "bidirectional": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/content-grid"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "modified": 1793000001
+}
