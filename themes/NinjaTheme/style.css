@@ -5,7 +5,7 @@ Theme URI: https://example.com/ninjatheme
 Author: Your Name
 Author URI: https://example.com
 Description: A modern and clean WordPress standalone theme with a focus on performance and user experience.
-Version: 1.2.3
+Version: 1.2.6
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: ninjatheme
@@ -3060,6 +3060,19 @@ body.has-main-hero-modal {
   align-items: start;
   margin-bottom: 72px;
 }
+@media (min-width: 1181px) {
+  .hero-stats--large-description .hero-stats__intro {
+    grid-template-columns: minmax(0, 35fr) minmax(0, 65fr);
+    gap: 0;
+  }
+  .hero-stats--large-description .hero-stats__content-col {
+    padding-left: 96px;
+    padding-top: 0;
+  }
+  .hero-stats--large-description .hero-stats__description {
+    max-width: none;
+  }
+}
 .hero-stats__title {
   max-width: 760px;
   margin: 0;
@@ -3070,7 +3083,6 @@ body.has-main-hero-modal {
   flex-direction: column;
   align-items: flex-start;
   gap: 28px;
-  padding-top: 36px;
 }
 .hero-stats__description {
   max-width: 48rem;
@@ -3140,6 +3152,15 @@ body.has-main-hero-modal {
      object-fit: cover;
   -o-object-position: center;
      object-position: center;
+}
+.hero-stats__video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16/9;
+  height: auto;
+  border: 0;
+  border-radius: 24px;
+  background: #000;
 }
 .hero-stats__footer {
   display: grid;
@@ -3316,6 +3337,9 @@ body.has-main-hero-modal {
   .hero-stats__img {
     aspect-ratio: 1.35/1;
     min-height: 288px;
+    border-radius: 1rem;
+  }
+  .hero-stats__video {
     border-radius: 1rem;
   }
   .hero-stats__stats {
@@ -3713,9 +3737,9 @@ body.has-main-hero-modal {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 80px;
+  gap: 40px;
   grid-column: span 2;
-  min-height: 414px;
+  min-height: auto;
   padding: 39px;
   border-radius: 40px;
   background: var(--pg-bg);
@@ -3777,8 +3801,8 @@ body.has-main-hero-modal {
   }
   .principles-grid__card, .principles-grid__card--slot-1, .principles-grid__card--slot-4 {
     grid-column: span 1;
-    min-height: 320px;
-    gap: 48px;
+    min-height: auto;
+    gap: 40px;
   }
 }
 @media (max-width: 640px) {
@@ -6961,7 +6985,7 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   letter-spacing: -0.04em;
   color: #1a1a1f !important;
   text-align: left !important;
-  max-width: 22ch;
+  max-width: 100%;
   margin: clamp(1.5rem, 3vw, 2.5rem) 0 0 !important;
 }
 .cs-hero__media {
@@ -8171,6 +8195,552 @@ a.icon-card__inner:hover .icon-card__media, a.icon-card__inner:focus-visible .ic
   color: #aaa;
 }
 
+.pf__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.pf__title {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 2.25rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -2px;
+  color: #000;
+}
+
+.pf__subtitle {
+  margin: 0;
+  font-size: 1.125rem;
+  line-height: 1.5;
+  color: #636363;
+}
+
+.pf__filterbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.3125rem;
+  margin-bottom: 2rem;
+}
+.pf__filterbar .pf__search-wrap {
+  flex: 0 1 21rem;
+  margin-bottom: 0;
+}
+.pf__filterbar .pf__search-input {
+  height: 47px;
+  padding: 0.5rem 1rem 0.5rem 3rem;
+  border: 1px solid #a8a8b3;
+  border-radius: 16px;
+  font-size: 0.875rem;
+}
+.pf__filterbar .pf__search-input::-moz-placeholder {
+  color: #a8a8b3;
+}
+.pf__filterbar .pf__search-input::placeholder {
+  color: #a8a8b3;
+}
+.pf__filterbar .pf__search-icon {
+  left: 1rem;
+  width: 24px;
+  height: 24px;
+  color: #1a1a1f;
+}
+
+.pf__selects {
+  flex: 1 1 28rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.3125rem;
+}
+@media (max-width: 1024px) {
+  .pf__selects {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 768px) {
+  .pf__selects {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pf__sd--field {
+  min-width: 0;
+}
+.pf__sd--field .pf__sd-trigger {
+  width: 100%;
+  height: 47px;
+  padding: 0.5rem 1rem;
+  gap: 1rem;
+  justify-content: space-between;
+  border: 1px solid #a8a8b3;
+  border-radius: 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #5c5c68;
+  text-align: left;
+}
+.pf__sd--field.has-active .pf__sd-trigger {
+  border-color: #e8e8ec;
+  font-weight: 400;
+  color: #1a1a1f;
+}
+.pf__sd--field.is-open .pf__sd-trigger,
+.pf__sd--field .pf__sd-trigger:hover {
+  border-color: #FF8140;
+}
+.pf__sd--field .pf__sd-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pf__sd--field .pf__sd-count {
+  padding: 0.25rem 0.5rem;
+  min-width: 0;
+  height: auto;
+  border-radius: 4px;
+  background: #fff3ed;
+  color: #bd4303;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+}
+.pf__sd--field .pf__sd-chevron {
+  width: 24px;
+  height: 24px;
+  color: #1a1a1f;
+}
+.pf__sd--field .pf__sd-panel {
+  right: 0;
+  border-radius: 16px;
+}
+
+.pf__meta-bar {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.pf__active-label {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #1a1a1f;
+}
+
+.pf__active {
+  gap: 1.1875rem;
+}
+
+.pf__chip {
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background: #fff3ed;
+  color: #bd4303;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+.pf__chip button {
+  padding: 0;
+  opacity: 1;
+  border-radius: 0;
+}
+.pf__chip button:hover {
+  background: none;
+  opacity: 0.7;
+}
+
+.pf__clear-all {
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #bd4303;
+  text-underline-offset: 2px;
+}
+.pf__clear-all:hover {
+  color: #1a1a1f;
+}
+
+.pf__count {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #5c5c68;
+}
+
+.pf .pf__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+}
+@media (max-width: 1024px) {
+  .pf .pf__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 768px) {
+  .pf .pf__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pf__grid .project-archive__item {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+.pf__grid .project-archive__item:hover {
+  transform: none;
+  box-shadow: none;
+}
+.pf__grid .project-archive__item .project-archive__link {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: auto;
+  color: inherit;
+  text-decoration: none;
+}
+.pf__grid .project-archive__item .project-archive__media {
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #f0f0f0;
+}
+.pf__grid .project-archive__item .project-archive__image,
+.pf__grid .project-archive__item .project-archive__image-placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.pf__grid .project-archive__item .project-archive__link:hover .project-archive__image {
+  transform: scale(1.03);
+}
+.pf__grid .project-archive__item .project-archive__body-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0;
+}
+.pf__grid .project-archive__item .project-archive__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.pf__grid .project-archive__item .project-archive__badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background: #f5f0ff;
+  color: #4a238e;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+.pf__grid .project-archive__item .project-archive__date {
+  margin-left: auto;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #5c5c68;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.pf__grid .project-archive__item .project-archive__item-title {
+  margin: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: #1a1a1f;
+}
+
+.pf__grid .blog-archive__item {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+.pf__grid .blog-archive__item:hover {
+  transform: none;
+  box-shadow: none;
+}
+.pf__grid .blog-archive__item .blog-archive__link {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: auto;
+  color: inherit;
+  text-decoration: none;
+}
+.pf__grid .blog-archive__item .blog-archive__media {
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #f0f0f0;
+}
+.pf__grid .blog-archive__item .blog-archive__image,
+.pf__grid .blog-archive__item .blog-archive__image-placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.pf__grid .blog-archive__item .blog-archive__link:hover .blog-archive__image {
+  transform: scale(1.03);
+}
+.pf__grid .blog-archive__item .blog-archive__body-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0;
+}
+.pf__grid .blog-archive__item .blog-archive__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.pf__grid .blog-archive__item .blog-archive__badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background: #f5f0ff;
+  color: #4a238e;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+.pf__grid .blog-archive__item .blog-archive__date {
+  margin-left: auto;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #5c5c68;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.pf__grid .blog-archive__item .blog-archive__item-title {
+  margin: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: #1a1a1f;
+}
+
+.pf__grid .cs-archive__item {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+.pf__grid .cs-archive__item:hover {
+  transform: none;
+  box-shadow: none;
+}
+.pf__grid .cs-archive__item .cs-archive__link {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: auto;
+  color: inherit;
+  text-decoration: none;
+}
+.pf__grid .cs-archive__item .cs-archive__media {
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #f0f0f0;
+}
+.pf__grid .cs-archive__item .cs-archive__image,
+.pf__grid .cs-archive__item .cs-archive__image-placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.pf__grid .cs-archive__item .cs-archive__link:hover .cs-archive__image {
+  transform: scale(1.03);
+}
+.pf__grid .cs-archive__item .cs-archive__body-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0;
+}
+.pf__grid .cs-archive__item .cs-archive__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.pf__grid .cs-archive__item .cs-archive__badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background: #f5f0ff;
+  color: #4a238e;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+.pf__grid .cs-archive__item .cs-archive__date {
+  margin-left: auto;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #5c5c68;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.pf__grid .cs-archive__item .cs-archive__item-title {
+  margin: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: #1a1a1f;
+}
+
+.pf__grid .cg-card__item {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+.pf__grid .cg-card__item:hover {
+  transform: none;
+  box-shadow: none;
+}
+.pf__grid .cg-card__item .cg-card__link {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: auto;
+  color: inherit;
+  text-decoration: none;
+}
+.pf__grid .cg-card__item .cg-card__media {
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #f0f0f0;
+}
+.pf__grid .cg-card__item .cg-card__image,
+.pf__grid .cg-card__item .cg-card__image-placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.pf__grid .cg-card__item .cg-card__link:hover .cg-card__image {
+  transform: scale(1.03);
+}
+.pf__grid .cg-card__item .cg-card__body-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0;
+}
+.pf__grid .cg-card__item .cg-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.pf__grid .cg-card__item .cg-card__badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background: #f5f0ff;
+  color: #4a238e;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+.pf__grid .cg-card__item .cg-card__date {
+  margin-left: auto;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #5c5c68;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.pf__grid .cg-card__item .cg-card__item-title {
+  margin: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: #1a1a1f;
+}
+
+.pf__load-more-wrap {
+  padding-top: 3rem;
+}
+
+.pf__load-more {
+  padding: 1rem 1.5rem;
+  border: 0;
+  border-radius: 16px;
+  background: #FF8140;
+  color: #1a1a1f;
+  font-size: 1rem;
+  line-height: 1.5;
+  box-shadow: 0 8px 16px rgba(233, 104, 39, 0.08);
+}
+.pf__load-more:hover:not(:disabled) {
+  border-color: transparent;
+  color: #1a1a1f;
+  background: rgb(255, 112.1780104712, 38.5);
+  box-shadow: 0 8px 16px rgba(233, 104, 39, 0.2);
+}
+
+@media (max-width: 768px) {
+  .pf__title {
+    font-size: 1.75rem;
+  }
+  .pf__filterbar .pf__search-wrap {
+    flex-basis: 100%;
+  }
+}
 .pf--wrap-pills .pf__axis {
   align-items: flex-start;
   flex-wrap: wrap;
